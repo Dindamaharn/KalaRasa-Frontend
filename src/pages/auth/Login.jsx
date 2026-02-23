@@ -41,7 +41,7 @@ function Login() {
                 placeholder="Masukkan Kata Sandi"
               />
               <img
-                src={showPassword ? eyeOffIcon : eyeIcon}
+                src={showPassword ? eyeIcon : eyeOffIcon}
                 alt="toggle password"
                 className="eye-icon"
                 onClick={() => setShowPassword(!showPassword)}

@@ -1,0 +1,174 @@
+.login-page {
+  display: flex;
+  height: 100vh;
+}
+
+/* LEFT */
+.login-left {
+  flex: 1;
+  height: 100vh;
+  background-image: url("../../assets/images/background.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  align-items: center;
+}
+
+.login-text h1 {
+  color: #022855;
+  font-size: 50px;
+  line-height: 1.2;
+}
+
+.extra {
+  font-weight: 800; 
+}
+
+.semi {
+  font-weight: 600; 
+}
+
+.desc {
+  margin-top: 15px;
+  color: #022855;
+  font-size: 30px;
+  font-weight: 700; 
+}
+
+/* RIGHT */
+.login-right {
+  flex: 1;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #fff;
+}
+
+.login-card {
+  width: 380px;
+  padding: 32px;
+  background: #ffffff; 
+  border: 2px solid #E5E7EB;  
+  border-radius: 16px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.05);
+}
+
+.login-logo {
+  display: block;
+  margin: 0 auto 20px;
+  width: 120px;
+}
+
+/* INPUT */
+.input-group {
+  display: flex;
+  align-items: center;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 10px;
+  margin-bottom: 15px;
+  background: white;
+}
+
+.input-group input {
+  border: none;
+  outline: none;
+  flex: 1;
+}
+
+.eye-icon {
+  width: 20px;
+  cursor: pointer;
+}
+
+
+/* FONT DEFAULT RIGHT SIDE */
+.login-card {
+  font-size: 16px;
+}
+
+/* LABEL */
+.login-card label {
+  display: block;
+  margin-bottom: 6px;
+  font-weight: 500;
+  color: #6B7280;
+}
+
+/* INPUT TEXT */
+.input-group input {
+  font-size: 16px;
+}
+
+/* LUPA PASSWORD */
+.forgot {
+  font-size: 14px;
+  color: #f97316;
+  font-weight: 600;
+  text-align: right;
+  margin-bottom: 12px;
+  cursor: pointer;
+}
+
+/* REGISTER */
+.register-text {
+  font-size: 14px;
+  text-align: center;
+  margin-top: 16px;
+}
+
+.register-text span {
+  color: #f97316;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+/* BUTTON */
+.login-btn {
+  width: 100%;
+  background: #0d2b4c;
+  color: white;
+  border: none;
+  padding: 10px;
+  border-radius: 8px;
+  margin-top: 10px;
+  cursor: pointer;
+  font-weight: 600; 
+}
+
+/* TABLET */
+@media (max-width: 1024px) {
+  .login-card {
+    width: 340px;
+    padding: 28px;
+  }
+
+  .login-text h1 {
+    font-size: 32px;
+  }
+}
+
+/* MOBILE */
+@media (max-width: 768px) {
+  .login-page {
+    flex-direction: column;
+  }
+
+  .login-left {
+    display: none; /* sembunyikan background */
+  }
+
+  .login-right {
+    width: 100%;
+    padding: 20px;
+  }
+
+  .login-card {
+    width: 100%;
+    max-width: 380px;
+  }
+}

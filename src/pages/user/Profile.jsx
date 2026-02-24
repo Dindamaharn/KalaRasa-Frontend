@@ -1,12 +1,30 @@
+import { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import Navbar from "../../components/layout/Navbar";
-import { Link } from "react-router-dom";
 import "./Profile.css";
+
 import profileIcon from "../../assets/icons/user.svg";
 import bookmarkIcon from "../../assets/icons/fill-bookmark.svg";
 import historyIcon from "../../assets/icons/history.svg";
 import logoutIcon from "../../assets/icons/logout.svg";
 
 function ProfileUser() {
+    const [user, setUser] = useState(null);
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        const storedUser = localStorage.getItem("user");
+        if (storedUser) {
+            setUser(JSON.parse(storedUser));
+        }
+    }, []);
+
+    const handleLogout = () => {
+        localStorage.removeItem("token");
+        localStorage.removeItem("user");
+        navigate("/login");
+    };
+
     return (
         <>
             <Navbar />
@@ -20,24 +38,40 @@ function ProfileUser() {
                         <div className="profile-left">
                             <div className="form-group">
                                 <label>Nama Lengkap</label>
-                                <input type="text" value="Dewi Anggraini" disabled />
+                                <input
+                                    type="text"
+                                    value={user?.name || ""}
+                                    disabled
+                                />
                             </div>
 
                             <div className="form-group">
                                 <label>Email</label>
-                                <input type="text" value="dewi.anggraini@example.com" disabled />
+                                <input
+                                    type="text"
+                                    value={user?.email || ""}
+                                    disabled
+                                />
                             </div>
                         </div>
 
                         <div className="profile-right">
                             <div className="form-group">
                                 <label>Total Poin</label>
-                                <input type="text" value="1200" disabled />
+                                <input
+                                    type="text"
+                                    value={user?.points || "0"}
+                                    disabled
+                                />
                             </div>
 
                             <div className="form-group">
                                 <label>No Telp</label>
-                                <input type="text" value="0812-3456-7890" disabled />
+                                <input
+                                    type="text"
+                                    value={user?.phone || "-"}
+                                    disabled
+                                />
                             </div>
                         </div>
 
@@ -45,6 +79,7 @@ function ProfileUser() {
                             <div className="profile-avatar">
                                 <img src={profileIcon} alt="Profile" />
                             </div>
+
                             <Link to="/edit-profile" className="edit-button">
                                 Edit Profil
                             </Link>
@@ -53,30 +88,28 @@ function ProfileUser() {
                     </div>
 
                     <div className="profile-menu">
-                        <Link to="/markah" className="menu-item">
+                        <Link to="/bookmark" className="menu-item">
                             <span>Markah</span>
                             <img src={bookmarkIcon} alt="Markah" />
                         </Link>
 
-                        <Link to="/riwayat" className="menu-item">
+                        <Link to="/history" className="menu-item">
                             <span>Riwayat</span>
                             <img src={historyIcon} alt="Riwayat" />
                         </Link>
 
                         <button
                             className="menu-item logout"
-                            onClick={() => setShowLogoutModal(true)}
+                            onClick={handleLogout}
                         >
                             <span>Keluar</span>
                             <img src={logoutIcon} alt="Keluar" />
                         </button>
-
                     </div>
 
                 </div>
             </div>
         </>
-
     );
 }
 

@@ -5,6 +5,9 @@ import Register from "./pages/auth/Register";
 import Home from "./pages/user/Home";
 import HomeAdmin from "./pages/admin/HomeAdmin";
 import Profile from "./pages/user/Profile";
+import Bookmark from "./pages/user/Bookmark";
+import History from "./pages/user/History";
+import Shopping from "./pages/user/Shopping";
 
 function App() {
   return (
@@ -15,6 +18,9 @@ function App() {
         <Route path="/register" element={<Register />} />
         <Route path="/home" element={<Home />} />
         <Route path="/profile" element={<Profile />} />
+        <Route path="/bookmark" element={<Bookmark />} />
+        <Route path="/history" element={<History />} />
+        <Route path="/shopping" element={<Shopping />} />
         <Route path="/home-admin" element={<HomeAdmin />} />
       </Routes>
     </BrowserRouter>

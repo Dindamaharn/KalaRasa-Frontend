@@ -1,0 +1,127 @@
+.profile-wrapper {
+    display: flex;
+    justify-content: center;
+    padding: 20px 20px;
+}
+
+.profile-card {
+    width: 100%;
+    max-width: 1100px;
+    background-color: #FFFFFF;
+    border-radius: 16px;
+    padding: 40px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+}
+
+.profile-title {
+    font-size: 24px;
+    font-weight: 600;
+    color: #1F2933;
+    margin-bottom: 32px;
+}
+
+.profile-content {
+    display: flex;
+    gap: 40px;
+    align-items: flex-start;
+}
+
+.profile-left,
+.profile-right {
+    flex: 1;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    font-size: 14px;
+    color: #6B7280;
+    margin-bottom: 6px;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 12px 14px;
+    border-radius: 10px;
+    border: 1px solid #E5E7EB;
+    background-color: #F9FAFC;
+    font-size: 14px;
+    color: #1F2933;
+}
+
+.profile-avatar-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+}
+
+.profile-avatar {
+    width: 110px;
+    height: 110px;
+    border: 3px solid #022855;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.profile-avatar img {
+    width: 40px;
+}
+
+.edit-button {
+    background-color: #022855;
+    color: #FFFFFF;
+    border: none;
+    text-decoration: none;
+    padding: 10px 18px;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.profile-menu {
+    margin-top: 40px;
+    border-top: 1px solid #E5E7EB;
+}
+
+.menu-item {
+    width: 100%;
+    padding: 16px 0;
+    border-bottom: 1px solid #E5E7EB;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    text-decoration: none;
+    background: none;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 500;
+}
+
+button.menu-item {
+    border: none;
+    outline: none;
+}
+
+.menu-item span {
+    font-weight: 500;
+    color: #1F2933;
+}
+
+.menu-item img {
+    width: 20px;
+    height: 20px;
+}
+
+.menu-item.logout {
+    color: #DC2626;
+}
+
+.menu-item.logout span {
+    color: #DC2626;
+    font-weight: 500;
+}

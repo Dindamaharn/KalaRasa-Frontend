@@ -1,5 +1,12 @@
+import Navbar from "../../components/layout/Navbar";
+
 function HomeUser() {
-  return <h1>Home User</h1>;
+  return (
+    <>
+      <Navbar />
+      <h1>Home User</h1>
+    </>
+  );
 }
 
 export default HomeUser;

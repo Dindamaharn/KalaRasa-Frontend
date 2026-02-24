@@ -1,6 +1,4 @@
-/* =======================
-   LAYOUT
-======================= */
+/*LAYOUT*/
 .login-page {
   display: flex;
   height: 100vh;
@@ -15,9 +13,7 @@
   align-items: center;
 }
 
-/* =======================
-   LEFT SIDE
-======================= */
+/*LEFT SIDE*/
 .login-left {
   background: url("../../assets/images/background.png") center/cover no-repeat;
 }
@@ -41,9 +37,7 @@
   font-weight: 700;
 }
 
-/* =======================
-   RIGHT SIDE
-======================= */
+/*RIGHT SIDE*/
 .login-right {
   background: #fff;
 }
@@ -64,9 +58,7 @@
   margin: 0 auto 20px;
 }
 
-/* =======================
-   FORM
-======================= */
+/*FORM */
 .login-card label {
   display: block;
   margin-bottom: 6px;
@@ -102,9 +94,7 @@
   color: #ef4444;
 }
 
-/* =======================
-   LINKS
-======================= */
+/*LINKS*/
 .forgot,
 .register-link {
   color: #f97316;
@@ -118,7 +108,8 @@
   margin-bottom: 12px;
 }
 
-.register-text {
+.register-text-to-page {
+  color: #6B7280;
   font-size: 14px;
   text-align: center;
   margin-top: 16px;
@@ -128,9 +119,7 @@
   text-decoration: none;
 }
 
-/* =======================
-   BUTTON
-======================= */
+/*BUTTON*/
 .login-btn {
   width: 100%;
   padding: 10px;
@@ -143,9 +132,7 @@
   cursor: pointer;
 }
 
-/* =======================
-   REMOVE DEFAULT PASSWORD ICON
-======================= */
+/*REMOVE DEFAULT PASSWORD ICON*/
 input[type="password"]::-ms-reveal,
 input[type="password"]::-ms-clear,
 input[type="password"]::-webkit-credentials-auto-fill-button,
@@ -153,9 +140,7 @@ input[type="password"]::-webkit-textfield-decoration-container {
   display: none !important;
 }
 
-/* =======================
-   RESPONSIVE
-======================= */
+/*RESPONSIVE*/
 
 /* Tablet */
 @media (max-width: 1024px) {

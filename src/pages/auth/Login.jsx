@@ -58,7 +58,7 @@ function Login() {
             <span className="semi">di</span> <span className="extra">Kala Rasa</span>
           </h1>
           <p className="desc">
-            Masuk untuk mengelola daftar belanja & <br />
+            Masuk <span className="semi">untuk</span> mengelola daftar belanja <span className="semi">&</span> <br />
             temukan resep favoritmu
           </p>
         </div>
@@ -107,7 +107,7 @@ function Login() {
                   Masuk
               </button>
 
-              <p className="register-text">
+              <p className="register-text-to-page">
                 Belum Memiliki Akun?{" "}
                 <Link to="/register" className="register-link">
                   Daftar

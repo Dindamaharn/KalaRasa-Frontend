@@ -1,0 +1,240 @@
+/* =========================
+   LAYOUT
+========================= */
+
+.register-page {
+  display: flex;
+  min-height: 100vh;
+}
+
+.register-left,
+.register-right {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.register-left {
+  padding: 40px 0;
+}
+
+/* =========================
+   RIGHT SIDE
+========================= */
+
+.register-right {
+  background: url("../../assets/images/background1.png") right center / cover no-repeat;
+}
+
+.register-text {
+  max-width: 500px;
+  text-align: left;
+  color: #022855;
+}
+
+.register-text h1 {
+  font-size: 50px;
+  line-height: 1.2;
+  font-weight: 800;
+}
+
+.register-text p {
+  margin-top: 15px;
+  font-size: 30px;
+  font-weight: 700;
+}
+
+/* =========================
+   FORM CARD
+========================= */
+
+.register-card {
+  width: 443px;
+  padding: 24px 55px;
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+  font-size: 16px;
+
+  background: #fff;
+  border: 2px solid #E5E7EB;
+  border-radius: 16px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.05);
+}
+
+/* =========================
+   LOGO
+========================= */
+
+.register-logo {
+  display: block;
+  width: 140px;
+  margin: 0 auto 10px;
+}
+
+/* =========================
+   LABEL
+========================= */
+
+.register-label {
+  font-size: 16px;
+  font-weight: 500;
+  color: #6B7280;
+}
+
+/* =========================
+   INPUT GROUP
+========================= */
+
+.input-group {
+  display: flex;
+  align-items: center;
+  padding: 14px;
+  border: 1px solid #E5E7EB;
+  border-radius: 12px;
+  background: #fff;
+}
+
+.input-group input {
+  flex: 1;
+  border: none;
+  outline: none;
+  font-size: 16px;
+  background: transparent;
+}
+
+/* Date Input */
+
+input[type="date"] {
+  color: #6B7280;
+}
+
+input[type="date"]:focus {
+  color: #111827;
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator {
+  display: none;
+  -webkit-appearance: none;
+}
+
+/* =========================
+   ICON
+========================= */
+
+.register-eye-icon,
+.register-calendar-icon {
+  width: 20px;
+  cursor: pointer;
+}
+
+/* =========================
+   RADIO (GENDER)
+========================= */
+
+.register-radio-group {
+  display: flex;
+  gap: 40px;
+}
+
+.gender-option {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: #6B7280;
+}
+
+/* =========================
+   ERROR
+========================= */
+
+.register-error-text {
+  font-size: 14px;
+  color: #ef4444;
+}
+
+/* =========================
+   LOGIN TEXT
+========================= */
+
+.register-login-text {
+  text-align: center;
+  font-size: 14px;
+  color: #6B7280;
+}
+
+.register-login-link {
+  margin-left: 4px;
+  font-weight: 600;
+  color: #F97316;
+  text-decoration: none;
+}
+
+/* =========================
+   BUTTON
+========================= */
+
+.register-btn {
+  width: 100%;
+  padding: 14px;
+  border: none;
+  border-radius: 12px;
+  background: #0d2b4c;
+  color: #fff;
+  font-weight: 600;
+  font-size: 16px;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.register-btn:hover {
+  background: #123a66;
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+/* Tablet */
+@media (max-width: 1024px) {
+  .register-page {
+    flex-direction: column;
+  }
+
+  .register-right {
+    display: none;
+  }
+
+  .register-card {
+    width: 100%;
+    max-width: 420px;
+    padding: 28px;
+  }
+
+  .register-text h1 {
+    font-size: 36px;
+  }
+
+  .register-text p {
+    font-size: 22px;
+  }
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+  .register-left {
+    padding: 20px;
+  }
+
+  .register-card {
+    width: 100%;
+    padding: 20px;
+    gap: 18px;
+  }
+
+  .register-radio-group {
+    flex-direction: column;
+    gap: 16px;
+  }
+}

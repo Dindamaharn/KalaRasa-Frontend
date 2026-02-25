@@ -1,3 +1,4 @@
+/* EDIT PROFILE PAGE  */
 .edit-profile-page {
     padding: 60px 120px;
     background-color: #F9FAFB;
@@ -15,6 +16,8 @@
     margin-bottom: 32px;
 }
 
+
+/* FORM LAYOUT */
 .form-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -25,30 +28,74 @@
     grid-column: span 2;
 }
 
+/*FORM ELEMENT */
 label {
+    display: block;
     font-size: 14px;
     font-weight: 500;
     margin-bottom: 6px;
-    display: block;
 }
 
 input,
 select {
     width: 100%;
     height: 44px;
+    padding: 0 14px;
     border-radius: 10px;
     border: 1px solid #E5E7EB;
-    padding: 0 14px;
     font-family: Poppins, sans-serif;
     font-size: 14px;
+    box-sizing: border-box;
+    }
+
+
+/* SELECT CUSTOM */
+select {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-color: #FFFFFF;
+
+    background-image: url("data:image/svg+xml;utf8,<svg fill='%236B7280' height='20' viewBox='0 0 20 20' width='20' xmlns='http://www.w3.org/2000/svg'><path d='M5.5 7l4.5 5 4.5-5z'/></svg>");
+    background-repeat: no-repeat;
+    background-position: right 18px center;
+
+    padding-right: 48px; 
 }
 
+/* PASSWORD FIELD */
+.password-wrapper {
+    position: relative;
+}
+
+.password-wrapper input {
+    padding-right: 48px;
+}
+
+.toggle-icon {
+    position: absolute;
+    right: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    opacity: 0.7;
+    transition: 0.2s;
+}
+
+.toggle-icon:hover {
+    opacity: 1;
+}
+
+/* DISABLED INPUT */
 .edit-profile-page .input:disabled {
     background-color: #F3F4F6;
     cursor: not-allowed;
     height: 20px;
 }
 
+/* BUTTON */
 .button-group {
     display: flex;
     justify-content: space-between;
@@ -60,8 +107,8 @@ select {
     border: none;
     padding: 12px 24px;
     border-radius: 10px;
-    cursor: pointer;
     font-weight: 500;
+    cursor: pointer;
 }
 
 .save-btn {
@@ -70,12 +117,92 @@ select {
     border: none;
     padding: 12px 28px;
     border-radius: 10px;
-    cursor: pointer;
     font-weight: 500;
+    cursor: pointer;
 }
 
+/* ERROR & RESET TEXT */
 .error-text {
-    color: #DC2626;
-    font-size: 12px;
     margin-top: 6px;
+    font-size: 12px;
+    color: #DC2626;
+}
+
+.reset-password-text {
+    width: fit-content;
+    margin-top: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+.reset-gray {
+    color: #6B7280;
+}
+
+.reset-orange {
+    color: #FE6A03;
+}
+
+.reset-password-text:hover {
+    opacity: 0.8;
+}
+
+/* RESPONSIVE */
+/* Tablet */
+@media (max-width: 1024px) {
+    .edit-profile-page {
+        padding: 40px 60px;
+    }
+
+    .form-grid {
+        gap: 20px 24px;
+    }
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+    .edit-profile-page {
+        padding: 24px;
+    }
+
+    .edit-card {
+        padding: 24px;
+    }
+
+    .form-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+    .full-width {
+        grid-column: span 1;
+    }
+
+    .button-group {
+        flex-direction: column;
+        gap: 16px;
+    }
+
+    .cancel-btn,
+    .save-btn {
+        width: 100%;
+    }
+}
+
+/* Extra Small Phone */
+@media (max-width: 480px) {
+    .edit-profile-page {
+        padding: 16px;
+    }
+
+    .edit-card h2 {
+        font-size: 20px;
+    }
+
+    input,
+    select {
+        height: 40px;
+        font-size: 13px;
+    }
 }

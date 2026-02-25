@@ -1,7 +1,6 @@
-import { login } from "../../services/authService.js";
+import { login } from "../../services/authService";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { Link } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import "./login.css";
 import logo from "../../assets/images/logo.png";
 import eyeIcon from "../../assets/icons/eye.svg";
@@ -23,25 +22,20 @@ function Login() {
         password,
       });
 
-      const user = response.data.data.user;
       const token = response.data.data.access_token;
 
-      // simpan ke localStorage
+      // ✅ simpan token saja
       localStorage.setItem("token", token);
-      localStorage.setItem("user", JSON.stringify(user));
 
-      // redirect berdasarkan role
-      if (user.role === "admin") {
-        navigate("/admin/home");
-      } else {
-        navigate("/home");
-      }
+      navigate("/home");
 
     } catch (error) {
       if (error.response?.status === 422) {
         setErrors(error.response.data.errors);
       } else if (error.response?.status === 401) {
-        setGeneralError(error.response.data.message);
+        setErrors({
+          email: ["Email atau password salah"],
+        });
       } else {
         console.error(error);
       }
@@ -50,24 +44,25 @@ function Login() {
 
   return (
     <div className="login-page">
-      {/* LEFT SIDE */}
       <div className="login-left">
         <div className="login-text">
           <h1>
             <span className="extra">Selamat Datang,</span> <br />
-            <span className="semi">di</span> <span className="extra">Kala Rasa</span>
+            <span className="semi">di</span>{" "}
+            <span className="extra">Kala Rasa</span>
           </h1>
           <p className="desc">
-            Masuk <span className="semi">untuk</span> mengelola daftar belanja <span className="semi">&</span> <br />
+            Masuk <span className="semi">untuk</span> mengelola daftar belanja{" "}
+            <span className="semi">&</span> <br />
             temukan resep favoritmu
           </p>
         </div>
       </div>
 
-      {/* RIGHT SIDE */}
       <div className="login-right">
         <div className="login-card">
           <img src={logo} alt="logo" className="login-logo" />
+
           <form onSubmit={handleLogin}>
             <label>Email</label>
             <div className="input-group">
@@ -78,6 +73,11 @@ function Login() {
                 onChange={(e) => setEmail(e.target.value)}
               />
             </div>
+
+            {errors.email && (
+              <p className="error-text">{errors.email[0]}</p>
+            )}
+
             <label>Kata Sandi</label>
             <div className="input-group">
               <input
@@ -94,14 +94,9 @@ function Login() {
               />
             </div>
 
-            {errors.email && (
-              <p className="error-text">{errors.email[0]}</p>
-            )}
             {errors.password && (
               <p className="error-text">{errors.password[0]}</p>
             )}
-
-            <p className="forgot">Lupa Kata Sandi?</p>
 
             <button className="login-btn" type="submit">
               Masuk

@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Navbar from "../../components/layout/Navbar";
+import Exit from "../../components/modal/Exit";
 import "./Profile.css";
 
 import profileIcon from "../../assets/icons/user.svg";
@@ -11,6 +12,7 @@ import logoutIcon from "../../assets/icons/logout.svg";
 function ProfileUser() {
     const [user, setUser] = useState(null);
     const navigate = useNavigate();
+    const [openExit, setOpenExit] = useState(false);
 
     useEffect(() => {
         const storedUser = localStorage.getItem("user");
@@ -100,7 +102,7 @@ function ProfileUser() {
 
                         <button
                             className="menu-item logout"
-                            onClick={handleLogout}
+                            onClick={() => setOpenExit(true)}
                         >
                             <span>Keluar</span>
                             <img src={logoutIcon} alt="Keluar" />
@@ -109,6 +111,11 @@ function ProfileUser() {
 
                 </div>
             </div>
+
+            <Exit
+                isOpen={openExit}
+                onClose={() => setOpenExit(false)}
+            />
         </>
     );
 }

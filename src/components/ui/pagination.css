@@ -1,0 +1,60 @@
+.pagination {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 20px;
+}
+
+/* BUTTON BASE */
+.pagination button {
+  min-width: 36px;
+  height: 36px;
+  border: none;
+  border-radius: 8px;
+  background: #f3f4f6;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* HOVER */
+.pagination button:hover:not(:disabled) {
+  background: #e5e7eb;
+}
+
+/* PAGE NUMBER STYLE */
+.page-number {
+  font-size: 15px;   
+  font-weight: 500;
+  padding: 0 12px;
+}
+
+/* ACTIVE */
+.page-number.active {
+  background: #022855;
+  color: white;
+}
+
+/* DISABLED */
+.pagination button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+/* ICON */
+.icon {
+  width: 16px;
+  height: 16px;
+}
+
+/* NEXT ROTATE */
+.rotate {
+  transform: rotate(180deg);
+}
+
+/* ELLIPSIS */
+.ellipsis {
+  font-size: 15px;
+  padding: 0 6px;
+}

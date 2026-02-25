@@ -8,6 +8,8 @@ import Profile from "./pages/user/Profile";
 import Bookmark from "./pages/user/Bookmark";
 import History from "./pages/user/History";
 import Shopping from "./pages/user/Shopping";
+import Recipes from "./pages/user/Recipes";
+import DetailRecipes from "./pages/user/DetailRecipes";
 import EditProfile from "./pages/user/EditProfile";
 
 function App() {
@@ -23,6 +25,8 @@ function App() {
         <Route path="/bookmark" element={<Bookmark />} />
         <Route path="/history" element={<History />} />
         <Route path="/shopping" element={<Shopping />} />
+        <Route path="/recipes" element={<Recipes />} />
+        <Route path="/detail-recipes" element={<DetailRecipes />} />
         <Route path="/admin/home" element={<HomeAdmin />} />
       </Routes>
     </BrowserRouter>

@@ -22,22 +22,6 @@
     margin-bottom: 60px;
 }
 
-.back-box {
-    width: 48px;
-    height: 48px;
-    border-radius: 14px;
-    background-color: #FFFFFF;
-    border: 1px solid #E5E7EB;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-}
-
-.back-box img {
-    width: 20px;
-}
-
 .search-input {
     flex: 1;
     height: 44px;

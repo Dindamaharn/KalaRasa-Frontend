@@ -1,0 +1,151 @@
+.detail-container {
+    padding: 40px 80px;
+    background-color: #F4F6F9;
+}
+
+/* IMAGE */
+.detail-image-wrapper {
+    position: relative;
+    width: 100%;
+    border-radius: 20px;
+    overflow: hidden;
+}
+
+.detail-image {
+    width: 100%;
+    height: 400px;
+    object-fit: cover;
+}
+
+/* ICON BUTTONS */
+.back-button,
+.bookmark-button {
+    position: absolute;
+    top: 20px;
+    background: white;
+    border: none;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.back-button {
+    left: 20px;
+}
+
+.bookmark-button {
+    right: 20px;
+}
+
+.back-button img,
+.bookmark-button img {
+    width: 20px;
+}
+
+/* CONTENT */
+.detail-content {
+    margin-top: 30px;
+}
+
+.recipe-title {
+    font-size: 28px;
+    margin-bottom: 6px;
+}
+
+.recipe-subtitle {
+    color: #6B7280;
+    margin-bottom: 16px;
+}
+
+/* META INFO */
+.recipe-meta {
+    display: flex;
+    gap: 30px;
+    margin-bottom: 30px;
+}
+
+.meta-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    color: #374151;
+}
+
+.meta-item img {
+    width: 18px;
+}
+
+/* CARD */
+.detail-card {
+    background: white;
+    padding: 24px;
+    border-radius: 16px;
+    margin-bottom: 24px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.detail-card h3 {
+    margin-bottom: 16px;
+    margin-top: 0px;
+}
+
+.detail-card ul {
+    padding-left: 20px;
+}
+
+.detail-card li {
+    margin-bottom: 8px;
+}
+
+/* STEP */
+.step {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 14px;
+}
+
+.step-number {
+    background-color: #0A2C5E;
+    color: white;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    margin-right: 12px;
+}
+
+.step p {
+    margin-top: 0px;
+}
+
+/* BUTTONS */
+.detail-buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 30px;
+}
+
+.rate-button {
+    background-color: #F97316;
+    color: white;
+    border: none;
+    padding: 12px 28px;
+    border-radius: 12px;
+    cursor: pointer;
+}
+
+.cart-button {
+    background-color: #0A2C5E;
+    color: white;
+    border: none;
+    padding: 12px 28px;
+    border-radius: 12px;
+    cursor: pointer;
+}

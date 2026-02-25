@@ -1,0 +1,139 @@
+.recipes-page {
+    padding: 20px 80px;
+}
+
+.recipes-page h3 {
+    font-size: 20px;
+    color: #1F2933;
+    margin-bottom: 2px;
+}
+
+.recipes-page p {
+    color: #6B7280;
+    margin-top: 5px;
+}
+
+/* SEARCH */
+
+.recipes-search {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 20px;
+}
+
+.search-input {
+    flex: 1;
+    height: 44px;
+    border-radius: 12px;
+    border: 1px solid #E5E7EB;
+    padding: 0 16px;
+}
+
+.search-button {
+    height: 44px;
+    padding: 0 24px;
+    border-radius: 12px;
+    border: none;
+    background-color: #022855;
+    color: #FFFFFF;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+.add-recipes-button {
+    padding: 12px 24px;
+    background-color: #FE6A03;
+    border: none;
+    border-radius: 12px;
+    text-decoration: none;
+    color: #FFFFFF;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+/* GRID */
+.recipes-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px;
+}
+
+/* CARD */
+.recipe-card {
+    background: #ffffff;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+    transition: transform 0.2s ease;
+}
+
+.recipe-card:hover {
+    transform: translateY(-4px);
+}
+
+.recipe-image {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+}
+
+/* BODY */
+.recipe-body {
+    padding: 16px;
+}
+
+.recipe-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.recipe-header h4 {
+    margin: 0;
+    font-size: 16px;
+    color: #1F2933;
+}
+
+.bookmark-icon {
+    width: 20px;
+    cursor: pointer;
+}
+
+.recipe-desc {
+    font-size: 14px;
+    color: #6B7280;
+    margin: 10px 0 16px 0;
+}
+
+/* FOOTER */
+.recipe-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.rating {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.rating img {
+    width: 24px;
+}
+
+.rating span {
+    font-weight: 500;
+}
+
+.detail-button {
+    background-color: #022855;
+    color: #ffffff;
+    border: none;
+    border-radius: 10px;
+    text-decoration: none;
+    padding: 6px 16px;
+    cursor: pointer;
+    font-size: 14px;
+}

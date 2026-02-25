@@ -43,9 +43,10 @@ select {
     font-size: 14px;
 }
 
-input:disabled {
+.edit-profile-page .input:disabled {
     background-color: #F3F4F6;
     cursor: not-allowed;
+    height: 20px;
 }
 
 .button-group {

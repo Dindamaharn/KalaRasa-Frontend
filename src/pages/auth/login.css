@@ -28,8 +28,13 @@
   line-height: 1.2;
 }
 
-.extra { font-weight: 800; }
-.semi { font-weight: 600; }
+.extra {
+  font-weight: 800;
+}
+
+.semi {
+  font-weight: 600;
+}
 
 .desc {
   margin-top: 15px;
@@ -68,6 +73,7 @@
 
 .input-group {
   display: flex;
+  height: 20px;
   align-items: center;
   padding: 10px;
   margin-bottom: 15px;
@@ -144,7 +150,9 @@ input[type="password"]::-webkit-textfield-decoration-container {
 
 /* Tablet */
 @media (max-width: 1024px) {
-  .login-left { display: none; }
+  .login-left {
+    display: none;
+  }
 
   .login-card {
     width: 340px;
@@ -162,7 +170,9 @@ input[type="password"]::-webkit-textfield-decoration-container {
     flex-direction: column;
   }
 
-  .login-left { display: none; }
+  .login-left {
+    display: none;
+  }
 
   .login-right {
     width: 100%;

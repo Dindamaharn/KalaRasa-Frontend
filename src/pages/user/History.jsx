@@ -3,10 +3,13 @@ import "./history.css";
 import emptyIcon from "../../assets/icons/Empty History.svg";
 import backIcon from "../../assets/icons/back.svg";
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
+import HistoryTabs from "../../components/ui/HistoryTabs";
 
 function RiwayatUser() {
 
     const navigate = useNavigate();
+    const [activeTab, setActiveTab] = useState("Menunggu");
     const history = []; // nanti dari API
 
     return (
@@ -33,6 +36,17 @@ function RiwayatUser() {
                     <button className="search-button">
                         Cari
                     </button>
+                </div>
+
+                <div>
+                    <HistoryTabs
+                        activeTab={activeTab}
+                        setActiveTab={setActiveTab}
+                    />
+
+                    {activeTab === "Menunggu" && <div>Data menunggu...</div>}
+                    {activeTab === "Disetujui" && <div>Data disetujui...</div>}
+                    {activeTab === "Ditolak" && <div>Data ditolak...</div>}
                 </div>
 
                 {/* CONTENT */}

@@ -1,0 +1,35 @@
+.period-toggle {
+    position: relative;
+    display: inline-flex;
+    background: #E5E7EB;
+    padding: 6px;
+    border-radius: 999px;
+}
+
+.period-btn {
+    position: relative;
+    z-index: 2;
+    padding: 8px 20px;
+    border: none;
+    background: transparent;
+    border-radius: 999px;
+    cursor: pointer;
+    font-weight: 500;
+    font-size: 14px;
+    color: #6b6d6f;
+    transition: color 0.3s ease;
+}
+
+.period-btn.active {
+    color: #1F2933;
+}
+
+.period-indicator {
+    position: absolute;
+    top: 6px;
+    bottom: 6px;
+    background: #ffffff;
+    border-radius: 999px;
+    transition: all 0.3s ease;
+    z-index: 1;
+}

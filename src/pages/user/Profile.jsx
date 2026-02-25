@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { getProfile } from "../../services/authService";
 import Navbar from "../../components/layout/Navbar";
 import Exit from "../../components/modal/Exit";
 import "./Profile.css";
@@ -15,10 +16,19 @@ function ProfileUser() {
     const [openExit, setOpenExit] = useState(false);
 
     useEffect(() => {
-        const storedUser = localStorage.getItem("user");
-        if (storedUser) {
-            setUser(JSON.parse(storedUser));
-        }
+        const fetchUser = async () => {
+            try {
+                const response = await getProfile();
+                console.log("DATA PROFILE:", response.data);
+
+                setUser(response.data.user ?? response.data);
+
+            } catch (error) {
+                console.error("Gagal ambil profile:", error);
+            }
+        };
+
+        fetchUser();
     }, []);
 
     const handleLogout = () => {
@@ -26,6 +36,17 @@ function ProfileUser() {
         localStorage.removeItem("user");
         navigate("/login");
     };
+
+    if (!user) {
+        return (
+            <>
+                <Navbar />
+                <div style={{ padding: "40px" }}>
+                    Loading...
+                </div>
+            </>
+        );
+    }
 
     return (
         <>
@@ -82,7 +103,7 @@ function ProfileUser() {
                                 <img src={profileIcon} alt="Profile" />
                             </div>
 
-                            <Link to="/user/edit-profile" className="edit-button">
+                            <Link to="/edit-profile" className="edit-button">
                                 Edit Profil
                             </Link>
                         </div>
@@ -90,12 +111,12 @@ function ProfileUser() {
                     </div>
 
                     <div className="profile-menu">
-                        <Link to="/user/bookmark" className="menu-item">
+                        <Link to="/bookmark" className="menu-item">
                             <span>Markah</span>
                             <img src={bookmarkIcon} alt="Markah" />
                         </Link>
 
-                        <Link to="/user/history" className="menu-item">
+                        <Link to="/history" className="menu-item">
                             <span>Riwayat</span>
                             <img src={historyIcon} alt="Riwayat" />
                         </Link>

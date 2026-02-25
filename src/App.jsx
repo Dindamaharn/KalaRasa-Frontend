@@ -8,6 +8,7 @@ import Profile from "./pages/user/Profile";
 import Bookmark from "./pages/user/Bookmark";
 import History from "./pages/user/History";
 import Shopping from "./pages/user/Shopping";
+import EditProfile from "./pages/user/EditProfile";
 
 function App() {
   return (
@@ -16,11 +17,12 @@ function App() {
         <Route path="" element={<Splash />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
-        <Route path="/user/home" element={<Home />} />
-        <Route path="/user/profile" element={<Profile />} />
-        <Route path="/user/bookmark" element={<Bookmark />} />
-        <Route path="/user/history" element={<History />} />
-        <Route path="/user/shopping" element={<Shopping />} />
+        <Route path="/home" element={<Home />} />
+        <Route path="/profile" element={<Profile />} />
+        <Route path="/edit-profile" element={<EditProfile />} />
+        <Route path="/bookmark" element={<Bookmark />} />
+        <Route path="/history" element={<History />} />
+        <Route path="/shopping" element={<Shopping />} />
         <Route path="/admin/home" element={<HomeAdmin />} />
       </Routes>
     </BrowserRouter>

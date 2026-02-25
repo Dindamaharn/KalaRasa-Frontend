@@ -11,18 +11,18 @@ function Navbar() {
                 <img src={logo} alt="Kala Rasa Logo" className="navbar-logo" />
 
                 <div className="navbar-menu">
-                    <NavLink to="/user/home" className="nav-link">
+                    <NavLink to="/home" className="nav-link">
                         Beranda
                     </NavLink>
-                    <NavLink to="/user/recipes" className="nav-link">
+                    <NavLink to="/recipes" className="nav-link">
                         Resep
                     </NavLink>
-                    <NavLink to="/user/shopping" className="nav-link">
+                    <NavLink to="/shopping" className="nav-link">
                         Daftar Belanja
                     </NavLink>
                 </div>
 
-                <Link to="/user/profile" className="navbar-profile">
+                <Link to="/profile" className="navbar-profile">
                     <img src={profileIcon} alt="Profile" />
                 </Link>
 

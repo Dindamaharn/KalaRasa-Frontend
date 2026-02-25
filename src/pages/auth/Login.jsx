@@ -13,40 +13,40 @@ function Login() {
   const [showPassword, setShowPassword] = useState(false);
   const [errors, setErrors] = useState({});
   const navigate = useNavigate();
-  
+
   const handleLogin = async (e) => {
-  e.preventDefault();
+    e.preventDefault();
 
-  try {
-    const response = await login({
-      email,
-      password,
-    });
+    try {
+      const response = await login({
+        email,
+        password,
+      });
 
-    const user = response.data.data.user;
-    const token = response.data.data.access_token;
+      const user = response.data.data.user;
+      const token = response.data.data.access_token;
 
-    // simpan ke localStorage
-    localStorage.setItem("token", token);
-    localStorage.setItem("user", JSON.stringify(user));
+      // simpan ke localStorage
+      localStorage.setItem("token", token);
+      localStorage.setItem("user", JSON.stringify(user));
 
-    // redirect berdasarkan role
-    if (user.role === "admin") {
-      navigate("/admin/home");
-    } else {
-      navigate("/user/home");
+      // redirect berdasarkan role
+      if (user.role === "admin") {
+        navigate("/admin/home");
+      } else {
+        navigate("/home");
+      }
+
+    } catch (error) {
+      if (error.response?.status === 422) {
+        setErrors(error.response.data.errors);
+      } else if (error.response?.status === 401) {
+        setGeneralError(error.response.data.message);
+      } else {
+        console.error(error);
+      }
     }
-
-  } catch (error) {
-    if (error.response?.status === 422) {
-      setErrors(error.response.data.errors);
-    } else if (error.response?.status === 401) {
-      setGeneralError(error.response.data.message);
-    } else {
-      console.error(error);
-    }
-  }
-};
+  };
 
   return (
     <div className="login-page">
@@ -68,56 +68,56 @@ function Login() {
       <div className="login-right">
         <div className="login-card">
           <img src={logo} alt="logo" className="login-logo" />
-            <form onSubmit={handleLogin}>
-              <label>Email</label>
-              <div className="input-group">
-                <input
-                  type="email"
-                  placeholder="Masukkan Email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                />
-              </div>
-              <label>Kata Sandi</label>
-              <div className="input-group">
-                <input
-                  type={showPassword ? "text" : "password"}
-                  placeholder="Masukkan Kata Sandi"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                />
-                <img
-                  src={showPassword ? eyeIcon : eyeOffIcon}
-                  alt="toggle password"
-                  className="eye-icon"
-                  onClick={() => setShowPassword(!showPassword)}
-                />
-              </div>
-
-              {errors.email && (
-                <p className="error-text">{errors.email[0]}</p>
-              )}
-              {errors.password && (
-                <p className="error-text">{errors.password[0]}</p>
-              )}
-
-              <p className="forgot">Lupa Kata Sandi?</p>
-
-              <button className="login-btn" type="submit">
-                  Masuk
-              </button>
-
-              <p className="register-text-to-page">
-                Belum Memiliki Akun?{" "}
-                <Link to="/register" className="register-link">
-                  Daftar
-                </Link>
-              </p>
-              </form>
-              </div>
+          <form onSubmit={handleLogin}>
+            <label>Email</label>
+            <div className="input-group">
+              <input
+                type="email"
+                placeholder="Masukkan Email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              />
             </div>
-          </div>
-        );
+            <label>Kata Sandi</label>
+            <div className="input-group">
+              <input
+                type={showPassword ? "text" : "password"}
+                placeholder="Masukkan Kata Sandi"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+              />
+              <img
+                src={showPassword ? eyeIcon : eyeOffIcon}
+                alt="toggle password"
+                className="eye-icon"
+                onClick={() => setShowPassword(!showPassword)}
+              />
+            </div>
+
+            {errors.email && (
+              <p className="error-text">{errors.email[0]}</p>
+            )}
+            {errors.password && (
+              <p className="error-text">{errors.password[0]}</p>
+            )}
+
+            <p className="forgot">Lupa Kata Sandi?</p>
+
+            <button className="login-btn" type="submit">
+              Masuk
+            </button>
+
+            <p className="register-text-to-page">
+              Belum Memiliki Akun?{" "}
+              <Link to="/register" className="register-link">
+                Daftar
+              </Link>
+            </p>
+          </form>
+        </div>
+      </div>
+    </div>
+  );
 }
 
 export default Login;

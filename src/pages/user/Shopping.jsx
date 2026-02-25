@@ -1,7 +1,6 @@
 import Navbar from "../../components/layout/Navbar";
 import "./shopping.css";
 import emptyIcon from "../../assets/icons/Empty List.svg";
-import { useNavigate } from "react-router-dom";
 
 function ShoppingUser() {
 

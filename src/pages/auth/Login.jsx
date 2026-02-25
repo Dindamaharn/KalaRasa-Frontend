@@ -32,9 +32,9 @@ function Login() {
 
     // redirect berdasarkan role
     if (user.role === "admin") {
-      navigate("/home-admin");
+      navigate("/admin/home");
     } else {
-      navigate("/home");
+      navigate("/user/home");
     }
 
   } catch (error) {

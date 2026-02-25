@@ -1,7 +1,7 @@
 import { NavLink, Link } from "react-router-dom";
 import logo from "../../assets/images/logo.png";
 import profileIcon from "../../assets/icons/user.svg";
-import "./Navbar.css";
+import "./navbar.css";
 
 function Navbar() {
     return (
@@ -11,18 +11,18 @@ function Navbar() {
                 <img src={logo} alt="Kala Rasa Logo" className="navbar-logo" />
 
                 <div className="navbar-menu">
-                    <NavLink to="/home" className="nav-link">
+                    <NavLink to="/user/home" className="nav-link">
                         Beranda
                     </NavLink>
-                    <NavLink to="/recipes" className="nav-link">
+                    <NavLink to="/user/recipes" className="nav-link">
                         Resep
                     </NavLink>
-                    <NavLink to="/shopping" className="nav-link">
+                    <NavLink to="/user/shopping" className="nav-link">
                         Daftar Belanja
                     </NavLink>
                 </div>
 
-                <Link to="/profile" className="navbar-profile">
+                <Link to="/user/profile" className="navbar-profile">
                     <img src={profileIcon} alt="Profile" />
                 </Link>
 

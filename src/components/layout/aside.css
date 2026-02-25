@@ -1,0 +1,68 @@
+/* SIDEBAR CONTAINER */
+.aside {
+    display: flex;
+    flex-direction: column;
+
+    width: 260px;
+    height: 1024px;
+
+    padding: 24px 20px;
+    background: #FFFFFF;
+}
+
+/* PROFILE SECTION */
+.profile {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    margin-bottom: 40px;
+}
+
+.avatar {
+    width: 36px;
+    height: 36px;
+}
+
+.logo {
+    height: 28px;
+}
+
+/* MENU WRAPPER */
+.aside-menu {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+
+/* MENU ITEM */
+.menu {
+    display: flex;
+    align-items: center;
+
+    height: 44px;
+    padding: 0 14px;
+
+    border: none;
+    border-radius: 10px;
+    background: none;
+
+    font-size: 16px;
+    font-weight: 600;
+    color: #022855;
+    text-decoration: none;
+}
+
+
+/* ACTIVE STATE */
+.menu.active {
+    background: #E5E7EB;
+}
+
+
+/* LOGOUT BUTTON */
+.logout {
+    margin-top: auto;
+    color: #DC2626;
+}

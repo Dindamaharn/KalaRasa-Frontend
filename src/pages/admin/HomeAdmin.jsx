@@ -3,13 +3,17 @@ import AsideAdmin from "../../components/layout/Aside";
 import Pagination from "../../components/ui/Pagination";
 import "./homeAdmin.css";
 
+// import icon
+import usersIcon from "../../assets/icons/group-person.svg";
+import recipeIcon from "../../assets/icons/chef-hat.svg";
+import submissionIcon from "../../assets/icons/approval-list.svg";
+
 function HomeAdmin() {
   const [currentPage, setCurrentPage] = useState(1);
-  const totalPages = 10; // sesuaikan dengan total data dari backend nanti
+  const totalPages = 10; 
 
   const handlePageChange = (page) => {
     setCurrentPage(page);
-    // nanti di sini bisa fetch data berdasarkan page
   };
 
   return (
@@ -20,21 +24,30 @@ function HomeAdmin() {
         <h1>Beranda</h1>
 
         <div className="cards">
-          <div className="card">
-            <p>Total Pengguna</p>
-            <h2>120</h2>
-          </div>
+  <div className="card">
+    <div className="card-text">
+      <p>Total Pengguna</p>
+      <h2>120</h2>
+    </div>
+    <img src={usersIcon} alt="" className="card-icon" />
+  </div>
 
-          <div className="card">
-            <p>Total Resep</p>
-            <h2>1025</h2>
-          </div>
+  <div className="card">
+    <div className="card-text">
+      <p>Total Resep</p>
+      <h2>1025</h2>
+    </div>
+    <img src={recipeIcon} alt="" className="card-icon" />
+  </div>
 
-          <div className="card">
-            <p>Total Pengajuan</p>
-            <h2>50</h2>
-          </div>
-        </div>
+  <div className="card">
+    <div className="card-text">
+      <p>Total Pengajuan</p>
+      <h2>50</h2>
+    </div>
+    <img src={submissionIcon} alt="" className="card-icon" />
+  </div>
+</div>
 
         <div className="table-box">
           <h3>Antrian Pengajuan Resep</h3>
@@ -65,11 +78,13 @@ function HomeAdmin() {
             </tbody>
           </table>
 
-          <Pagination
-            currentPage={currentPage}
-            totalPages={totalPages}
-            onPageChange={handlePageChange}
-          />
+          <div className="pagination-container">
+            <Pagination
+              currentPage={currentPage}
+              totalPages={totalPages}
+              onPageChange={handlePageChange}
+            />
+          </div>
         </div>
       </main>
     </div>

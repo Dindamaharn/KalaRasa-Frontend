@@ -11,6 +11,8 @@ import Shopping from "./pages/user/Shopping";
 import Recipes from "./pages/user/Recipes";
 import DetailRecipes from "./pages/user/DetailRecipes";
 import EditProfile from "./pages/user/EditProfile";
+import AddRecipes from "./pages/user/AddRecipes";
+import AddShopping from "./pages/user/AddShopping";
 
 function App() {
   return (
@@ -27,6 +29,8 @@ function App() {
         <Route path="/shopping" element={<Shopping />} />
         <Route path="/recipes" element={<Recipes />} />
         <Route path="/detail-recipes" element={<DetailRecipes />} />
+        <Route path="/add-recipes" element={<AddRecipes />} />
+        <Route path="/add-shopping" element={<AddShopping />} />
         <Route path="/admin/home" element={<HomeAdmin />} />
       </Routes>
     </BrowserRouter>

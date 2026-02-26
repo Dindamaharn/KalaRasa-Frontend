@@ -1,0 +1,108 @@
+.history-card {
+    display: flex;
+    justify-content: space-between;
+    gap: 24px;
+    padding: 20px;
+    border-radius: 16px;
+    background-color: #FFFFFF;
+    border: 1px solid #E5E7EB;
+    margin-bottom: 24px;
+}
+
+/* LEFT */
+.card-left img {
+    width: 160px;
+    height: 120px;
+    object-fit: cover;
+    border-radius: 12px;
+}
+
+/* MIDDLE */
+.card-middle {
+    flex: 1;
+}
+
+.recipe-title {
+    font-weight: 600;
+    font-size: 18px;
+    margin-bottom: 8px;
+    margin-top: 0;
+}
+
+.recipe-desc {
+    color: #6B7280;
+    margin-bottom: 12px;
+    line-height: 1.5;
+}
+
+.card-info-row {
+    display: flex;
+    gap: 24px;
+    margin-bottom: 0;
+}
+
+.card-info {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #6B7280;
+    font-size: 14px;
+}
+
+.card-info img {
+    width: 16px;
+}
+
+/* RIGHT */
+.card-right {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-end;
+}
+
+.status {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-weight: 500;
+    color: #16A34A;
+}
+
+.status img {
+    width: 16px;
+}
+
+/* BUTTONS */
+.button-group {
+    display: flex;
+    gap: 12px;
+    margin-top: 2px;
+}
+
+.primary-btn {
+    background-color: #022855;
+    color: #FFFFFF;
+    border: none;
+    padding: 8px 18px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-weight: 500;
+}
+
+.secondary-btn {
+    background-color: #E5E7EB;
+    border: none;
+    padding: 8px 18px;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.danger-btn {
+    background-color: #DC2626;
+    color: #FFFFFF;
+    border: none;
+    padding: 8px 18px;
+    border-radius: 10px;
+    cursor: pointer;
+}

@@ -1,5 +1,6 @@
 import Navbar from "../../components/layout/Navbar";
 import "./shopping.css";
+import { Link } from "react-router-dom";
 import emptyIcon from "../../assets/icons/Empty List.svg";
 
 function ShoppingUser() {
@@ -39,9 +40,9 @@ function ShoppingUser() {
 
                         <h3>Belum Ada Daftar Belanja</h3>
                         <p>Anda belum menambahkan daftar belanja.</p>
-                        <button className="add-button">
+                        <Link to="/add-shopping" className="add-button">
                             Tambahkan Daftar Belanja
-                        </button>
+                        </Link>
                     </div>
                 )}
 

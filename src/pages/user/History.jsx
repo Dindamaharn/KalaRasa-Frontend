@@ -5,6 +5,9 @@ import backIcon from "../../assets/icons/back.svg";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import HistoryTabs from "../../components/ui/HistoryTabs";
+import WaitingCard from "../../components/ui/WaitingCard";
+import ApprovedCard from "../../components/ui/ApprovedCard";
+import RejectedCard from "../../components/ui/RejectedCard";
 
 function RiwayatUser() {
 
@@ -44,9 +47,9 @@ function RiwayatUser() {
                         setActiveTab={setActiveTab}
                     />
 
-                    {activeTab === "Menunggu" && <div>Data menunggu...</div>}
-                    {activeTab === "Disetujui" && <div>Data disetujui...</div>}
-                    {activeTab === "Ditolak" && <div>Data ditolak...</div>}
+                    {activeTab === "Menunggu" && <WaitingCard />}
+                    {activeTab === "Disetujui" && <ApprovedCard />}
+                    {activeTab === "Ditolak" && <RejectedCard />}
                 </div>
 
                 {/* CONTENT */}

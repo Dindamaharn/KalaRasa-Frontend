@@ -2,12 +2,11 @@
 .aside {
     display: flex;
     flex-direction: column;
-
     width: 260px;
-    height: 1024px;
-
+    min-height: 100vh;
     padding: 24px 20px;
     background: #FFFFFF;
+    transition: transform 0.3s ease;
 }
 
 /* PROFILE SECTION */
@@ -15,7 +14,6 @@
     display: flex;
     align-items: center;
     gap: 12px;
-
     margin-bottom: 40px;
 }
 
@@ -36,34 +34,87 @@
     gap: 8px;
 }
 
-
 /* MENU ITEM */
 .menu {
     display: flex;
     align-items: center;
-
     height: 44px;
     padding: 0 14px;
-
     border: none;
     border-radius: 10px;
     background: none;
-
     font-size: 16px;
     font-weight: 600;
     color: #022855;
     text-decoration: none;
 }
 
-
 /* ACTIVE STATE */
 .menu.active {
     background: #E5E7EB;
 }
 
-
 /* LOGOUT BUTTON */
 .logout {
     margin-top: auto;
     color: #DC2626;
+}
+
+/* tombol hamburger */
+.menu-toggle {
+    display: none;
+    position: fixed;
+    top: 16px;
+    left: 16px;
+    z-index: 1100;
+    background: #ffffff;
+    border: none;
+    font-size: 22px;
+    padding: 8px 12px;
+    border-radius: 8px;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+/* overlay */
+.sidebar-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.25);
+    z-index: 900;
+}
+
+/* RESPONSIVE */
+/* Tablet */
+@media (max-width: 1024px) {
+    .aside {
+        width: 220px;
+        padding: 20px 16px;
+    }
+
+    .menu {
+        font-size: 15px;
+    }
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+    .menu-toggle {
+        display: block;
+    }
+
+    .aside {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 240px;
+        height: 100vh;
+        transform: translateX(-100%);
+        z-index: 1000;
+        box-shadow: 6px 0 24px rgba(0,0,0,0.08);
+    }
+
+    .aside.open {
+        transform: translateX(0);
+    }
 }

@@ -34,15 +34,12 @@ function App() {
         <Route path="/history" element={<History />} />
         <Route path="/shopping" element={<Shopping />} />
         <Route path="/recipes" element={<Recipes />} />
-<<<<<<< HEAD
         <Route path="/recipes/:id" element={<DetailRecipes />} />
 
         {/* Admin */}
-=======
         <Route path="/detail-recipes" element={<DetailRecipes />} />
         <Route path="/add-recipes" element={<AddRecipes />} />
         <Route path="/add-shopping" element={<AddShopping />} />
->>>>>>> 64baf4c496b36146aeedbb734ab2b91964367c07
         <Route path="/admin/home" element={<HomeAdmin />} />
         <Route path="/admin/users" element={<UsersAdmin />} />
         <Route path="/admin/users/:id" element={<DetailUsers />} />

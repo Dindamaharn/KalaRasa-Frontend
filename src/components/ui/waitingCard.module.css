@@ -1,5 +1,4 @@
-/* CONTAINER */
-.history-card {
+.historyCard {
     display: flex;
     justify-content: space-between;
     gap: 24px;
@@ -11,33 +10,31 @@
     margin-top: 20px;
 }
 
-/* LEFT */
-.card-left img {
+.cardLeft img {
     width: 160px;
     height: 120px;
     object-fit: cover;
     border-radius: 12px;
 }
 
-/* MIDDLE */
-.card-middle {
+.cardMiddle {
     flex: 1;
 }
 
-.recipe-title {
+.recipeTitle {
     font-weight: 600;
     font-size: 18px;
     margin-bottom: 8px;
     margin-top: 0;
 }
 
-.recipe-desc {
+.recipeDesc {
     color: #6B7280;
     margin-bottom: 12px;
     line-height: 1.5;
 }
 
-.card-info {
+.cardInfo {
     display: flex;
     align-items: center;
     gap: 8px;
@@ -46,32 +43,37 @@
     font-size: 14px;
 }
 
-.card-info img {
+.cardInfo img {
     width: 16px;
 }
 
-/* RIGHT */
-.card-right {
+.cardRight {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     align-items: flex-end;
 }
 
-.status {
-    display: flex;
+.statusBadge {
+    display: inline-flex;
     align-items: center;
     gap: 6px;
+    padding: 6px 12px;
+    border-radius: 10px;
+    font-size: 13px;
     font-weight: 500;
-    color: #F59E0B;
 }
 
-.status img {
+.waiting {
+    background-color: #fef3c7;
+    color: #d97706;
+}
+
+.waitIcon {
     width: 16px;
 }
 
-/* BUTTON */
-.primary-btn {
+.primaryBtn {
     background-color: #022855;
     color: #FFFFFF;
     border: none;

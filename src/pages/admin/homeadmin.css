@@ -24,12 +24,14 @@
   padding: 24px;
   overflow: hidden;
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.04);
-  z-index: 1; /* layer card normal */
+  z-index: 1;
+  /* layer card normal */
 }
 
 .card-text {
   position: relative;
-  z-index: 2; /* teks selalu di atas icon */
+  z-index: 2;
+  /* teks selalu di atas icon */
 }
 
 .card-icon {
@@ -37,8 +39,10 @@
   right: 20px;
   bottom: 15px;
   width: 100px;
-  z-index: 0; /* icon paling belakang */
-  pointer-events: none; /* biar tidak ganggu klik */
+  z-index: 0;
+  /* icon paling belakang */
+  pointer-events: none;
+  /* biar tidak ganggu klik */
 }
 
 .cards {
@@ -127,8 +131,8 @@ tbody tr:hover {
   font-size: 13px;
   cursor: pointer;
   transition: 0.2s;
-  color: #1F2933;        
-  text-decoration: none; 
+  color: #1F2933;
+  text-decoration: none;
 }
 
 /* Pagination */

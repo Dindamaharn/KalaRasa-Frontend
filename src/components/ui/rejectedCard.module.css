@@ -1,4 +1,4 @@
-.history-card {
+.historyCard {
     display: flex;
     justify-content: space-between;
     gap: 24px;
@@ -7,10 +7,11 @@
     background-color: #FFFFFF;
     border: 1px solid #E5E7EB;
     margin-bottom: 24px;
+    margin-top: 20px;
 }
 
 /* LEFT */
-.card-left img {
+.cardLeft img {
     width: 160px;
     height: 120px;
     object-fit: cover;
@@ -18,89 +19,89 @@
 }
 
 /* MIDDLE */
-.card-middle {
+.cardMiddle {
     flex: 1;
 }
 
-.recipe-title {
+.recipeTitle {
     font-weight: 600;
     font-size: 18px;
     margin-bottom: 8px;
     margin-top: 0;
 }
 
-.recipe-desc {
+.recipeDesc {
     color: #6B7280;
     margin-bottom: 12px;
     line-height: 1.5;
 }
 
-.card-info-row {
-    display: flex;
-    gap: 24px;
-    margin-bottom: 0;
-}
-
-.card-info {
+.cardInfo {
     display: flex;
     align-items: center;
     gap: 8px;
+    margin-bottom: 16px;
     color: #6B7280;
     font-size: 14px;
 }
 
-.card-info img {
+.cardInfo img {
     width: 16px;
 }
 
+.rejectReason {
+    background-color: #FEE2E2;
+    color: #991B1B;
+    padding: 12px;
+    border-radius: 10px;
+    font-size: 14px;
+    margin-top: 8px;
+}
+
 /* RIGHT */
-.card-right {
+.cardRight {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     align-items: flex-end;
 }
 
-.status {
-    display: flex;
+.statusBadge {
+    display: inline-flex;
     align-items: center;
     gap: 6px;
+    padding: 6px 12px;
+    border-radius: 10px;
+    font-size: 13px;
     font-weight: 500;
-    color: #16A34A;
 }
 
-.status img {
+.rejected {
+    background-color: #FEE2E2;
+    color: #DC2626;
+}
+
+.failIcon {
     width: 16px;
 }
 
-/* BUTTONS */
-.button-group {
+.buttonGroupVertical {
     display: flex;
-    gap: 12px;
-    margin-top: 2px;
+    flex-direction: column;
+    gap: 8px;
 }
 
-.primary-btn {
-    background-color: #022855;
-    color: #FFFFFF;
-    border: none;
-    padding: 8px 18px;
-    border-radius: 10px;
-    cursor: pointer;
-    font-weight: 500;
-}
-
-.secondary-btn {
-    background-color: #E5E7EB;
-    border: none;
-    padding: 8px 18px;
-    border-radius: 10px;
-    cursor: pointer;
-}
-
-.danger-btn {
+.dangerBtn {
     background-color: #DC2626;
     color: #FFFFFF;
+    border: none;
+    padding: 8px 18px;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.secondaryBtn {
+    background-color: #E5E7EB;
     border: none;
     padding: 8px 18px;
     border-radius: 10px;

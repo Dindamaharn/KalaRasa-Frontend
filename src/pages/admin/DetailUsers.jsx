@@ -69,32 +69,32 @@ function DetailUsers() {
           <div className="user-grid">
             <div className="form-group">
               <label>Nama Lengkap</label>
-              <input type="text" value={user.nama} readOnly />
+              <input type="text" value={user.nama} disabled />
             </div>
 
             <div className="form-group">
               <label>Total Poin</label>
-              <input type="text" value={user.poin} readOnly />
+              <input type="text" value={user.poin} disabled />
             </div>
 
             <div className="form-group">
               <label>No Telp</label>
-              <input type="text" value={user.telp} readOnly />
+              <input type="text" value={user.telp} disabled />
             </div>
 
             <div className="form-group">
               <label>Alamat Email</label>
-              <input type="text" value={user.email} readOnly />
+              <input type="text" value={user.email} disabled />
             </div>
 
             <div className="form-group">
               <label>Jenis Kelamin</label>
-              <input type="text" value={user.gender} readOnly />
+              <input type="text" value={user.gender} disabled />
             </div>
 
             <div className="form-group">
               <label>Tanggal Lahir</label>
-              <input type="text" value={user.lahir} readOnly />
+              <input type="text" value={user.lahir} disabled />
             </div>
           </div>
 

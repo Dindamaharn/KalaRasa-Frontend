@@ -39,7 +39,7 @@ function SubmissionDetail() {
             <img
               src={recipe.image}
               alt={recipe.nama}
-              className="recipe-image"
+              className="recipe-image-admin"
             />
 
             {/* INFO */}

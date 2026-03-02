@@ -96,7 +96,7 @@ function RecipesAdmin() {
             Pengajuan Resep
           </Link>
 
-          <Link to="/admin/add-recipe" className="btn-primary">
+          <Link to="/admin/add-recipe" className="btn-primary-admin">
             Tambah Resep Baru
           </Link>
         </div>

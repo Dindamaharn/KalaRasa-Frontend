@@ -55,7 +55,7 @@ body {
 }
 
 /* IMAGE (RESPONSIVE FIX) */
-.recipe-image {
+.-admin {
     width: 100%;
     aspect-ratio: 2 / 1;
     object-fit: cover;
@@ -181,7 +181,7 @@ body {
         padding: 20px;
     }
 
-    .recipe-image {
+    .recipe-image-admin {
         aspect-ratio: 16 / 9;
     }
 }

@@ -103,7 +103,7 @@ function RecipesAdmin() {
 
         <div className="recipes-list">
           {currentData.map((recipe) => (
-            <div className="recipe-card" key={recipe.id}>
+            <div className="recipe-card-admin" key={recipe.id}>
               <img src={recipe.image} alt={recipe.nama} />
 
               <div className="recipe-info">

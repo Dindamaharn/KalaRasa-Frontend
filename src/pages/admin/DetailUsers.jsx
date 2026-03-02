@@ -67,32 +67,32 @@ function DetailUsers() {
         <div className="detail-card">
           {/* USER INFO */}
           <div className="user-grid">
-            <div className="form-group">
+            <div className="form-group-detail-user">
               <label>Nama Lengkap</label>
               <input type="text" value={user.nama} disabled />
             </div>
 
-            <div className="form-group">
+            <div className="form-group-detail-user">
               <label>Total Poin</label>
               <input type="text" value={user.poin} disabled />
             </div>
 
-            <div className="form-group">
+            <div className="form-group-detail-user">
               <label>No Telp</label>
               <input type="text" value={user.telp} disabled />
             </div>
 
-            <div className="form-group">
+            <div className="form-group-detail-user">
               <label>Alamat Email</label>
               <input type="text" value={user.email} disabled />
             </div>
 
-            <div className="form-group">
+            <div className="form-group-detail-user">
               <label>Jenis Kelamin</label>
               <input type="text" value={user.gender} disabled />
             </div>
 
-            <div className="form-group">
+            <div className="form-group-detail-user">
               <label>Tanggal Lahir</label>
               <input type="text" value={user.lahir} disabled />
             </div>
@@ -118,7 +118,7 @@ function DetailUsers() {
                     <td>{item.nama}</td>
                     <td>{item.tanggal}</td>
                     <td>
-                      <span className={`status-admin status-${item.status.toLowerCase()}`}>
+                      <span className={`status-${item.status.toLowerCase()}`}>
                         {item.status}
                       </span>
                     </td>

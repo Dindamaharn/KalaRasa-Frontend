@@ -57,7 +57,7 @@
     margin-bottom: 25px;
 }
 
-.form-group input {
+.form-group-detail-user input {
     width: 100%;
     padding: 10px 12px;
     border-radius: 8px;
@@ -65,7 +65,7 @@
     font-size: 14px;
 }
 
-.form-group input:disabled {
+.form-group-detail-user input:disabled {
     background-color: #ffffff;
     color: #111827;
     opacity: 1;
@@ -113,18 +113,30 @@
 .status-menunggu {
     background: #ffe7c2;
     color: #ff8a00;
+    padding: 6px 12px;
+    border-radius: 10px;
+    font-size: 13px;
+    font-weight: 600;
 }
 
 /* DISETUJUI */
 .status-disetujui {
     background: #d1fae5;
     color: #059669;
+    padding: 6px 12px;
+    border-radius: 10px;
+    font-size: 13px;
+    font-weight: 600;
 }
 
 /* DITOLAK */
 .status-ditolak {
     background: #fee2e2;
     color: #dc2626;
+    padding: 6px 12px;
+    border-radius: 10px;
+    font-size: 13px;
+    font-weight: 600;
 }
 
 /* BUTTON DETAIL */

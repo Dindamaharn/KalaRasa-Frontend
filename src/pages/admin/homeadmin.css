@@ -113,7 +113,7 @@ tbody tr:hover {
 }
 
 /* Status badge */
-.status {
+.status-admin {
   background: #fef3c7;
   color: #d97706;
   padding: 6px 12px;

@@ -1,0 +1,164 @@
+.reject-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.25);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 999;
+}
+
+.reject-card {
+    width: 640px;
+    height: 317px;
+
+    background: #ffffff;
+    border-radius: 16px;
+    padding: 32px;
+    position: relative;
+    animation: popupFade 0.25s ease;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+}
+
+.reject-close {
+    position: absolute;
+    right: 20px;
+    top: 20px;
+    width: 18px;
+    cursor: pointer;
+}
+
+.reject-title {
+    font-size: 24px;
+    font-weight: 600;
+    margin-bottom: 6px;
+    color: #1F2933;
+}
+
+.reject-subtitle {
+    font-size: 16px;
+    color: #6B7280;
+    margin-bottom: 20px;
+}
+
+.reject-textarea {
+    width: 100%;
+    height: 110px;
+    color: #6B7280;
+    border: 1px solid #6B7280;
+    border-radius: 8px;
+    padding: 12px;
+    font-size: 16px;
+    resize: none;
+    outline: none;
+    margin-bottom: 24px;
+    font-family: inherit;
+    box-sizing: border-box; 
+}
+
+.reject-textarea:focus {
+    border-color: #022855;
+}
+
+.reject-button {
+    background: #022855;
+    color: white;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+    float: right;
+    transition: 0.2s ease;
+}
+
+.reject-button:hover {
+    background: #0c2348;
+}
+
+@keyframes popupFade {
+    from {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+
+/* TABLET */
+@media (max-width: 1024px) {
+  .reject-card {
+    width: 90%;
+    height: auto;
+    padding: 28px;
+  }
+}
+
+/* MOBILE */
+@media (max-width: 768px) {
+    .reject-card {
+        width: 92%;
+        height: auto;
+        padding: 24px;
+    }
+
+    .reject-title {
+        font-size: 20px;
+    }
+
+    .reject-subtitle {
+        font-size: 14px;
+    }
+
+    .reject-textarea {
+        height: 100px;
+        font-size: 14px;
+    }
+
+    .reject-button {
+        width: 100%;
+        float: none;
+    }
+    }
+
+    /* SMALL MOBILE */
+    @media (max-width: 480px) {
+    .reject-overlay {
+        padding: 16px;
+    }
+
+    .reject-card {
+        width: 100%;
+        border-radius: 14px;
+        padding: 20px;
+    }
+
+    .reject-title {
+        font-size: 18px;
+    }
+
+    .reject-subtitle {
+        font-size: 13px;
+    }
+
+    .reject-textarea {
+        height: 90px;
+    }
+
+    .reject-close {
+        top: 16px;
+        right: 16px;
+        width: 16px;
+    }
+
+    .reject-button {
+        font-size: 14px;
+        padding: 12px;
+    }
+}

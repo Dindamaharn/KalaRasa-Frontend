@@ -47,7 +47,7 @@ function Aside() {
                 </NavLink>
 
                 <NavLink
-                    to="/admin/resep"
+                    to="/admin/recipes"
                     className={({ isActive }) =>
                         isActive ? "menu active" : "menu"
                     }

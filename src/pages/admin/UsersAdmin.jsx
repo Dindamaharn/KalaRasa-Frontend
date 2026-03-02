@@ -63,7 +63,7 @@ function UsersAdmin() {
             <div className="users-header">
             <h1>Pengguna</h1>
 
-            <div className="search-box">
+            <div className="search-box-admin">
                 <input
                 type="text"
                 placeholder="Cari berdasarkan nama atau email"

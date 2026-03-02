@@ -22,13 +22,13 @@
   margin-bottom: 16px;
 }
 
-.search-box {
+.search-box-admin {
   display: flex;
   gap: 8px;
 }
 
-.search-box input {
-  width: 260px;
+.search-box-admin input {
+  width: 300px;
   padding: 10px 14px;
   border-radius: 10px;
   border: 1px solid #e5e7eb;
@@ -36,7 +36,7 @@
   font-size: 14px;
 }
 
-.search-box button {
+.search-box-admin button {
   padding: 10px 16px;
   border-radius: 10px;
   border: 1px solid #E5E7EB;

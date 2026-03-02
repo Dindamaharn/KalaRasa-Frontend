@@ -16,6 +16,10 @@ import DetailRecipes from "./pages/user/DetailRecipes";
 import EditProfile from "./pages/user/EditProfile";
 import AddRecipes from "./pages/user/AddRecipes";
 import AddShopping from "./pages/user/AddShopping";
+import RecipesAdmin from "./pages/admin/RecipesAdmin";
+import AddRecipesAdmin from "./pages/admin/AddRecipes";
+import SubmissionRecipes from "./pages/admin/SubmissionRecipes";
+import UpdateRecipeAdmin from "./pages/admin/UpdateRecipes";
 
 function App() {
   return (
@@ -35,15 +39,19 @@ function App() {
         <Route path="/shopping" element={<Shopping />} />
         <Route path="/recipes" element={<Recipes />} />
         <Route path="/recipes/:id" element={<DetailRecipes />} />
-
-        {/* Admin */}
         <Route path="/detail-recipes" element={<DetailRecipes />} />
         <Route path="/add-recipes" element={<AddRecipes />} />
         <Route path="/add-shopping" element={<AddShopping />} />
+
+        {/* Admin */}
         <Route path="/admin/home" element={<HomeAdmin />} />
         <Route path="/admin/users" element={<UsersAdmin />} />
         <Route path="/admin/users/:id" element={<DetailUsers />} />
+        <Route path="/admin/recipes" element={<RecipesAdmin />} />
         <Route path="/admin/submissions/:id" element={<SubmissionDetail />} />
+        <Route path="/admin/submissions" element={<SubmissionRecipes />} />
+        <Route path="/admin/add-recipe" element={<AddRecipesAdmin />} />
+        <Route path="/admin/recipes/:id" element={<UpdateRecipeAdmin />} />
       </Routes>
     </BrowserRouter>
   );

@@ -1,0 +1,283 @@
+.admin-update-page {
+    display: flex;
+    background-color: #f4f6f9;
+    min-height: 100vh;
+}
+
+.admin-update-content {
+    flex: 1;
+    padding: 40px 60px;
+    display: flex;
+    justify-content: center;
+}
+
+/* LAYOUT */
+.admin-update-layout {
+    display: flex;
+    align-items: flex-start;
+    gap: 24px;
+    width: 100%;
+    max-width: 1250px;
+}
+
+/* BACK BUTTON */
+.admin-update-back-btn {
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    border: 1px solid #e5e7eb;
+    background: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    margin-top: 6px;
+}
+
+.admin-update-back-btn img {
+    width: 18px;
+}
+
+/* CARD */
+.admin-update-card {
+    background: white;
+    padding: 42px 48px;
+    border-radius: 20px;
+    box-shadow: 0 10px 28px rgba(0, 0, 0, 0.05);
+    width: 100%;
+    max-width: 1100px;
+}
+
+/* SPACING SEMUA ELEMENT DALAM CARD */
+.admin-update-card > * {
+    margin-bottom: 18px;
+}
+
+/* TITLE */
+.admin-update-card h2 {
+    color: #1F2933;
+    font-size: 26px;
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+
+/* LABEL */
+.admin-update-card label {
+    display: block;
+    color: #6B7280;
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 6px;
+}
+
+/* INPUT */
+.admin-update-card input,
+.admin-update-card textarea,
+.admin-update-card select {
+    width: 100%;
+    padding: 13px 15px;
+    border-radius: 12px;
+    border: 1px solid #e5e7eb;
+    font-size: 14px;
+    transition: 0.2s;
+}
+
+.admin-update-card input:focus,
+.admin-update-card textarea:focus,
+.admin-update-card select:focus {
+    outline: none;
+    border-color: #022855;
+}
+
+.admin-update-card textarea {
+    height: 110px;
+    resize: none;
+}
+
+/* UPLOAD */
+.admin-update-upload-box {
+    border: 2px dashed #d1d5db;
+    border-radius: 16px;
+    padding: 40px;
+    text-align: center;
+    cursor: pointer;
+}
+
+.admin-update-upload-box img {
+    width: 80px;
+    border-radius: 10px;
+    margin-bottom: 10px;
+}
+
+.admin-update-change-photo {
+    display: block;
+    margin-top: 8px;
+    color: #6b7280;
+    font-size: 13px;
+}
+
+/* ROW 3 INPUT */
+.admin-update-row-3 {
+    display: flex;
+    gap: 18px;
+}
+
+.admin-update-row-3 > div {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+/* SECTION HEADER */
+.admin-update-section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 25px;
+}
+
+.admin-update-section-header span {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    color: #f97316;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 16px;
+}
+
+.admin-update-section-header img {
+    width: 16px;
+}
+
+/* INGREDIENT */
+.admin-update-ingredient-row {
+    display: flex;
+    gap: 14px;
+    margin-top: 6px;
+}
+
+.admin-update-ingredient-row input {
+    flex: 1;
+}
+
+/* STEP */
+.admin-update-step-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-top: 6px;
+}
+
+.admin-update-step-number {
+    font-weight: 600;
+    min-width: 22px;
+    color: #6B7280;
+    font-size: 16px;
+}
+
+/* BUTTON */
+.admin-update-buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 35px;
+}
+
+.admin-update-cancel {
+    background: #DDDDDD;
+    color: #1F2933;
+    border: none;
+    padding: 12px 22px;
+    border-radius: 12px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.admin-update-submit {
+    background: #022855;
+    color: white;
+    border: none;
+    padding: 12px 28px;
+    border-radius: 12px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 700;
+}
+
+/* ================= RESPONSIVE ================= */
+
+/* TABLET */
+@media (max-width: 1024px) {
+    .admin-update-content {
+        padding: 30px;
+    }
+
+    .admin-update-layout {
+        flex-direction: column;
+    }
+
+    .admin-update-card {
+        padding: 34px;
+    }
+
+    .admin-update-row-3 {
+        flex-direction: column;
+    }
+}
+
+/* MOBILE */
+@media (max-width: 768px) {
+    .admin-update-content {
+        padding: 20px;
+    }
+
+    .admin-update-card {
+        padding: 24px;
+        border-radius: 16px;
+    }
+
+    .admin-update-card h2 {
+        font-size: 20px;
+    }
+
+    .admin-update-upload-box {
+        padding: 30px 20px;
+    }
+
+    .admin-update-ingredient-row {
+        flex-direction: column;
+    }
+
+    .admin-update-step-row {
+        align-items: flex-start;
+    }
+
+    .admin-update-buttons {
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    .admin-update-cancel,
+    .admin-update-submit {
+        width: 100%;
+    }
+}
+
+/* HP KECIL */
+@media (max-width: 480px) {
+    .admin-update-card {
+        padding: 20px;
+    }
+
+    .admin-update-card label {
+        font-size: 14px;
+    }
+
+    .admin-update-card input,
+    .admin-update-card textarea,
+    .admin-update-card select {
+        font-size: 13px;
+        padding: 11px 12px;
+    }
+}

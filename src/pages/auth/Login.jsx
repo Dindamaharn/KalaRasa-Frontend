@@ -20,15 +20,18 @@ function Login() {
       const response = await login({
         email,
         password,
+        device_uuid: crypto.randomUUID(),
+        device_name: "react-web",
+        platform: "web",
       });
 
-      const token = response.data.data.access_token;
+      const token = response.data.access_token;
 
-      // ✅ simpan token saja
+      // simpan token & user
       localStorage.setItem("token", token);
+      localStorage.setItem("user", JSON.stringify(response.data.user));
 
       navigate("/home");
-
     } catch (error) {
       if (error.response?.status === 422) {
         setErrors(error.response.data.errors);
@@ -37,7 +40,7 @@ function Login() {
           email: ["Email atau password salah"],
         });
       } else {
-        console.error(error);
+        console.error("Login error:", error);
       }
     }
   };

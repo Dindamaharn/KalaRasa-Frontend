@@ -49,38 +49,44 @@ function getDeviceName() {
 }
 
   const handleLogin = async (e) => {
-    e.preventDefault();
+  e.preventDefault();
 
-    try {
-      const response = await login({
-        email,
-        password,
-        device_uuid: deviceUUID,
-        device_name: getDeviceName(),
-        platform: "web",
-      });
+  try {
+    const response = await login({
+      email,
+      password,
+      device_uuid: deviceUUID,
+      device_name: getDeviceName(),
+      platform: "web",
+    });
 
-      const accessToken = response.data.access_token;
-      const refreshToken = response.data.refresh_token;
+    const accessToken = response.data.access_token;
+    const refreshToken = response.data.refresh_token;
+    const user = response.data.user;
 
-      // simpan token
-      localStorage.setItem("access_token", accessToken);
-      localStorage.setItem("refresh_token", refreshToken);
-      localStorage.setItem("user", JSON.stringify(response.data.user));
+    // simpan token
+    localStorage.setItem("access_token", accessToken);
+    localStorage.setItem("refresh_token", refreshToken);
+    localStorage.setItem("user", JSON.stringify(user));
 
+    // cek role dari API
+    if (user.role?.name === "admin") {
+      navigate("/admin/home");
+    } else {
       navigate("/home");
-    } catch (error) {
-      if (error.response?.status === 422) {
-        setErrors(error.response.data.errors);
-      } else if (error.response?.status === 401) {
-        setErrors({
-          email: ["Email atau password salah"],
-        });
-      } else {
-        console.error("Login error:", error);
-      }
     }
-  };
+  } catch (error) {
+    if (error.response?.status === 422) {
+      setErrors(error.response.data.errors);
+    } else if (error.response?.status === 401) {
+      setErrors({
+        email: ["Email atau password salah"],
+      });
+    } else {
+      console.error("Login error:", error);
+    }
+  }
+};
 
   return (
     <div className="login-page">

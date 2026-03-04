@@ -1,6 +1,6 @@
 /* EDIT PROFILE PAGE  */
 .edit-profile-page {
-    padding: 60px 120px;
+    padding: 20px 120px;
     background-color: #F9FAFB;
     min-height: 100vh;
 }
@@ -14,6 +14,7 @@
 
 .edit-card h2 {
     margin-bottom: 32px;
+    margin-top: 0px;
 }
 
 
@@ -46,7 +47,7 @@ select {
     font-family: Poppins, sans-serif;
     font-size: 14px;
     box-sizing: border-box;
-    }
+}
 
 
 /* SELECT CUSTOM */
@@ -60,7 +61,7 @@ select {
     background-repeat: no-repeat;
     background-position: right 18px center;
 
-    padding-right: 48px; 
+    padding-right: 48px;
 }
 
 /* PASSWORD FIELD */

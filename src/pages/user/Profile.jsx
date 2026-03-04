@@ -19,114 +19,116 @@ function ProfileUser() {
 
     useEffect(() => {
         const fetchUser = async () => {
-        try {
-            const response = await getProfile();
-            const userData = response.data.data.user;
-            setUser(userData);
-        } catch (error) {
-            console.error("Profile error:", error);
+            try {
+                const response = await getProfile();
+                const userData = response.data.data.user;
+                setUser(userData);
+            } catch (error) {
+                console.error("Profile error:", error);
 
-            if (error.response?.status === 401) {
-            localStorage.removeItem("token");
-            navigate("/login");
+                if (error.response?.status === 401) {
+                    localStorage.removeItem("token");
+                    navigate("/login");
+                }
+            } finally {
+                setLoading(false);
             }
-        } finally {
-            setLoading(false);
-        }
         };
 
         fetchUser();
     }, [navigate]);
 
     const handleLogout = () => {
-        localStorage.removeItem("token");
+        localStorage.removeItem("access_token");
+        localStorage.removeItem("refresh_token");
+        localStorage.removeItem("user");
         navigate("/login");
     };
 
     return (
         <>
-        <Navbar />
+            <Navbar />
 
-        <div className="profile-wrapper">
-            {!loading && !user && (
-            <div style={{ padding: "40px" }}>
-                Gagal memuat data user
+            <div className="profile-wrapper">
+                {!loading && !user && (
+                    <div style={{ padding: "40px" }}>
+                        Gagal memuat data user
+                    </div>
+                )}
+
+                {!loading && user && (
+                    <div className="profile-card">
+                        <h2 className="profile-title">Profil Pengguna</h2>
+
+                        <div className="profile-content">
+                            <div className="profile-left">
+                                <div className="form-group">
+                                    <label>Nama Lengkap</label>
+                                    <input type="text" value={user?.name || "-"} disabled />
+                                </div>
+
+                                <div className="form-group">
+                                    <label>Email</label>
+                                    <input type="text" value={user?.email || "-"} disabled />
+                                </div>
+                            </div>
+
+                            <div className="profile-right">
+                                <div className="form-group">
+                                    <label>Total Poin</label>
+                                    <input type="text" value={user?.points ?? "0"} disabled />
+                                </div>
+
+                                <div className="form-group">
+                                    <label>No Telp</label>
+                                    <input type="text" value={user?.phone || "-"} disabled />
+                                </div>
+                            </div>
+
+                            <div className="profile-avatar-section">
+                                <div className="profile-avatar">
+                                    <img src={profileIcon} alt="Profile" />
+                                </div>
+
+                                <Link to="/edit-profile" className="edit-button">
+                                    Edit Profil
+                                </Link>
+                            </div>
+                        </div>
+
+                        <div className="profile-menu">
+                            <Link to="/bookmark" className="menu-item">
+                                <span>Markah</span>
+                                <img src={bookmarkIcon} alt="Markah" />
+                            </Link>
+
+                            <Link to="/history" className="menu-item">
+                                <span>Riwayat</span>
+                                <img src={historyIcon} alt="Riwayat" />
+                            </Link>
+
+                            <button
+                                className="menu-item logout"
+                                onClick={() => setOpenExit(true)}
+                            >
+                                <span>Keluar</span>
+                                <img src={logoutIcon} alt="Keluar" />
+                            </button>
+                        </div>
+                    </div>
+                )}
             </div>
-            )}
 
-            {!loading && user && (
-            <div className="profile-card">
-                <h2 className="profile-title">Profil Pengguna</h2>
+            <Exit
+                isOpen={openExit}
+                onClose={() => setOpenExit(false)}
+                onConfirm={handleLogout}
+            />
 
-                <div className="profile-content">
-                <div className="profile-left">
-                    <div className="form-group">
-                    <label>Nama Lengkap</label>
-                    <input type="text" value={user?.name || "-"} disabled />
-                    </div>
-
-                    <div className="form-group">
-                    <label>Email</label>
-                    <input type="text" value={user?.email || "-"} disabled />
-                    </div>
-                </div>
-
-                <div className="profile-right">
-                    <div className="form-group">
-                    <label>Total Poin</label>
-                    <input type="text" value={user?.points ?? "0"} disabled />
-                    </div>
-
-                    <div className="form-group">
-                    <label>No Telp</label>
-                    <input type="text" value={user?.phone || "-"} disabled />
-                    </div>
-                </div>
-
-                <div className="profile-avatar-section">
-                    <div className="profile-avatar">
-                    <img src={profileIcon} alt="Profile" />
-                    </div>
-
-                    <Link to="/edit-profile" className="edit-button">
-                    Edit Profil
-                    </Link>
-                </div>
-                </div>
-
-                <div className="profile-menu">
-                <Link to="/bookmark" className="menu-item">
-                    <span>Markah</span>
-                    <img src={bookmarkIcon} alt="Markah" />
-                </Link>
-
-                <Link to="/history" className="menu-item">
-                    <span>Riwayat</span>
-                    <img src={historyIcon} alt="Riwayat" />
-                </Link>
-
-                <button
-                    className="menu-item logout"
-                    onClick={() => setOpenExit(true)}
-                >
-                    <span>Keluar</span>
-                    <img src={logoutIcon} alt="Keluar" />
-                </button>
-                </div>
-            </div>
-            )}
-        </div>
-
-        <Exit
-            isOpen={openExit}
-            onClose={() => setOpenExit(false)}
-            onConfirm={handleLogout}
-        />
-
-        <LoadingModal
-            isOpen={loading}
-            text="Memuat profil..."
-        />
+            <LoadingModal
+                isOpen={loading}
+                text="Memuat profil..."
+            />
         </>
     );
 }

@@ -13,6 +13,41 @@ function Login() {
   const [errors, setErrors] = useState({});
   const navigate = useNavigate();
 
+// ambil / buat device uuid sekali saja
+let deviceUUID = localStorage.getItem("device_uuid");
+
+if (!deviceUUID) {
+  deviceUUID = crypto.randomUUID();
+  localStorage.setItem("device_uuid", deviceUUID);
+}
+
+// ambil nama device (browser + OS)
+function getDeviceName() {
+  const ua = navigator.userAgent;
+
+  let browser = "Browser";
+  if (ua.includes("Chrome") && !ua.includes("Edge") && !ua.includes("OPR")) {
+    browser = "Chrome";
+  } else if (ua.includes("Safari") && !ua.includes("Chrome")) {
+    browser = "Safari";
+  } else if (ua.includes("Firefox")) {
+    browser = "Firefox";
+  } else if (ua.includes("Edge")) {
+    browser = "Edge";
+  } else if (ua.includes("OPR") || ua.includes("Opera")) {
+    browser = "Opera";
+  }
+
+  let os = "Unknown";
+  if (ua.includes("Win")) os = "Windows";
+  else if (ua.includes("Mac")) os = "Mac";
+  else if (ua.includes("Linux")) os = "Linux";
+  else if (ua.includes("Android")) os = "Android";
+  else if (ua.includes("like Mac")) os = "iOS";
+
+  return `${browser} - ${os}`;
+}
+
   const handleLogin = async (e) => {
     e.preventDefault();
 
@@ -20,15 +55,17 @@ function Login() {
       const response = await login({
         email,
         password,
-        device_uuid: crypto.randomUUID(),
-        device_name: "react-web",
+        device_uuid: deviceUUID,
+        device_name: getDeviceName(),
         platform: "web",
       });
 
-      const token = response.data.access_token;
+      const accessToken = response.data.access_token;
+      const refreshToken = response.data.refresh_token;
 
-      // simpan token & user
-      localStorage.setItem("token", token);
+      // simpan token
+      localStorage.setItem("access_token", accessToken);
+      localStorage.setItem("refresh_token", refreshToken);
       localStorage.setItem("user", JSON.stringify(response.data.user));
 
       navigate("/home");
@@ -107,9 +144,14 @@ function Login() {
 
             <p className="register-text-to-page">
               Belum Memiliki Akun?{" "}
-              <Link to="/register" className="register-link">
+              <a
+                href="https://hub.jtv.co.id/register"
+                className="register-link"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 Daftar
-              </Link>
+              </a>
             </p>
           </form>
         </div>

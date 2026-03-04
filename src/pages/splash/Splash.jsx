@@ -1,16 +1,23 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import "./splash.css";
+import logo from "../../assets/images/logo-splash.png";
 
-function Splash() {
+function SplashScreen() {
     const navigate = useNavigate();
 
     useEffect(() => {
-    setTimeout(() => {
+        const timer = setTimeout(() => {
         navigate("/login");
-        }, 2000);
-    }, []);
+        }, 2500); 
+        return () => clearTimeout(timer);
+    }, [navigate]);
 
-    return <h1>Welcome to Kala Rasa</h1>;
-    }
+    return (
+        <div className="splash-container">
+        <img src={logo} alt="KalaRasa Logo" className="splash-logo" />
+        </div>
+    );
+}
 
-export default Splash;
+export default SplashScreen;

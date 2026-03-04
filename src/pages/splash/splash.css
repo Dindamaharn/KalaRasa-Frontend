@@ -1,0 +1,35 @@
+.splash-container {
+    height: 100vh;
+    width: 100%;
+    background: #F9FAFC;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    padding: 20px; 
+}
+
+/* LOGO */
+.splash-logo {
+    width: clamp(180px, 40vw, 494px);
+    max-width: 100%;
+    animation: slideDown 1.5s ease-out forwards;
+}
+
+/* ANIMATION */
+@keyframes slideDown {
+    0% {
+        transform: translateY(-40vh);
+        opacity: 0;
+    }
+    100% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+@media (max-width: 480px) {
+    .splash-logo {
+        width: 70vw;
+    }
+}

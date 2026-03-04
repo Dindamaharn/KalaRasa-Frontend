@@ -1,46 +1,79 @@
 import Navbar from "../../components/layout/Navbar";
 import styles from "./recipes.module.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import bookmarkIcon from "../../assets/icons/bookmark.svg";
 import bookmarkFillIcon from "../../assets/icons/fill-bookmark.svg";
 import starIcon from "../../assets/icons/star.svg";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import api from "../../services/api";
 
 function RecipesUser() {
 
+    const navigate = useNavigate();
     const [search, setSearch] = useState("");
+    const [recipes, setRecipes] = useState([]);
+    const [loading, setLoading] = useState(false);
 
-    const [recipes, setRecipes] = useState([
-        {
-            id: 1,
-            title: "Tumis Sayur",
-            desc: "Menu sehat untuk makan siang keluarga",
-            rating: 4,
-            image: "https://images.unsplash.com/photo-1604908176997-125f25cc6f3d",
-            bookmarked: false
-        },
-        {
-            id: 2,
-            title: "Cheese Burger",
-            desc: "Burger enak dan sehat buatan rumahan",
-            rating: 5,
-            image: "https://images.unsplash.com/photo-1586190848861-99aa4a171e90",
-            bookmarked: false
+    useEffect(() => {
+        fetchRecipes();
+    }, []);
+
+    const fetchRecipes = async () => {
+        try {
+            setLoading(true);
+
+            const response = await api.get("/recipe");
+
+            // Karena backend pakai paginate
+            const recipeData = response.data.data.data;
+
+            const formatted = recipeData.map((item) => ({
+                id: item.id,
+                title: item.nama,
+                desc: item.deskripsi,
+                rating: item.avg_rating,
+                image: item.gambar
+                    ? `http://127.0.0.1:8000/storage/${item.gambar}`
+                    : "https://via.placeholder.com/300",
+                bookmarked: item.is_favorited ?? false
+            }));
+
+            setRecipes(formatted);
+
+        } catch (error) {
+            console.error("Gagal mengambil resep:", error);
+        } finally {
+            setLoading(false);
         }
-    ]);
+    };
 
-    const handleBookmark = (id) => {
-        const updated = recipes.map((recipe) =>
-            recipe.id === id
-                ? { ...recipe, bookmarked: !recipe.bookmarked }
-                : recipe
-        );
-        setRecipes(updated);
+    const handleBookmark = async (id, isBookmarked) => {
+        try {
+            await api.post(`/recipe/${id}/toggle-favorite`);
+
+            // update state langsung tanpa fetch ulang
+            setRecipes(prev =>
+                prev.map(recipe =>
+                    recipe.id === id
+                        ? { ...recipe, bookmarked: !recipe.bookmarked }
+                        : recipe
+                )
+            );
+
+            // kalau baru ditambahkan ke bookmark, langsung pindah halaman
+            if (!isBookmarked) {
+                navigate("/bookmark");
+            }
+
+        } catch (error) {
+            console.error("Gagal toggle bookmark:", error);
+        }
     };
 
     const filteredRecipes = recipes.filter((recipe) =>
         recipe.title.toLowerCase().includes(search.toLowerCase())
     );
+
 
     return (
         <>
@@ -70,8 +103,10 @@ function RecipesUser() {
                     </Link>
                 </div>
 
+                {loading && <p>Memuat resep...</p>}
+
                 <div className={styles.recipesGrid}>
-                    {filteredRecipes.map((recipe) => (
+                    {!loading && filteredRecipes.map((recipe) => (
                         <div className={styles.recipeCard} key={recipe.id}>
 
                             <img
@@ -92,7 +127,7 @@ function RecipesUser() {
                                         }
                                         alt="Bookmark"
                                         className={styles.bookmarkIcon}
-                                        onClick={() => handleBookmark(recipe.id)}
+                                        onClick={() => handleBookmark(recipe.id, recipe.bookmarked)}
                                     />
                                 </div>
 
@@ -107,7 +142,7 @@ function RecipesUser() {
                                     </div>
 
                                     <Link
-                                        to="/detail-recipes"
+                                        to={`/detail-recipes/${recipe.id}`}
                                         className={styles.detailButton}
                                     >
                                         Detail
@@ -118,7 +153,7 @@ function RecipesUser() {
                         </div>
                     ))}
 
-                    {filteredRecipes.length === 0 && (
+                    {!loading && filteredRecipes.length === 0 && (
                         <p>Resep tidak ditemukan.</p>
                     )}
                 </div>

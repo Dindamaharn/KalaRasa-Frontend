@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import SuccessPopup from "../../components/modal/Succes";
 import { getProfile, updateProfile } from "../../services/authService";
+import LoadingModal from "../../components/modal/Loading";
 import eyeIcon from "../../assets/icons/eye.svg";
 import eyeOffIcon from "../../assets/icons/eye-off.svg";
 
@@ -87,15 +88,6 @@ function EditProfile() {
             }
         }
     };
-
-    if (loading) {
-        return (
-            <>
-                <Navbar />
-                <div style={{ padding: "40px" }}>Loading...</div>
-            </>
-        );
-    }
 
     return (
         <>
@@ -242,6 +234,11 @@ function EditProfile() {
                     }}
                 />
             )}
+
+            <LoadingModal
+                isOpen={loading}
+                text="Memuat profil..."
+            />
         </>
     );
 }

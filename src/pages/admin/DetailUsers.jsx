@@ -1,85 +1,73 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useParams, Link } from "react-router-dom";
 import AsideAdmin from "../../components/layout/Aside";
 import Pagination from "../../components/ui/Pagination";
-import { Link } from "react-router-dom";
+import api from "../../services/api";
 import "./detailusers.css";
-
 import backIcon from "../../assets/icons/back.svg";
 
 function DetailUsers() {
-  const [currentPage, setCurrentPage] = useState(1);
+  const { id } = useParams();
 
-  const user = {
-    nama: "Dewi Anggraini",
-    poin: "1200",
-    telp: "0812-3456-7890",
-    email: "dewi.anggraini@example.com",
-    gender: "Wanita",
-    lahir: "31/12/1978",
+  const [user, setUser] = useState(null);
+  const [submissions, setSubmissions] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+
+  const fetchUserDetail = async (page = 1) => {
+    try {
+      const response = await api.get(`/admin/user/${id}`, {
+        params: { page }
+      });
+
+      const resData = response.data.data;
+
+      setUser(resData.user);
+      setSubmissions(resData.submissions.data);
+      setTotalPages(resData.submissions.last_page);
+    } catch (error) {
+      console.error("Gagal ambil detail user:", error);
+    }
   };
 
-  const submissions = [
-    {
-      id: 1,
-      nama: "Soto Banjar",
-      tanggal: "19/08/2025",
-      status: "Menunggu",
-    },
-    {
-      id: 2,
-      nama: "Tumis Sayur",
-      tanggal: "12/09/2025",
-      status: "Disetujui",
-    },
-    {
-      id: 3,
-      nama: "Kue Cucur",
-      tanggal: "15/09/2025",
-      status: "Ditolak",
-    },
-  ];
+  useEffect(() => {
+    fetchUserDetail(currentPage);
+  }, [currentPage]);
 
-  const itemsPerPage = 5;
-  const totalPages = Math.ceil(submissions.length / itemsPerPage);
-
-  const startIndex = (currentPage - 1) * itemsPerPage;
-  const currentData = submissions.slice(
-    startIndex,
-    startIndex + itemsPerPage
-  );
+  if (!user) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <div className="admin-layout">
       <AsideAdmin />
 
       <main className="admin-content">
-        {/* HEADER */}
         <div className="detail-header">
           <div className="detail-title">
-            <Link to="/admin/users" className="back-btn">
+            <Link to="/admin/user" className="back-btn">
               <img src={backIcon} alt="back" />
             </Link>
             <h1>Detail Pengguna</h1>
           </div>
         </div>
 
-        {/* CARD */}
         <div className="detail-card">
           {/* USER INFO */}
           <div className="user-grid">
             <div className="form-group-detail-user">
               <label>Nama Lengkap</label>
-              <input type="text" value={user.nama} disabled />
+              <input type="text" value={user.nama_lengkap} disabled />
             </div>
 
             <div className="form-group-detail-user">
               <label>Total Poin</label>
-              <input type="text" value={user.poin} disabled />
+              <input type="text" value={user.points} disabled />
             </div>
 
             <div className="form-group-detail-user">
               <label>No Telp</label>
-              <input type="text" value={user.telp} disabled />
+              <input type="text" value={user.no_telp} disabled />
             </div>
 
             <div className="form-group-detail-user">
@@ -89,16 +77,16 @@ function DetailUsers() {
 
             <div className="form-group-detail-user">
               <label>Jenis Kelamin</label>
-              <input type="text" value={user.gender} disabled />
+              <input type="text" value={user.jenis_kelamin} disabled />
             </div>
 
             <div className="form-group-detail-user">
               <label>Tanggal Lahir</label>
-              <input type="text" value={user.lahir} disabled />
+              <input type="text" value={user.tanggal_lahir} disabled />
             </div>
           </div>
 
-          {/* TABLE */}
+          {/* TABLE SUBMISSION */}
           <div className="submission-section">
             <table className="submission-table">
               <thead>
@@ -112,31 +100,38 @@ function DetailUsers() {
               </thead>
 
               <tbody>
-                {currentData.map((item, index) => (
-                  <tr key={item.id}>
-                    <td>{index + 1}</td>
-                    <td>{item.nama}</td>
-                    <td>{item.tanggal}</td>
-                    <td>
-                      <span className={`status-${item.status.toLowerCase()}`}>
-                        {item.status}
-                      </span>
-                    </td>
-                    <td>
-                      <Link
-                        to={`/admin/submission/${item.id}`}
-                        className="btn-detail"
-                      >
-                        Lihat
-                      </Link>
+                {submissions.length === 0 ? (
+                  <tr>
+                    <td colSpan="5" style={{ textAlign: "center" }}>
+                      Tidak ada submission
                     </td>
                   </tr>
-                ))}
+                ) : (
+                  submissions.map((item, index) => (
+                    <tr key={item.id}>
+                      <td>{index + 1}</td>
+                      <td>{item.nama_resep}</td>
+                      <td>{item.tanggal_submit}</td>
+                      <td>
+                        <span className={`status-${item.status.toLowerCase()}`}>
+                          {item.status}
+                        </span>
+                      </td>
+                      <td>
+                        <Link
+                          to={`/admin/submission/${item.id}`}
+                          className="btn-detail"
+                        >
+                          Lihat
+                        </Link>
+                      </td>
+                    </tr>
+                  ))
+                )}
               </tbody>
             </table>
           </div>
 
-          {/* PAGINATION */}
           <div className="pagination-container">
             <Pagination
               currentPage={currentPage}
@@ -146,7 +141,6 @@ function DetailUsers() {
           </div>
         </div>
 
-        {/* FOOTER */}
         <div className="admin-footer">
           © 2025 Kala Rasa — Admin
         </div>

@@ -1,59 +1,59 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import AsideAdmin from "../../components/layout/Aside";
 import Pagination from "../../components/ui/Pagination";
 import { Link } from "react-router-dom";
+import api from "../../services/api";
 import "./UsersAdmin.css";
 
 function UsersAdmin() {
+    const [users, setUsers] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
+    const [totalPages, setTotalPages] = useState(1);
     const [search, setSearch] = useState("");
 
-    const users = [
-        {
-        id: 1,
-        nama: "Dewi Anggraini",
-        email: "dewi@example.com",
-        telp: "0812-3456-7890",
-        gender: "Perempuan",
-        tanggal: "15/07/2005",
-        },
-        {
-        id: 2,
-        nama: "Budi Santoso",
-        email: "budi@example.com",
-        telp: "0813-1122-3344",
-        gender: "Laki-laki",
-        tanggal: "12/02/1998",
-        },
-        {
-        id: 3,
-        nama: "Agus Permadi",
-        email: "agus@example.com",
-        telp: "0819-5566-7788",
-        gender: "Laki-laki",
-        tanggal: "10/06/2000",
-        },
-    ];
+    const formatDate = (dateString) => {
+        if (!dateString) return "-";
 
-    const itemsPerPage = 5;
+        const date = new Date(dateString);
+        if (isNaN(date)) return dateString; 
 
-    const filteredUsers = users.filter(
-        (user) =>
-        user.nama.toLowerCase().includes(search.toLowerCase()) ||
-        user.email.toLowerCase().includes(search.toLowerCase())
-    );
+        const day = String(date.getDate()).padStart(2, "0");
+        const month = String(date.getMonth() + 1).padStart(2, "0");
+        const year = date.getFullYear();
 
-    const totalPages = Math.ceil(filteredUsers.length / itemsPerPage);
+        return `${day}/${month}/${year}`;
+    };
+
+    const fetchUsers = async (page = 1, keyword = "") => {
+        try {
+        const response = await api.get("/admin/user", {
+            params: {
+            page: page,
+            search: keyword,
+            },
+        });
+
+        const resData = response.data.data;
+
+        setUsers(resData.data);
+        setTotalPages(resData.last_page);
+        } catch (error) {
+        console.error("Gagal ambil users:", error);
+        }
+    };
+
+    useEffect(() => {
+        fetchUsers(currentPage, search);
+    }, [currentPage]);
+
+    const handleSearch = () => {
+        setCurrentPage(1);
+        fetchUsers(1, search);
+    };
 
     const handlePageChange = (page) => {
         setCurrentPage(page);
     };
-
-    const startIndex = (currentPage - 1) * itemsPerPage;
-    const currentData = filteredUsers.slice(
-        startIndex,
-        startIndex + itemsPerPage
-    );
 
     return (
         <div className="admin-layout">
@@ -70,7 +70,7 @@ function UsersAdmin() {
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
                 />
-                <button>Cari</button>
+                <button onClick={handleSearch}>Cari</button>
             </div>
             </div>
 
@@ -88,23 +88,31 @@ function UsersAdmin() {
                 </thead>
 
                 <tbody>
-                {currentData.map((user) => (
-                    <tr key={user.id}>
-                    <td>{user.nama}</td>
-                    <td>{user.email}</td>
-                    <td>{user.telp}</td>
-                    <td>{user.gender}</td>
-                    <td>{user.tanggal}</td>
-                    <td>
-                        <Link
-    to={`/admin/users/${user.id}`}
-    className="btn-detail"
-    >
-    Lihat
-    </Link>
+                {users.length === 0 ? (
+                    <tr>
+                    <td colSpan="6" style={{ textAlign: "center" }}>
+                        Tidak ada data
                     </td>
                     </tr>
-                ))}
+                ) : (
+                    users.map((user) => (
+                    <tr key={user.id}>
+                        <td>{user.nama_lengkap || "-"}</td>
+                        <td>{user.email || "-"}</td>
+                        <td>{user.no_telp || "-"}</td>
+                        <td>{user.jenis_kelamin || "-"}</td>
+                        <td>{formatDate(user.tanggal_lahir)}</td>
+                        <td>
+                        <Link
+                            to={`/admin/users/${user.id}`}
+                            className="btn-detail"
+                        >
+                            Lihat
+                        </Link>
+                        </td>
+                    </tr>
+                    ))
+                )}
                 </tbody>
             </table>
 

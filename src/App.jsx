@@ -1,4 +1,5 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import ProtectedRoute from "./components/ProtectedRoute";
 import Splash from "./pages/splash/Splash";
 import Login from "./pages/auth/Login";
 import Register from "./pages/auth/Register";
@@ -31,8 +32,16 @@ function App() {
         <Route path="/register" element={<Register />} />
 
         {/* User */}
-        <Route path="/home" element={<Home />} />
-        <Route path="/profile" element={<Profile />} />
+        <Route path="/home" element={
+          <ProtectedRoute>
+            <Home />
+          </ProtectedRoute>
+        } />
+        <Route path="/profile" element={
+          <ProtectedRoute>
+            <Profile />
+          </ProtectedRoute>
+        } />
         <Route path="/edit-profile" element={<EditProfile />} />
         <Route path="/bookmark" element={<Bookmark />} />
         <Route path="/history" element={<History />} />
@@ -44,7 +53,11 @@ function App() {
         <Route path="/add-shopping" element={<AddShopping />} />
 
         {/* Admin */}
-        <Route path="/admin/home" element={<HomeAdmin />} />
+        <Route path="/admin/home" element={
+          <ProtectedRoute>
+            <HomeAdmin />
+          </ProtectedRoute>
+        } />
         <Route path="/admin/users" element={<UsersAdmin />} />
         <Route path="/admin/users/:id" element={<DetailUsers />} />
         <Route path="/admin/recipes" element={<RecipesAdmin />} />

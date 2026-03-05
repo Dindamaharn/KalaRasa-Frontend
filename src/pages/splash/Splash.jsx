@@ -8,14 +8,26 @@ function SplashScreen() {
 
     useEffect(() => {
         const timer = setTimeout(() => {
-        navigate("/login");
-        }, 2500); 
+            const token = localStorage.getItem("access_token");
+            const user = JSON.parse(localStorage.getItem("user"));
+
+            if (token && user) {
+                if (user.role?.name === "admin") {
+                    navigate("/admin/home");
+                } else {
+                    navigate("/home");
+                }
+            } else {
+                navigate("/login");
+            }
+        }, 2500);
+
         return () => clearTimeout(timer);
     }, [navigate]);
 
     return (
         <div className="splash-container">
-        <img src={logo} alt="KalaRasa Logo" className="splash-logo" />
+            <img src={logo} alt="KalaRasa Logo" className="splash-logo" />
         </div>
     );
 }

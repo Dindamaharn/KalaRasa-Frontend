@@ -3,7 +3,7 @@ import AsideAdmin from "../../components/layout/Aside";
 import Pagination from "../../components/ui/Pagination";
 import "./homeAdmin.css";
 import { Link } from "react-router-dom";
-import api from "../../services/api"; 
+import api from "../../services/api";
 
 import usersIcon from "../../assets/icons/group-person.svg";
 import recipeIcon from "../../assets/icons/chef-hat.svg";
@@ -11,56 +11,51 @@ import submissionIcon from "../../assets/icons/approval-list.svg";
 
 function HomeAdmin() {
   const [currentPage, setCurrentPage] = useState(1);
+
   const [summary, setSummary] = useState({
-    totalUsers: 0,
-    totalRecipes: 0,
-    totalSubmissions: 0,
+    total_users: 0,
+    total_recipes: 0,
+    total_submissions: 0,
   });
+
   const [submissions, setSubmissions] = useState([]);
+  const [totalPages, setTotalPages] = useState(1);
 
-  const itemsPerPage = 3;
+  // ================= FETCH SUMMARY =================
+  const fetchSummary = async () => {
+    try {
+      const res = await api.get("/admin/dashboard/summary");
 
+      console.log("SUMMARY:", res.data);
+
+      setSummary(res.data.data);
+    } catch (err) {
+      console.error("Summary error:", err.response || err);
+    }
+  };
+
+  // ================= FETCH SUBMISSIONS =================
+  const fetchSubmissions = async (page = 1) => {
+    try {
+      const res = await api.get(`/admin/recipe-submissions?page=${page}`);
+
+      console.log("SUBMISSIONS:", res.data);
+
+      setSubmissions(res.data.data.data);
+      setTotalPages(res.data.data.last_page);
+    } catch (err) {
+      console.error("Submission error:", err.response || err);
+    }
+  };
+
+  // ================= USE EFFECT =================
   useEffect(() => {
     fetchSummary();
-    fetchSubmissions();
   }, []);
 
-  // FETCH SUMMARY
-  const fetchSummary = async () => {
-  try {
-    const res = await api.get("/admin/dashboard/summary");
-
-    console.log("SUMMARY:", res.data);
-
-    setSummary(res.data.data);
-
-  } catch (err) {
-    console.error("Summary error:", err.response || err);
-  }
-};
-
-  // FETCH SUBMISSIONS
-
-  const fetchSubmissions = async () => {
-  try {
-    const res = await api.get("/admin/recipe-submissions");
-
-    console.log("SUBMISSIONS:", res.data);
-
-    setSubmissions(res.data.data.data);
-
-  } catch (err) {
-    console.error("Submission error:", err.response || err);
-  }
-};
-
-  // PAGINATION
-  const totalPages = Math.ceil(submissions.length / itemsPerPage);
-  const startIndex = (currentPage - 1) * itemsPerPage;
-  const currentData = submissions.slice(
-    startIndex,
-    startIndex + itemsPerPage
-  );
+  useEffect(() => {
+    fetchSubmissions(currentPage);
+  }, [currentPage]);
 
   return (
     <div className="admin-layout">
@@ -112,19 +107,23 @@ function HomeAdmin() {
             </thead>
 
             <tbody>
-              {currentData.length > 0 ? (
-                currentData.map((item) => (
+              {submissions.length > 0 ? (
+                submissions.map((item) => (
                   <tr key={item.id}>
-                    <td>{item.recipeName}</td>
-                    <td>{item.userName}</td>
+                    <td>{item.nama}</td>
+
+                    <td>{item.creator?.name || "-"}</td>
+
                     <td>
-                      {new Date(item.createdAt).toLocaleDateString()}
+                      {item.created_at
+                        ? new Date(item.created_at).toLocaleDateString()
+                        : "-"}
                     </td>
+
                     <td>
-                      <span className="status-admin">
-                        {item.status}
-                      </span>
+                      <span className="status-admin">{item.status}</span>
                     </td>
+
                     <td>
                       <Link
                         to={`/admin/submissions/${item.id}`}
@@ -145,6 +144,7 @@ function HomeAdmin() {
             </tbody>
           </table>
 
+          {/* ================= PAGINATION ================= */}
           {totalPages > 1 && (
             <Pagination
               currentPage={currentPage}
@@ -152,11 +152,9 @@ function HomeAdmin() {
               onPageChange={setCurrentPage}
             />
           )}
+          
         </div>
-
-        <div className="admin-footer">
-          © 2025 Kala Rasa — Admin
-        </div>
+        <div className="admin-footer">© 2026 Kala Rasa — Admin</div>
       </main>
     </div>
   );

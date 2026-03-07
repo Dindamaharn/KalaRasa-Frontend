@@ -53,11 +53,9 @@ function App() {
         <Route path="/add-shopping" element={<AddShopping />} />
 
         {/* Admin */}
-        <Route path="/admin/home" element={
-          <ProtectedRoute>
-            <HomeAdmin />
-          </ProtectedRoute>
-        } />
+        <Route path="/admin/home"
+          element={<ProtectedRoute role="admin"> <HomeAdmin /></ProtectedRoute>}
+        />
         <Route path="/admin/users" element={<UsersAdmin />} />
         <Route path="/admin/users/:id" element={<DetailUsers />} />
         <Route path="/admin/recipes" element={<RecipesAdmin />} />

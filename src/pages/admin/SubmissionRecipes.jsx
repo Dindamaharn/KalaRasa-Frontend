@@ -14,21 +14,21 @@ function QueueSubmissionRecipes() {
       id: 1,
       nama: "Soto Banjar",
       pengaju: "Yanto Setio",
-      tanggal: "19/08/2025",
+      tanggal: "19/08/2026",
       status: "Menunggu",
     },
     {
       id: 2,
       nama: "Tumis Sayur",
       pengaju: "Dewi Anggraini",
-      tanggal: "12/09/2025",
+      tanggal: "12/09/2026",
       status: "Menunggu",
     },
     {
       id: 3,
       nama: "Kue Cucur",
       pengaju: "Samsul Arik",
-      tanggal: "15/09/2025",
+      tanggal: "15/09/2026",
       status: "Menunggu",
     },
   ];
@@ -121,7 +121,7 @@ function QueueSubmissionRecipes() {
 
         {/* FOOTER */}
         <div className="admin-footer">
-          © 2025 Kala Rasa — Admin
+          © 2026 Kala Rasa — Admin
         </div>
       </main>
     </div>

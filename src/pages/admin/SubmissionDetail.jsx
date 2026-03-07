@@ -109,7 +109,7 @@ function SubmissionDetail() {
         </div>
 
         <footer className="admin-footer">
-          © 2025 Kala Rasa — Admin
+          © 2026 Kala Rasa — Admin
         </footer>
 
 

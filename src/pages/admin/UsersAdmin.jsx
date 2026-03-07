@@ -133,7 +133,7 @@ function UsersAdmin() {
                 </div>
 
                 <div className="admin-footer">
-                    © 2025 Kala Rasa — Admin
+                    © 2026 Kala Rasa — Admin
                 </div>
             </main>
         </div>

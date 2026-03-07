@@ -25,13 +25,11 @@
   overflow: hidden;
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.04);
   z-index: 1;
-  /* layer card normal */
 }
 
 .card-text {
   position: relative;
   z-index: 2;
-  /* teks selalu di atas icon */
 }
 
 .card-icon {
@@ -136,12 +134,8 @@ tbody tr:hover {
 }
 
 /* Pagination */
-.pagination-container {
-  display: flex;
+.pagination{
   justify-content: center;
-  align-items: center;
-  margin-top: 20px;
-  padding-top: 16px;
 }
 
 /* Footer */

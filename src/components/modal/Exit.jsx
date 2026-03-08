@@ -5,8 +5,8 @@ function Exit({ isOpen, onClose }) {
   const navigate = useNavigate();
 
   const handleExit = () => {
-    localStorage.removeItem("token");
-    navigate("/login");
+  localStorage.clear();
+  navigate("/login");
   };
 
   if (!isOpen) return null;

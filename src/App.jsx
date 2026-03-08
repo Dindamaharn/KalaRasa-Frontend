@@ -32,16 +32,24 @@ function App() {
         <Route path="/register" element={<Register />} />
 
         {/* User */}
-        <Route path="/home" element={
-          <ProtectedRoute>
-            <Home />
-          </ProtectedRoute>
-        } />
-        <Route path="/profile" element={
-          <ProtectedRoute>
-            <Profile />
-          </ProtectedRoute>
-        } />
+        <Route
+          path="/home"
+          element={
+            <ProtectedRoute>
+              <Home />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/profile"
+          element={
+            <ProtectedRoute>
+              <Profile />
+            </ProtectedRoute>
+          }
+        />
+
         <Route path="/edit-profile" element={<EditProfile />} />
         <Route path="/bookmark" element={<Bookmark />} />
         <Route path="/history" element={<History />} />
@@ -52,16 +60,77 @@ function App() {
         <Route path="/add-shopping" element={<AddShopping />} />
 
         {/* Admin */}
-        <Route path="/admin/home"
-          element={<ProtectedRoute role="admin"> <HomeAdmin /></ProtectedRoute>}
+        <Route
+          path="/admin/home"
+          element={
+            <ProtectedRoute role="admin">
+              <HomeAdmin />
+            </ProtectedRoute>
+          }
         />
-        <Route path="/admin/users" element={<UsersAdmin />} />
-        <Route path="/admin/users/:id" element={<DetailUsers />} />
-        <Route path="/admin/recipes" element={<RecipesAdmin />} />
-        <Route path="/admin/submissions/:id" element={<SubmissionDetail />} />
-        <Route path="/admin/submissions" element={<SubmissionRecipes />} />
-        <Route path="/admin/add-recipe" element={<AddRecipesAdmin />} />
-        <Route path="/admin/recipes/:id" element={<UpdateRecipeAdmin />} />
+
+        <Route
+          path="/admin/users"
+          element={
+            <ProtectedRoute role="admin">
+              <UsersAdmin />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/admin/users/:id"
+          element={
+            <ProtectedRoute role="admin">
+              <DetailUsers />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/admin/recipes"
+          element={
+            <ProtectedRoute role="admin">
+              <RecipesAdmin />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/admin/submissions"
+          element={
+            <ProtectedRoute role="admin">
+              <SubmissionRecipes />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/admin/submissions/:id"
+          element={
+            <ProtectedRoute role="admin">
+              <SubmissionDetail />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/admin/add-recipe"
+          element={
+            <ProtectedRoute role="admin">
+              <AddRecipesAdmin />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/admin/recipes/:id"
+          element={
+            <ProtectedRoute role="admin">
+              <UpdateRecipeAdmin />
+            </ProtectedRoute>
+          }
+        />
       </Routes>
     </BrowserRouter>
   );

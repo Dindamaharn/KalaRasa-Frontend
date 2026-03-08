@@ -1,23 +1,25 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import "./ReasonRejection.css";
 import closeIcon from "../../assets/icons/close-popup.svg";
 
 const RejectReason = ({ isOpen, onClose, onSubmit }) => {
     const [reason, setReason] = useState("");
-    const navigate = useNavigate();
+
     if (!isOpen) return null;
 
     const handleSubmit = () => {
-    // proses kirim alasan (kalau ada API / logic lain)
+        if (!reason || reason.length < 10) {
+        return;
+        }
 
-    navigate("/admin/submissions");
+        onSubmit(reason); // kirim ke parent component
+        setReason("");
     };
 
     return (
         <div className="reject-overlay">
         <div className="reject-card">
-            {/* Close Button */}
+
             <img
             src={closeIcon}
             alt="close"
@@ -25,13 +27,11 @@ const RejectReason = ({ isOpen, onClose, onSubmit }) => {
             onClick={onClose}
             />
 
-            {/* Title */}
             <h2 className="reject-title">Alasan Penolakan</h2>
             <p className="reject-subtitle">
             Berikan alasan penolakan resep secara jelas.
             </p>
 
-            {/* Textarea */}
             <textarea
             className="reject-textarea"
             placeholder="Masukkan alasan Anda disini"
@@ -39,10 +39,10 @@ const RejectReason = ({ isOpen, onClose, onSubmit }) => {
             onChange={(e) => setReason(e.target.value)}
             />
 
-            {/* Button */}
             <button className="reject-button" onClick={handleSubmit}>
-                Kirim Alasan
+            Kirim Alasan
             </button>
+
         </div>
         </div>
     );

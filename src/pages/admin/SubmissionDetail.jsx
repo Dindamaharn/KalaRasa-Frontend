@@ -4,6 +4,7 @@ import "./submissiondetail.css";
 import { useState, useEffect } from "react";
 import RejectReason from "../../components/modal/ReasonRejection";
 import UploadConfirm from "../../components/modal/UploadConfirm";
+import Loading from "../../components/modal/Loading"; // <-- import Loading Modal
 import backIcon from "../../assets/icons/back.svg";
 import timeIcon from "../../assets/icons/time.svg";
 import locationIcon from "../../assets/icons/location.svg";
@@ -18,6 +19,7 @@ function SubmissionDetail() {
 
   const [showRejectModal, setShowRejectModal] = useState(false);
   const [showApproveModal, setShowApproveModal] = useState(false);
+  const [loading, setLoading] = useState(true); // <-- loading state global
 
   useEffect(() => {
     fetchDetail();
@@ -25,6 +27,7 @@ function SubmissionDetail() {
 
   const fetchDetail = async () => {
     try {
+      setLoading(true); // <-- tampilkan loading saat fetch
       const res = await api.get(`/admin/recipe/${id}`);
       const data = res.data.data;
 
@@ -44,163 +47,142 @@ function SubmissionDetail() {
 
     } catch (err) {
       console.log(err);
+    } finally {
+      setLoading(false); // <-- sembunyikan loading saat selesai
     }
   };
 
-  if (!recipe) {
-    return (
-      <div className="admin-layout">
-        <AsideAdmin />
-        <main className="admin-content">
-          <p>Loading recipe detail...</p>
-        </main>
-      </div>
-    );
-  }
+  const handleReject = async (reason) => {
+    try {
+      setLoading(true);
+      await api.patch(`/admin/recipe/${id}/reject`, { rejection_reason: reason });
+      navigate("/admin/submissions");
+    } catch (err) {
+      console.log(err.response?.data || err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleApprove = async () => {
+    try {
+      setLoading(true);
+      await api.patch(`/admin/recipe/${id}/approve`);
+      navigate("/admin/submissions");
+    } catch (err) {
+      console.log(err);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
-    <div className="admin-layout">
+    <>
+      {/* LOADING MODAL */}
+      <Loading isOpen={loading} />
 
-      <AsideAdmin />
+      <div className="admin-layout">
+        <AsideAdmin />
 
-      <main className="admin-content">
+        <main className="admin-content">
 
-        <div className="submission-wrapper">
+          <div className="submission-wrapper">
 
-          <Link to="/admin/submissions" className="back-btn">
-            <img src={backIcon} alt="Back" />
-          </Link>
+            <Link to="/admin/submissions" className="back-btn">
+              <img src={backIcon} alt="Back" />
+            </Link>
 
-          <div className="submission-card">
+            {recipe && (
+              <div className="submission-card">
 
-            <img
-              src={
-                recipe.gambar
-                  ? `http://127.0.0.1:8000/storage/${recipe.gambar}`
-                  : "https://via.placeholder.com/400x300?text=No+Image"
-              }
-              alt={recipe.nama}
-              className="recipe-image-admin"
-            />
+                <img
+                  src={
+                    recipe.gambar
+                      ? `http://127.0.0.1:8000/storage/${recipe.gambar}`
+                      : "https://via.placeholder.com/400x300?text=No+Image"
+                  }
+                  alt={recipe.nama}
+                  className="recipe-image-admin"
+                />
 
-            <div className="recipe-info">
+                <div className="recipe-info">
+                  <h2>{recipe.nama}</h2>
+                  <p className="recipe-desc">{recipe.deskripsi}</p>
 
-              <h2>{recipe.nama}</h2>
+                  <div className="recipe-meta">
+                    <span>
+                      <img src={timeIcon} alt="Waktu" className="meta-icon" />
+                      {recipe.waktu_masak} menit
+                    </span>
 
-              <p className="recipe-desc">{recipe.deskripsi}</p>
-
-              <div className="recipe-meta">
-
-                <span>
-                  <img src={timeIcon} alt="Waktu" className="meta-icon" />
-                  {recipe.waktu_masak} menit
-                </span>
-
-                <span>
-                  <img src={locationIcon} alt="Lokasi" className="meta-icon" />
-                  {recipe.region}
-                </span>
-
-              </div>
-
-            </div>
-
-            {/* BAHAN */}
-            <div className="section-card">
-
-              <h3>Bahan - bahan</h3>
-
-              <ul>
-                {recipe.ingredients?.map((item) => (
-                  <li key={item.id}>
-                    {item.pivot.jumlah} {item.pivot.satuan} {item.nama}
-                  </li>
-                ))}
-              </ul>
-
-            </div>
-
-            {/* LANGKAH */}
-            <div className="section-card">
-
-              <h3>Cara Membuat</h3>
-
-              {steps.map((step, index) => (
-
-                <div className="step" key={index}>
-                  <span className="step-number">{index + 1}</span>
-                  <p>{step}</p>
+                    <span>
+                      <img src={locationIcon} alt="Lokasi" className="meta-icon" />
+                      {recipe.region}
+                    </span>
+                  </div>
                 </div>
 
-              ))}
+                {/* BAHAN */}
+                <div className="section-card">
+                  <h3>Bahan - bahan</h3>
+                  <ul>
+                    {recipe.ingredients?.map((item) => (
+                      <li key={item.id}>
+                        {item.pivot.jumlah} {item.pivot.satuan} {item.nama}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
 
-            </div>
+                {/* LANGKAH */}
+                <div className="section-card">
+                  <h3>Cara Membuat</h3>
+                  {steps.map((step, index) => (
+                    <div className="step" key={index}>
+                      <span className="step-number">{index + 1}</span>
+                      <p>{step}</p>
+                    </div>
+                  ))}
+                </div>
 
-            {/* ACTION */}
-            <div className="submission-actions">
+                {/* ACTION */}
+                <div className="submission-actions">
+                  <button className="btn-reject" onClick={() => setShowRejectModal(true)}>
+                    Tolak Pengajuan
+                  </button>
 
-              <button
-                className="btn-reject"
-                onClick={() => setShowRejectModal(true)}
-              >
-                Tolak Pengajuan
-              </button>
+                  <button className="btn-approve" onClick={() => setShowApproveModal(true)}>
+                    Setujui Pengajuan
+                  </button>
+                </div>
 
-              <button
-                className="btn-approve"
-                onClick={() => setShowApproveModal(true)}
-              >
-                Setujui Pengajuan
-              </button>
-
-            </div>
+              </div>
+            )}
 
           </div>
 
-        </div>
+          <footer className="admin-footer">
+            © 2026 Kala Rasa — Admin
+          </footer>
 
-        <footer className="admin-footer">
-          © 2026 Kala Rasa — Admin
-        </footer>
+        </main>
 
-      </main>
+        {/* MODAL REJECT */}
+        <RejectReason
+          isOpen={showRejectModal}
+          onClose={() => setShowRejectModal(false)}
+          onSubmit={handleReject}
+        />
 
-      {/* MODAL REJECT */}
-      <RejectReason
-        isOpen={showRejectModal}
-        onClose={() => setShowRejectModal(false)}
-        onSubmit={async (reason) => {
-          try {
-            await api.patch(`/admin/recipe/${id}/reject`, {
-              rejection_reason: reason
-            });
+        {/* MODAL APPROVE */}
+        <UploadConfirm
+          isOpen={showApproveModal}
+          onClose={() => setShowApproveModal(false)}
+          onConfirm={handleApprove}
+        />
 
-            navigate("/admin/submissions");
-
-          } catch (err) {
-            console.log(err.response.data);
-          }
-        }}
-      />
-
-      {/* MODAL APPROVE */}
-      <UploadConfirm
-        isOpen={showApproveModal}
-        onClose={() => setShowApproveModal(false)}
-        onConfirm={async () => {
-          try {
-
-            await api.patch(`/admin/recipe/${id}/approve`);
-
-            navigate("/admin/submissions");
-
-          } catch (err) {
-            console.log(err);
-          }
-        }}
-      />
-
-    </div>
+      </div>
+    </>
   );
 }
 

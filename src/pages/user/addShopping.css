@@ -12,8 +12,7 @@
     height: 48px;
     border-radius: 14px;
     background-color: #FFFFFF;
-    border: none;
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.06);
+    border: 1px solid #E5E7EB;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -26,7 +25,7 @@
     padding: 40px;
     border-radius: 16px;
     flex: 1;
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.06);
+    border: 1px solid #E5E7EB;
 }
 
 .add-shopping-card h2 {

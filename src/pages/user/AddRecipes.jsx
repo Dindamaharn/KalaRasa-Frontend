@@ -1,5 +1,4 @@
 import styles from "./addRecipes.module.css";
-import Navbar from "../../components/layout/Navbar";
 import backIcon from "../../assets/icons/back.svg";
 import uploadIcon from "../../assets/icons/upload-add.svg";
 import { useNavigate } from "react-router-dom";

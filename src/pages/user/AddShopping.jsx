@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Navbar from "../../components/layout/Navbar";
-import backIcon from "../../assets/icons/back.svg"
+import backIcon from "../../assets/icons/back.svg";
 import "./addShopping.css";
 
 function AddShopping() {
@@ -13,8 +13,6 @@ function AddShopping() {
     ]);
 
     const handleAddItem = () => {
-        if (!itemName || !quantity || !unit) return;
-
         const newItem = {
             id: Date.now(),
             name: "",
@@ -26,15 +24,52 @@ function AddShopping() {
     };
 
     const handleItemChange = (id, field, value) => {
-        setItems(items.map(item =>
-            item.id === id ? { ...item, [field]: value } : item
-        ));
+        setItems(
+            items.map((item) =>
+                item.id === id ? { ...item, [field]: value } : item
+            )
+        );
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log("Title:", title);
-        console.log("Items:", items);
+
+        try {
+            const token = localStorage.getItem("access_token");
+
+            const payload = {
+                nama_list: title,
+                items: items.map((item) => ({
+                    nama_item: item.name,
+                    jumlah: Number(item.quantity),
+                    satuan: item.unit,
+                })),
+            };
+
+            const response = await fetch(
+                "http://localhost:8000/api/shopping-lists",
+                {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        Authorization: `Bearer ${token}`,
+                    },
+                    body: JSON.stringify(payload),
+                }
+            );
+
+            const data = await response.json();
+
+            if (data.success) {
+                alert("Daftar belanja berhasil dibuat");
+                navigate("/shopping");
+            } else {
+                alert(data.message || "Gagal membuat daftar belanja");
+            }
+        } catch (error) {
+            console.error("Error:", error);
+            alert("Terjadi kesalahan");
+        }
     };
 
     return (
@@ -102,16 +137,6 @@ function AddShopping() {
                             +
                         </button>
                     </div>
-
-                    {items.length > 0 && (
-                        <div className="item-list">
-                            {items.map((item) => (
-                                <div key={item.id} className="item-preview">
-                                    {item.name} - {item.quantity} {item.unit}
-                                </div>
-                            ))}
-                        </div>
-                    )}
 
                     <div className="button-row">
                         <button

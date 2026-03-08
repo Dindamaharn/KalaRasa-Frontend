@@ -1,6 +1,10 @@
-import "./detailRecipes.css";
-import { useNavigate } from "react-router-dom";
+import styles from "./detailRecipes.module.css";
+import { useNavigate, useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
+import api from "../../services/api";
+
 import bookmarkIcon from "../../assets/icons/bookmark.svg";
+import fillBookmarkIcon from "../../assets/icons/fill-bookmark.svg";
 import starIcon from "../../assets/icons/star.svg";
 import timeIcon from "../../assets/icons/time.svg";
 import locationIcon from "../../assets/icons/location.svg";
@@ -8,101 +12,177 @@ import backIcon from "../../assets/icons/back.svg";
 
 const DetailRecipes = () => {
     const navigate = useNavigate();
+    const { id } = useParams();
+
+    const [recipe, setRecipe] = useState(null);
+    const [userData, setUserData] = useState(null);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        fetchRecipe();
+    }, [id]);
+
+    const fetchRecipe = async () => {
+        try {
+            const response = await api.get(`/recipe/recipes/${id}`);
+
+            setRecipe(response.data.data.recipe);
+            setUserData(response.data.data.user_data);
+
+        } catch (error) {
+            console.error("Gagal mengambil detail resep:", error);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    const handleBookmark = async () => {
+        try {
+            const response = await api.post(`/recipe/${id}/toggle-favorite`);
+
+            setUserData((prev) => ({
+                ...prev,
+                is_favorited: response.data.data.is_favorited
+            }));
+
+        } catch (error) {
+            console.error("Gagal toggle bookmark:", error);
+        }
+    };
+
+    const handleAddShoppingList = async () => {
+        try {
+            await api.post(`/recipe/${id}/add-to-shopping-list`);
+            alert("Bahan berhasil ditambahkan ke daftar belanja!");
+        } catch (error) {
+            console.error("Gagal menambah ke daftar belanja:", error);
+        }
+    };
+
+    if (loading) {
+        return <p style={{ textAlign: "center", marginTop: "40px" }}>Memuat resep...</p>;
+    }
+
+    if (!recipe) {
+        return <p style={{ textAlign: "center", marginTop: "40px" }}>Resep tidak ditemukan</p>;
+    }
+
     return (
-        <div className="detail-container">
+        <div className={styles.detailContainer}>
 
             {/* IMAGE SECTION */}
-            <div className="detail-image-wrapper">
+            <div className={styles.detailImageWrapper}>
+
                 <img
-                    src="https://images.unsplash.com/photo-1604908176997-125f25cc6f3d"
-                    alt="Recipe"
-                    className="detail-image"
+                    src={
+                        recipe.gambar
+                            ? `http://127.0.0.1:8000/storage/${recipe.gambar}`
+                            : "https://via.placeholder.com/600"
+                    }
+                    alt={recipe.nama}
+                    className={styles.detailImage}
                 />
 
-                <button className="back-button" onClick={() => navigate(-1)}>
+                <button
+                    className={styles.backButton}
+                    onClick={() => navigate(-1)}
+                >
                     <img src={backIcon} alt="Back" />
                 </button>
 
-                <button className="bookmark-button">
-                    <img src={bookmarkIcon} alt="Bookmark" />
+                <button
+                    className={styles.bookmarkButton}
+                    onClick={handleBookmark}
+                >
+                    <img
+                        src={
+                            userData?.is_favorited
+                                ? fillBookmarkIcon
+                                : bookmarkIcon
+                        }
+                        alt="Bookmark"
+                    />
                 </button>
+
             </div>
 
             {/* CONTENT */}
-            <div className="detail-content">
+            <div className={styles.detailContent}>
 
-                <h1 className="recipe-title">Tumis Sayur</h1>
-                <p className="recipe-subtitle">
-                    Menu sehat untuk makan siang keluarga
+                <h1 className={styles.recipeTitle}>{recipe.nama}</h1>
+
+                <p className={styles.recipeSubtitle}>
+                    {recipe.deskripsi}
                 </p>
 
-                <div className="recipe-meta">
-                    <div className="meta-item">
+                {/* META */}
+                <div className={styles.recipeMeta}>
+
+                    <div className={styles.metaItem}>
                         <img src={starIcon} alt="Star" />
-                        <span>4/5</span>
+                        <span>{recipe.avg_rating ?? 0}/5</span>
                     </div>
 
-                    <div className="meta-item">
+                    <div className={styles.metaItem}>
                         <img src={timeIcon} alt="Time" />
-                        <span>15 menit</span>
+                        <span>{recipe.waktu_masak} menit</span>
                     </div>
 
-                    <div className="meta-item">
+                    <div className={styles.metaItem}>
                         <img src={locationIcon} alt="Location" />
-                        <span>Bali</span>
+                        <span>{recipe.region}</span>
                     </div>
+
                 </div>
 
                 {/* BAHAN */}
-                <div className="detail-card">
+                <div className={styles.detailCard}>
+
                     <h3>Bahan - bahan</h3>
+
                     <ul>
-                        <li>3 ikat daun pakis</li>
-                        <li>3 siung bawang putih</li>
-                        <li>4 siung bawang merah</li>
-                        <li>4 buah cabe kriting merah</li>
-                        <li>4 buah cabe rawit merah</li>
-                        <li>Secukupnya gula, garam dan kaldu jamur</li>
+                        {recipe.ingredients?.map((item) => (
+                            <li key={item.id}>
+                                {Number(item.pivot?.jumlah)} {item.pivot?.satuan} {item.nama}
+                            </li>
+                        ))}
                     </ul>
+
                 </div>
 
                 {/* CARA MEMBUAT */}
-                <div className="detail-card">
+                <div className={styles.detailCard}>
+
                     <h3>Cara Membuat</h3>
 
-                    <div className="step">
-                        <div className="step-number">1</div>
-                        <p>
-                            Cuci bersih daun pakis tiriskan, iris bawang dan cabe.
-                            Tumis bawang sampai layu.
-                        </p>
-                    </div>
+                    {recipe.langkah_langkah
+                        ?.split("\\n")
+                        .map((step, index) => (
+                            <div className={styles.step} key={index}>
+                                <div className={styles.stepNumber}>
+                                    {index + 1}
+                                </div>
 
-                    <div className="step">
-                        <div className="step-number">2</div>
-                        <p>
-                            Masukkan irisan cabe lalu daun pakis.
-                            Tambahkan gula, garam dan kaldu jamur.
-                        </p>
-                    </div>
+                                <p>{step.replace(/^\d+\.\s*/, "")}</p>
+                            </div>
+                        ))}
 
-                    <div className="step">
-                        <div className="step-number">3</div>
-                        <p>
-                            Aduk rata hingga matang. Koreksi rasa dan sajikan.
-                        </p>
-                    </div>
                 </div>
 
                 {/* BUTTONS */}
-                <div className="detail-buttons">
-                    <button className="rate-button">
+                <div className={styles.detailButtons}>
+
+                    <button className={styles.rateButton}>
                         Beri Penilaian
                     </button>
 
-                    <button className="cart-button">
+                    <button
+                        className={styles.cartButton}
+                        onClick={handleAddShoppingList}
+                    >
                         Tambah ke Daftar Belanja
                     </button>
+
                 </div>
 
             </div>

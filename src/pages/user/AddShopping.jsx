@@ -8,25 +8,27 @@ function AddShopping() {
     const navigate = useNavigate();
 
     const [title, setTitle] = useState("");
-    const [itemName, setItemName] = useState("");
-    const [quantity, setQuantity] = useState("");
-    const [unit, setUnit] = useState("");
-    const [items, setItems] = useState([]);
+    const [items, setItems] = useState([
+        { id: Date.now(), name: "", quantity: "", unit: "" }
+    ]);
 
     const handleAddItem = () => {
         if (!itemName || !quantity || !unit) return;
 
         const newItem = {
             id: Date.now(),
-            name: itemName,
-            quantity,
-            unit,
+            name: "",
+            quantity: "",
+            unit: "",
         };
 
         setItems([...items, newItem]);
-        setItemName("");
-        setQuantity("");
-        setUnit("");
+    };
+
+    const handleItemChange = (id, field, value) => {
+        setItems(items.map(item =>
+            item.id === id ? { ...item, [field]: value } : item
+        ));
     };
 
     const handleSubmit = (e) => {
@@ -45,6 +47,7 @@ function AddShopping() {
                 <h2>Tambahkan Daftar Belanja Baru</h2>
 
                 <form onSubmit={handleSubmit}>
+
                     <div className="form-group">
                         <label>Masukkan Judul Daftar Belanja</label>
                         <input
@@ -58,36 +61,46 @@ function AddShopping() {
                     <div className="form-group">
                         <label>Tambahkan Item Belanja</label>
 
-                        <div className="item-row">
-                            <input
-                                type="text"
-                                placeholder="Nama Item"
-                                value={itemName}
-                                onChange={(e) => setItemName(e.target.value)}
-                            />
+                        {items.map((item) => (
+                            <div key={item.id} className="item-row">
 
-                            <input
-                                type="number"
-                                placeholder="Jumlah"
-                                value={quantity}
-                                onChange={(e) => setQuantity(e.target.value)}
-                            />
+                                <input
+                                    type="text"
+                                    placeholder="Nama Item"
+                                    value={item.name}
+                                    onChange={(e) =>
+                                        handleItemChange(item.id, "name", e.target.value)
+                                    }
+                                />
 
-                            <input
-                                type="text"
-                                placeholder="Satuan"
-                                value={unit}
-                                onChange={(e) => setUnit(e.target.value)}
-                            />
+                                <input
+                                    type="number"
+                                    placeholder="Jumlah"
+                                    value={item.quantity}
+                                    onChange={(e) =>
+                                        handleItemChange(item.id, "quantity", e.target.value)
+                                    }
+                                />
 
-                            <button
-                                type="button"
-                                className="add-item-button"
-                                onClick={handleAddItem}
-                            >
-                                +
-                            </button>
-                        </div>
+                                <input
+                                    type="text"
+                                    placeholder="Satuan"
+                                    value={item.unit}
+                                    onChange={(e) =>
+                                        handleItemChange(item.id, "unit", e.target.value)
+                                    }
+                                />
+
+                            </div>
+                        ))}
+
+                        <button
+                            type="button"
+                            className="add-item-button"
+                            onClick={handleAddItem}
+                        >
+                            +
+                        </button>
                     </div>
 
                     {items.length > 0 && (
@@ -116,6 +129,7 @@ function AddShopping() {
                             Simpan Daftar Belanja
                         </button>
                     </div>
+
                 </form>
             </div>
         </div>

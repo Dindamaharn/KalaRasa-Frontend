@@ -142,7 +142,7 @@ function RecipesUser() {
                                     </div>
 
                                     <Link
-                                        to={`/detail-recipes/${recipe.id}`}
+                                        to={`/recipes/${recipe.id}`}
                                         className={styles.detailButton}
                                     >
                                         Detail

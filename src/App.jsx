@@ -48,7 +48,6 @@ function App() {
         <Route path="/shopping" element={<Shopping />} />
         <Route path="/recipes" element={<Recipes />} />
         <Route path="/recipes/:id" element={<DetailRecipes />} />
-        <Route path="/detail-recipes" element={<DetailRecipes />} />
         <Route path="/add-recipes" element={<AddRecipes />} />
         <Route path="/add-shopping" element={<AddShopping />} />
 

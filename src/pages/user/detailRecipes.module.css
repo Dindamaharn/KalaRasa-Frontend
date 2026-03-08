@@ -1,0 +1,257 @@
+.detailContainer {
+    padding: 40px 80px;
+    background-color: #F4F6F9;
+}
+
+/* IMAGE */
+.detailImageWrapper {
+    position: relative;
+    width: 100%;
+    border-radius: 20px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+.detailImage {
+    width: 100%;
+    height: 400px;
+    object-fit: cover;
+}
+
+/* ICON BUTTONS */
+.backButton,
+.bookmarkButton {
+    position: absolute;
+    top: 20px;
+    background: white;
+    border: none;
+    width: 48px;
+    height: 48px;
+    border: 1px solid #E5E7EB;
+    border-radius: 14px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.backButton {
+    left: 20px;
+}
+
+.bookmarkButton {
+    right: 20px;
+}
+
+.backButton img,
+.bookmarkButton img {
+    width: 20px;
+}
+
+/* CONTENT */
+.detailContent {
+    margin-top: 30px;
+}
+
+.recipeTitle {
+    font-size: 28px;
+    margin-bottom: 6px;
+}
+
+.recipeSubtitle {
+    color: #6B7280;
+    margin-bottom: 16px;
+}
+
+/* META INFO */
+.recipeMeta {
+    display: flex;
+    gap: 30px;
+    margin-bottom: 30px;
+}
+
+.metaItem {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    color: #374151;
+}
+
+.metaItem img {
+    width: 18px;
+}
+
+/* CARD */
+.detailCard {
+    background: white;
+    padding: 24px;
+    border-radius: 16px;
+    margin-bottom: 24px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.detailCard h3 {
+    margin-bottom: 16px;
+    margin-top: 0px;
+}
+
+.detailCard ul {
+    padding-left: 20px;
+}
+
+.detailCard li {
+    margin-bottom: 8px;
+}
+
+/* STEP */
+.step {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 14px;
+}
+
+.stepNumber {
+    background-color: #0A2C5E;
+    color: white;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    margin-right: 12px;
+}
+
+.step p {
+    margin-top: 0px;
+}
+
+/* BUTTONS */
+.detailButtons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 30px;
+}
+
+.rateButton {
+    background-color: #F97316;
+    color: white;
+    border: none;
+    padding: 12px 28px;
+    border-radius: 12px;
+    cursor: pointer;
+    font-weight: 500;
+}
+
+.cartButton {
+    background-color: #0A2C5E;
+    color: white;
+    border: none;
+    padding: 12px 28px;
+    border-radius: 12px;
+    cursor: pointer;
+    font-weight: 500;
+}
+
+/* TABLET */
+@media (max-width: 1024px) {
+    .detailContainer {
+        padding: 30px 40px;
+    }
+
+    .detailImage {
+        height: 320px;
+    }
+
+    .recipeTitle {
+        font-size: 24px;
+    }
+
+    .recipeMeta {
+        gap: 10px;
+        flex-wrap: wrap;
+    }
+
+    .detailButtons {
+        gap: 10px;
+    }
+}
+
+
+/* MOBILE */
+@media (max-width: 768px) {
+    .detailContainer {
+        padding: 20px;
+    }
+
+    .detailImage {
+        height: 250px;
+    }
+
+    .backButton,
+    .bookmarkButton {
+        width: 40px;
+        height: 40px;
+        top: 12px;
+    }
+
+    .backButton {
+        left: 12px;
+    }
+
+    .bookmarkButton {
+        right: 12px;
+    }
+
+    .recipeTitle {
+        font-size: 20px;
+    }
+
+    .recipeSubtitle {
+        font-size: 14px;
+    }
+
+    .recipeMeta {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .detailCard {
+        padding: 18px;
+    }
+
+    .detailButtons {
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    .rateButton,
+    .cartButton {
+        width: 100%;
+        text-align: center;
+    }
+}
+
+
+/* SMALL MOBILE */
+@media (max-width: 480px) {
+    .detailImage {
+        height: 200px;
+    }
+
+    .recipeTitle {
+        font-size: 18px;
+    }
+
+    .stepNumber {
+        width: 24px;
+        height: 24px;
+        font-size: 12px;
+    }
+
+    .metaItem img {
+        width: 16px;
+    }
+}

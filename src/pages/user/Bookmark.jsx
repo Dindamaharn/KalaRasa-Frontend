@@ -1,12 +1,13 @@
 import Navbar from "../../components/layout/Navbar";
-import "./bookmark.css";
+import styles from "./bookmark.module.css";
+import { Link, useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import api from "../../services/api";
+
 import emptyIcon from "../../assets/icons/Empty Mark.svg";
 import backIcon from "../../assets/icons/back.svg";
 import starIcon from "../../assets/icons/star.svg";
 import bookmarkIcon from "../../assets/icons/fill-bookmark.svg";
-import { Link, useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
-import api from "../../services/api";
 
 function MarkahUser() {
 
@@ -33,7 +34,6 @@ function MarkahUser() {
         try {
             await api.delete(`/bookmarks/${recipeId}`);
 
-            // hapus dari state supaya langsung hilang dari UI
             setBookmarks((prev) =>
                 prev.filter((item) => item.id !== recipeId)
             );
@@ -47,12 +47,12 @@ function MarkahUser() {
         <>
             <Navbar />
 
-            <div className="markah-page">
+            <div className={styles.markahPage}>
 
                 {/* SEARCH SECTION */}
-                <div className="markah-search">
+                <div className={styles.markahSearch}>
                     <button
-                        className="back-box"
+                        className={styles.backBox}
                         onClick={() => navigate(-1)}
                     >
                         <img src={backIcon} alt="Back" />
@@ -61,31 +61,34 @@ function MarkahUser() {
                     <input
                         type="text"
                         placeholder="Cari resep berdasarkan nama makanan"
-                        className="search-input"
+                        className={styles.searchInput}
                     />
 
-                    <button className="search-button">
+                    <button className={styles.searchButton}>
                         Cari
                     </button>
                 </div>
 
-                {/* CONTENT */}
+                {/* EMPTY STATE */}
                 {!loading && bookmarks.length === 0 && (
-                    <div className="empty-container">
+                    <div className={styles.emptyContainer}>
                         <img
                             src={emptyIcon}
                             alt="Empty"
-                            className="empty-icon"
+                            className={styles.emptyIcon}
                         />
 
                         <h3>Belum Ada Markah</h3>
                         <p>Anda belum menyimpan resep favorit.</p>
                     </div>
                 )}
+
                 {loading && <p>Memuat bookmark...</p>}
-                <div className="recipes-grid">
+
+                {/* GRID */}
+                <div className={styles.recipesGrid}>
                     {!loading && bookmarks.map((recipe) => (
-                        <div className="recipe-card" key={recipe.id}>
+                        <div className={styles.recipeCard} key={recipe.id}>
 
                             <img
                                 src={
@@ -94,31 +97,35 @@ function MarkahUser() {
                                         : "https://via.placeholder.com/300"
                                 }
                                 alt={recipe.nama}
-                                className="recipe-image"
+                                className={styles.recipeImage}
                             />
 
-                            <div className="recipe-body">
-                                <div className="recipe-header">
+                            <div className={styles.recipeBody}>
+                                <div className={styles.recipeHeader}>
                                     <h4>{recipe.nama}</h4>
+
                                     <img
                                         src={bookmarkIcon}
                                         alt="Bookmark"
-                                        className="bookmark-icon"
+                                        className={styles.bookmarkIcon}
                                         onClick={() => handleRemoveBookmark(recipe.id)}
                                     />
                                 </div>
 
-                                <p className="recipe-desc">
+                                <p className={styles.recipeDesc}>
                                     {recipe.deskripsi}
                                 </p>
 
-                                <div className="recipe-footer">
-                                    <div className="rating">
+                                <div className={styles.recipeFooter}>
+                                    <div className={styles.rating}>
                                         <img src={starIcon} alt="Star" />
                                         <span>{recipe.avg_rating ?? 0}/5</span>
                                     </div>
 
-                                    <Link to="/detail-recipes" className="detail-button">
+                                    <Link
+                                        to={`/recipes/${recipe.id}`}
+                                        className={styles.detailButton}
+                                    >
                                         Detail
                                     </Link>
                                 </div>

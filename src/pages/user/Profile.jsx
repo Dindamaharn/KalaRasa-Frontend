@@ -4,7 +4,7 @@ import { getProfile } from "../../services/authService";
 import Navbar from "../../components/layout/Navbar";
 import Exit from "../../components/modal/Exit";
 import LoadingModal from "../../components/modal/Loading";
-import "./Profile.css";
+import styles from "./profile.module.css";
 
 import profileIcon from "../../assets/icons/user.svg";
 import bookmarkIcon from "../../assets/icons/fill-bookmark.svg";
@@ -49,7 +49,7 @@ function ProfileUser() {
         <>
             <Navbar />
 
-            <div className="profile-wrapper">
+            <div className={styles.profileWrapper}>
                 {!loading && !user && (
                     <div style={{ padding: "40px" }}>
                         Gagal memuat data user
@@ -57,58 +57,58 @@ function ProfileUser() {
                 )}
 
                 {!loading && user && (
-                    <div className="profile-card">
-                        <h2 className="profile-title">Profil Pengguna</h2>
+                    <div className={styles.profileCard}>
+                        <h2 className={styles.profileTitle}>Profil Pengguna</h2>
 
-                        <div className="profile-content">
-                            <div className="profile-left">
-                                <div className="form-group">
+                        <div className={styles.profileContent}>
+                            <div className={styles.profileLeft}>
+                                <div className={styles.formGroup}>
                                     <label>Nama Lengkap</label>
                                     <input type="text" value={user?.name || "-"} disabled />
                                 </div>
 
-                                <div className="form-group">
+                                <div className={styles.formGroup}>
                                     <label>Email</label>
                                     <input type="text" value={user?.email || "-"} disabled />
                                 </div>
                             </div>
 
-                            <div className="profile-right">
-                                <div className="form-group">
+                            <div className={styles.profileRight}>
+                                <div className={styles.formGroup}>
                                     <label>Total Poin</label>
                                     <input type="text" value={user?.points ?? "0"} disabled />
                                 </div>
 
-                                <div className="form-group">
+                                <div className={styles.formGroup}>
                                     <label>No Telp</label>
                                     <input type="text" value={user?.phone || "-"} disabled />
                                 </div>
                             </div>
 
-                            <div className="profile-avatar-section">
-                                <div className="profile-avatar">
+                            <div className={styles.profileAvatarSection}>
+                                <div className={styles.profileAvatar}>
                                     <img src={profileIcon} alt="Profile" />
                                 </div>
 
-                                <Link to="/edit-profile" className="edit-button">
+                                <Link to="/edit-profile" className={styles.editButton}>
                                     Edit Profil
                                 </Link>
                             </div>
                         </div>
 
-                        <div className="profile-menu">
-                            <Link to="/bookmark" className="menu-item">
+                        <div className={styles.profileMenu}>
+                            <Link to="/bookmark" className={styles.menuItem}>
                                 <span>Markah</span>
                                 <img src={bookmarkIcon} alt="Markah" />
                             </Link>
 
-                            <Link to="/history" className="menu-item">
+                            <Link to="/history" className={styles.menuItem}>
                                 <span>Riwayat</span>
                                 <img src={historyIcon} alt="Riwayat" />
                             </Link>
 
                             <button
-                                className="menu-item logout"
+                                className={`${styles.menuItem} ${styles.logout}`}
                                 onClick={() => setOpenExit(true)}
                             >
                                 <span>Keluar</span>

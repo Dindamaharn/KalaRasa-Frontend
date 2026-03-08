@@ -1,0 +1,256 @@
+.profileWrapper {
+    display: flex;
+    justify-content: center;
+    padding: 20px 20px;
+}
+
+.profileCard {
+    width: 100%;
+    max-width: 1100px;
+    background-color: #FFFFFF;
+    border-radius: 16px;
+    padding: 40px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+}
+
+.profileTitle {
+    font-size: 24px;
+    font-weight: 600;
+    color: #1F2933;
+    margin-bottom: 32px;
+}
+
+.profileContent {
+    display: flex;
+    gap: 40px;
+    align-items: flex-start;
+}
+
+.profileLeft,
+.profileRight {
+    flex: 1;
+}
+
+.formGroup {
+    margin-bottom: 20px;
+}
+
+.formGroup label {
+    display: block;
+    font-size: 14px;
+    color: #6B7280;
+    margin-bottom: 6px;
+}
+
+.formGroup input {
+    width: 100%;
+    height: 40px;
+    padding: 12px 14px;
+    border-radius: 10px;
+    border: 1px solid #E5E7EB;
+    background-color: #F9FAFC;
+    font-size: 14px;
+    color: #1F2933;
+}
+
+.profileAvatarSection {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+}
+
+.profileAvatar {
+    width: 100px;
+    height: 100px;
+    border: 3px solid #022855;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.profileAvatar img {
+    width: 40px;
+}
+
+.editButton {
+    background-color: #022855;
+    color: #FFFFFF;
+    border: none;
+    text-decoration: none;
+    padding: 10px 18px;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.profileMenu {
+    margin-top: 40px;
+    border-top: 1px solid #E5E7EB;
+}
+
+.menuItem {
+    width: 100%;
+    padding: 16px 0;
+    border: none;
+    outline: none;
+    border-bottom: 1px solid #E5E7EB;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    text-decoration: none;
+    background: none;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 500;
+}
+
+.menuItem:focus {
+    outline: none;
+}
+
+.menuItem:active {
+    outline: none;
+}
+
+.menuItem span {
+    font-weight: 500;
+    color: #1F2933;
+}
+
+.menuItem img {
+    width: 20px;
+    height: 20px;
+}
+
+.logout {
+    color: #DC2626;
+}
+
+.logout span {
+    color: #DC2626;
+    font-weight: 500;
+}
+
+/* TABLET */
+@media (max-width: 1024px) {
+    .profileCard {
+        padding: 30px;
+    }
+
+    .profileContent {
+        gap: 30px;
+    }
+
+    .profileTitle {
+        font-size: 22px;
+    }
+}
+
+
+/* MOBILE */
+@media (max-width: 768px) {
+    .profileWrapper {
+        padding: 16px;
+    }
+
+    .profileCard {
+        padding: 24px;
+    }
+
+    .profileContent {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 12px;
+    }
+
+    /* avatar pindah ke atas */
+    .profileAvatarSection {
+        order: -1;
+        margin-bottom: 10px;
+    }
+
+    .profileLeft,
+    .profileRight {
+        width: 100%;
+        margin: 0;
+    }
+
+    .formGroup {
+        margin-bottom: 12px;
+    }
+
+    .profileAvatar {
+        width: 90px;
+        height: 90px;
+    }
+
+    .profileAvatar img {
+        width: 36px;
+    }
+
+    .profileTitle {
+        font-size: 20px;
+        margin-bottom: 18px;
+    }
+
+    .profileMenu {
+        margin-top: 18px;
+    }
+
+    .menuItem {
+        font-size: 15px;
+        padding: 14px 0;
+    }
+}
+
+
+/* SMALL MOBILE */
+@media (max-width: 480px) {
+    .profileCard {
+        padding: 20px;
+        border-radius: 12px;
+    }
+
+    .profileContent {
+        gap: 10px;
+    }
+
+    .profileTitle {
+        font-size: 18px;
+        margin-bottom: 16px;
+    }
+
+    .formGroup {
+        margin-bottom: 10px;
+    }
+
+    .formGroup input {
+        height: 38px;
+        font-size: 13px;
+    }
+
+    .profileAvatar {
+        width: 80px;
+        height: 80px;
+    }
+
+    .profileAvatar img {
+        width: 32px;
+    }
+
+    .editButton {
+        padding: 8px 14px;
+        font-size: 13px;
+    }
+
+    .menuItem {
+        font-size: 14px;
+    }
+
+    .menuItem img {
+        width: 18px;
+        height: 18px;
+    }
+}

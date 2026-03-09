@@ -1,0 +1,148 @@
+.footer{
+    background:#022855;
+    color:white;
+}
+
+/* CONTAINER */
+.footerContainer{
+    max-width:1300px;
+    margin:auto;
+    padding:50px 80px;
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-start;
+    gap:60px;
+}
+
+/* COLUMN */
+.footerColumn{
+    flex:1;
+}
+
+.footerColumn h4{
+    font-size:18px;
+    font-weight:600;
+    margin-bottom:18px;
+}
+
+.footerColumn p{
+    font-size:14px;
+    line-height:1.8;
+    color:#E5E7EB;
+    max-width:280px;
+}
+
+/* SOCIAL ICONS */
+.socialIcons{
+    display:flex;
+    gap:18px;
+    margin-top:10px;
+}
+
+.socialIcons img{
+    width:24px;
+    height:24px;
+    cursor:pointer;
+    filter:brightness(0) invert(1);
+    opacity:0.85;
+    transition:all 0.25s ease;
+}
+
+.socialIcons img:hover{
+    opacity:1;
+    transform:scale(1.1);
+}
+
+/* QUICK LINKS */
+.footerLinks{
+    display:flex;
+    flex-direction:column;
+    gap:12px;
+}
+
+.footerLinks a{
+    text-decoration:none;
+    color:#E5E7EB;
+    font-size:14px;
+    transition:0.2s;
+}
+
+.footerLinks a:hover{
+    color:white;
+}
+
+/* BOTTOM */
+.footerBottom{
+    text-align:center;
+    padding:22px;
+    font-size:13px;
+    border-top:1px solid rgba(255,255,255,0.15);
+    color:#D1D5DB;
+}
+
+/* ===== TABLET ===== */
+@media (max-width: 1024px){
+
+    .footerContainer{
+        padding:40px 40px;
+        gap:40px;
+    }
+
+    .footerColumn p{
+        max-width:100%;
+    }
+
+}
+
+
+/* ===== MOBILE ===== */
+@media (max-width: 768px){
+
+    .footerContainer{
+        flex-direction:column;
+        gap:40px;
+        padding:40px 20px;
+    }
+
+    .footerColumn{
+        width:100%;
+    }
+
+    .socialIcons{
+        margin-top:12px;
+    }
+
+}
+
+
+/* ===== SMALL MOBILE ===== */
+@media (max-width: 480px){
+
+    .footerContainer{
+        padding:35px 20px;
+        gap:30px;
+    }
+
+    .footerColumn h4{
+        font-size:16px;
+    }
+
+    .footerColumn p{
+        font-size:13px;
+    }
+
+    .footerLinks a{
+        font-size:13px;
+    }
+
+    .socialIcons img{
+        width:22px;
+        height:22px;
+    }
+
+    .footerBottom{
+        font-size:12px;
+        padding:18px;
+    }
+
+}

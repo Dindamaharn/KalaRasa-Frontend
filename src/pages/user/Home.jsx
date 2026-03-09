@@ -19,6 +19,10 @@ import jajananImg from "../../assets/images/jajanan.png";
 import ikanImg from "../../assets/images/ikanpg.png";
 import dagingImg from "../../assets/images/daging.png";
 import ayamImg from "../../assets/images/ayam.png";
+
+import messageIcon from "../../assets/icons/message.svg";
+import Chatbot from "../../components/modal/Chatbot";
+
 import Footer from "../../components/layout/Footer";
 
 const Home = () => {
@@ -53,6 +57,8 @@ const Home = () => {
   { name: "Olahan Pasta", image: pastaImg },
   { name: "Olahan Ikan", image: ikanImg },
   ];
+
+  const [openChat, setOpenChat] = useState(false);
 
   // AUTO SLIDE
   useEffect(() => {
@@ -260,7 +266,8 @@ const Home = () => {
         </section>
 
       </div>
-      <Footer />
+        <Chatbot />
+        <Footer />
     </>
   );
 };

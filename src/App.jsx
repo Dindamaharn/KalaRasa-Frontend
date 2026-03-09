@@ -12,6 +12,7 @@ import Profile from "./pages/user/Profile";
 import Bookmark from "./pages/user/Bookmark";
 import History from "./pages/user/History";
 import Shopping from "./pages/user/Shopping";
+import ShoppingDetail from "./pages/user/ShoppingDetail";
 import Recipes from "./pages/user/Recipes";
 import DetailRecipes from "./pages/user/DetailRecipes";
 import EditProfile from "./pages/user/EditProfile";
@@ -54,6 +55,7 @@ function App() {
         <Route path="/bookmark" element={<Bookmark />} />
         <Route path="/history" element={<History />} />
         <Route path="/shopping" element={<Shopping />} />
+        <Route path="/shopping/:id" element={<ShoppingDetail />} />
         <Route path="/recipes" element={<Recipes />} />
         <Route path="/recipes/:id" element={<DetailRecipes />} />
         <Route path="/add-recipes" element={<AddRecipes />} />

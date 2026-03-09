@@ -1,0 +1,135 @@
+.shoppingDetail {
+    padding: 20px 80px;
+    background-color: #f5f6f8;
+    min-height: 100vh;
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+}
+
+.backButton {
+    width: 48px;
+    height: 48px;
+    border-radius: 14px;
+    background-color: #FFFFFF;
+    border: 1px solid #E5E7EB;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    margin-bottom: 20px;
+}
+
+.detailCard {
+    background: #ffffff;
+    padding: 40px;
+    border-radius: 16px;
+    flex: 1;
+    border: 1px solid #E5E7EB;
+}
+
+.detailHeader h2 {
+    margin: 0;
+    font-size: 22px;
+}
+
+.detailHeader p {
+    color: #6B7280;
+    margin-top: 4px;
+}
+
+.detailHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.addItemBtn {
+    padding: 10px 10px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid #FF6A00;
+    border-radius: 12px;
+    background: none;
+}
+
+.itemList {
+    margin-top: 20px;
+}
+
+.itemRow {
+    display: grid;
+    grid-template-columns: 40px 1fr 70px 80px 120px 40px;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 0;
+    border-bottom: 1px solid #eee;
+}
+
+.itemNameInput {
+    font-weight: 500;
+}
+
+.itemQtyInput,
+.itemUnitInput,
+.itemPriceInput {
+    padding: 6px 10px;
+    border-radius: 6px;
+    text-align: center;
+}
+
+.customCheckbox {
+    width: 30px;
+    height: 30px;
+}
+
+.deleteBtn {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px 10px;
+    border-radius: 6px;
+    border: none;
+    background-color: #FEE2E2;
+}
+
+.totalBar {
+    margin-top: 20px;
+    background: #0C2D57;
+    color: white;
+    padding: 12px 20px;
+    border-radius: 10px;
+    display: flex;
+    justify-content: space-between;
+    font-weight: 600;
+}
+
+.actionButtons {
+    display: flex;
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.saveBtn {
+    flex: 1;
+    background: #FF6A00;
+    border: none;
+    color: white;
+    padding: 12px;
+    border-radius: 10px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.cancelBtn {
+    width: 200px;
+    background: #E5E7EB;
+    border: none;
+    border-radius: 10px;
+    font-weight: 600;
+    cursor: pointer;
+}

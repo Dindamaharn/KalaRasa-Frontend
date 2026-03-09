@@ -134,13 +134,15 @@ function UsersAdmin() {
                 </tbody>
                 </table>
 
+                {totalPages > 1 && (
                 <div className="pagination-container">
-                <Pagination
+                    <Pagination
                     currentPage={currentPage}
                     totalPages={totalPages}
                     onPageChange={handlePageChange}
-                />
+                    />
                 </div>
+                )}
             </div>
 
             <div className="admin-footer">

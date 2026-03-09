@@ -170,7 +170,7 @@ function DetailUsers() {
 
                         <td>
                           <Link
-                            to={`/admin/submission/${item.id}`}
+                            to={`/admin/submissions/${item.id}`}
                             className="btn-detail"
                           >
                             Lihat
@@ -184,13 +184,15 @@ function DetailUsers() {
             </div>
 
             {/* PAGINATION */}
-            <div className="pagination-container">
-              <Pagination
-                currentPage={currentPage}
-                totalPages={totalPages}
-                onPageChange={setCurrentPage}
-              />
-            </div>
+            {totalPages > 1 && (
+              <div className="pagination-container">
+                <Pagination
+                  currentPage={currentPage}
+                  totalPages={totalPages}
+                  onPageChange={setCurrentPage}
+                />
+              </div>
+            )}
           </div>
 
           <div className="admin-footer">

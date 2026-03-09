@@ -127,13 +127,15 @@ function QueueSubmissionRecipes() {
             </table>
           </div>
 
-          <div className="pagination-container">
-            <Pagination
-              currentPage={currentPage}
-              totalPages={totalPages}
-              onPageChange={handlePageChange}
-            />
-          </div>
+          {totalPages > 1 && (
+            <div className="pagination-container">
+              <Pagination
+                currentPage={currentPage}
+                totalPages={totalPages}
+                onPageChange={handlePageChange}
+              />
+            </div>
+          )}
 
           <div className="admin-footer">© 2026 Kala Rasa — Admin</div>
         </main>

@@ -2,7 +2,8 @@ import { useEffect, useState } from "react";
 import AsideAdmin from "../../components/layout/Aside";
 import Pagination from "../../components/ui/Pagination";
 import Loading from "../../components/modal/Loading";
-import { Link } from "react-router-dom";
+import RejectAccess from "../../components/modal/RejectAcces";
+import { Link, useNavigate } from "react-router-dom";
 import api from "../../services/api";
 import "./recipesAdmin.css";
 
@@ -11,11 +12,15 @@ import timeIcon from "../../assets/icons/time.svg";
 import locationIcon from "../../assets/icons/location.svg";
 
 function RecipesAdmin() {
+  const navigate = useNavigate();
+
   const [recipes, setRecipes] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [search, setSearch] = useState("");
   const [loading, setLoading] = useState(true);
+
+  const [showRejectAccess, setShowRejectAccess] = useState(false);
 
   const itemsPerPage = 10;
 
@@ -59,6 +64,15 @@ function RecipesAdmin() {
     fetchRecipes(1, search);
   };
 
+  // ================= HANDLE UPDATE =================
+  const handleUpdateClick = (recipe) => {
+  if (recipe.user?.role_id === 1) {
+    setShowRejectAccess(true);
+  } else {
+    navigate(`/admin/recipes/${recipe.id}`);
+  }
+};
+
   return (
     <>
       {/* LOADING MODAL */}
@@ -100,9 +114,9 @@ function RecipesAdmin() {
                 <div className="recipe-card-admin" key={recipe.id}>
                   <img
                     src={
-                      recipe.gambar
-                        ? `http://localhost:8000/storage/${recipe.gambar}`
-                        : ""
+                      recipe.gambar?.startsWith("http")
+                        ? recipe.gambar
+                        : `http://localhost:8000/storage/${recipe.gambar}`
                     }
                     alt={recipe.nama}
                   />
@@ -133,30 +147,38 @@ function RecipesAdmin() {
                     </div>
                   </div>
 
-                  <Link
-                    to={`/admin/recipes/${recipe.id}`}
+                  <button
                     className="btn-update"
+                    onClick={() => handleUpdateClick(recipe)}
                   >
                     Perbarui Resep
-                  </Link>
+                  </button>
                 </div>
               ))
             )}
           </div>
 
-          <div className="pagination-container">
-            <Pagination
-              currentPage={currentPage}
-              totalPages={totalPages}
-              onPageChange={handlePageChange}
-            />
-          </div>
+          {totalPages > 1 && (
+            <div className="pagination-container">
+              <Pagination
+                currentPage={currentPage}
+                totalPages={totalPages}
+                onPageChange={handlePageChange}
+              />
+            </div>
+          )}
 
           <div className="admin-footer">
             © 2026 Kala Rasa — Admin
           </div>
         </main>
       </div>
+
+      {/* MODAL AKSES DITOLAK */}
+      <RejectAccess
+        isOpen={showRejectAccess}
+        onClose={() => setShowRejectAccess(false)}
+      />
     </>
   );
 }

@@ -19,6 +19,10 @@ function AddRecipes() {
   const [kategori, setKategori] = useState("");
   const [gambar, setGambar] = useState(null);
 
+  const [previewImage, setPreviewImage] = useState(null);
+
+  const [errors, setErrors] = useState({});
+
   const [ingredients, setIngredients] = useState([
     { name: "", amount: "", unit: "" },
   ]);
@@ -42,29 +46,72 @@ function AddRecipes() {
     setIngredients(updated);
   };
 
-  // update step
+  // update langkah
   const handleStepChange = (index, value) => {
     const updated = [...steps];
     updated[index] = value;
     setSteps(updated);
   };
 
-  // upload gambar
+  // upload gambar + preview
   const handleImageChange = (e) => {
     const file = e.target.files[0];
+
+    if (!file) return;
+
+    if (file.size > 1024 * 1024) {
+      setErrors((prev) => ({
+        ...prev,
+        gambar: "Ukuran gambar maksimal 1MB",
+      }));
+      return;
+    }
+
     setGambar(file);
+    setPreviewImage(URL.createObjectURL(file));
+
+    setErrors((prev) => ({
+      ...prev,
+      gambar: null,
+    }));
   };
 
-  // submit ke backend
+  // validasi form
+  const validateForm = () => {
+    const newErrors = {};
+
+    if (!nama) newErrors.nama = "Nama resep wajib diisi";
+    if (!deskripsi) newErrors.deskripsi = "Deskripsi wajib diisi";
+    if (!waktuMasak) newErrors.waktuMasak = "Waktu memasak wajib diisi";
+    if (!region) newErrors.region = "Daerah wajib diisi";
+    if (!kategori) newErrors.kategori = "Kategori wajib dipilih";
+    if (!gambar) newErrors.gambar = "Foto masakan wajib diupload";
+
+    if (ingredients.length === 0) {
+      newErrors.ingredients = "Minimal 1 bahan";
+    }
+
+    if (steps.length === 0) {
+      newErrors.steps = "Minimal 1 langkah";
+    }
+
+    setErrors(newErrors);
+
+    return Object.keys(newErrors).length === 0;
+  };
+
+  // submit
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    if (!validateForm()) return;
 
     try {
       const formData = new FormData();
 
       formData.append("nama", nama);
       formData.append("deskripsi", deskripsi);
-      formData.append("waktu_masak", waktuMasak);
+      formData.append("waktu_masak", parseInt(waktuMasak) || 0);
       formData.append("region", region);
       formData.append("kategori", kategori);
 
@@ -72,24 +119,42 @@ function AddRecipes() {
         formData.append("gambar", gambar);
       }
 
-      ingredients.forEach((item, index) => {
-        formData.append(`bahan_bahan[${index}][nama]`, item.name);
-        formData.append(`bahan_bahan[${index}][jumlah]`, item.amount);
-        formData.append(`bahan_bahan[${index}][satuan]`, item.unit);
-      });
+      // bahan
+      ingredients
+        .filter((item) => item.name && item.amount)
+        .forEach((item, index) => {
+          formData.append(`bahan_bahan[${index}][nama]`, item.name);
+          formData.append(`bahan_bahan[${index}][jumlah]`, item.amount);
+          formData.append(`bahan_bahan[${index}][satuan]`, item.unit);
+        });
 
-      steps.forEach((step, index) => {
-        formData.append(`langkah_langkah[${index}]`, step);
-      });
+      // langkah
+      steps
+        .filter((step) => step.trim() !== "")
+        .forEach((step, index) => {
+          formData.append(`langkah_langkah[${index}]`, step);
+        });
 
-      await api.post("/recipes", formData, {
+      await api.post("/admin/recipe", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
       });
+
       navigate("/admin/recipes");
+
     } catch (error) {
-      console.error(error);
+      const backendErrors = error.response?.data?.errors;
+
+      if (backendErrors) {
+        setErrors(backendErrors);
+      } else {
+        setErrors({
+          general: "Terjadi kesalahan saat menyimpan resep",
+        });
+      }
+
+      console.error("ERROR BACKEND:", error.response?.data || error);
     }
   };
 
@@ -100,7 +165,6 @@ function AddRecipes() {
       <div className="admin-add-content">
         <div className="admin-add-layout">
 
-          {/* BACK BUTTON */}
           <button
             className="admin-add-back-btn"
             onClick={() => navigate(-1)}
@@ -108,21 +172,36 @@ function AddRecipes() {
             <img src={backIcon} alt="Back" />
           </button>
 
-          {/* CARD */}
-          <div className="admin-add-card">
+          <form className="admin-add-card" onSubmit={handleSubmit}>
             <h2>Tambahkan Resep Baru</h2>
 
             {/* FOTO */}
             <label>Foto Masakan *</label>
-            <div
-              className="admin-add-upload-box"
+
+            <div className="admin-add-upload-box"
               onClick={() => fileInputRef.current.click()}
             >
-              <img src={uploadIcon} alt="Upload" />
-              <p>
-                Tekan untuk unggah foto <br />
-                JPG, PNG maks 1 MB
-              </p>
+              {previewImage ? (
+                <div className="preview-wrapper">
+                  <img
+                    src={previewImage}
+                    alt="preview"
+                    className="preview-image"
+                  />
+
+                  <div className="preview-overlay">
+                    Klik untuk mengubah gambar
+                  </div>
+                </div>
+              ) : (
+                <>
+                  <img src={uploadIcon} alt="Upload" />
+                  <p>
+                    Klik untuk unggah foto <br />
+                    JPG / PNG (maks 1 MB)
+                  </p>
+                </>
+              )}
 
               <input
                 type="file"
@@ -132,9 +211,13 @@ function AddRecipes() {
                 onChange={handleImageChange}
               />
             </div>
+            {errors.gambar && (
+              <p className="form-error">{errors.gambar}</p>
+            )}
 
             {/* NAMA */}
             <label>Nama Resep *</label>
+
             <input
               type="text"
               placeholder="Contoh: Tumis Sayur Bayam"
@@ -142,38 +225,61 @@ function AddRecipes() {
               onChange={(e) => setNama(e.target.value)}
             />
 
+            {errors.nama && (
+              <p className="form-error">{errors.nama}</p>
+            )}
+
             {/* DESKRIPSI */}
             <label>Deskripsi Resep *</label>
+
             <textarea
               placeholder="Jelaskan tentang resep Anda..."
               value={deskripsi}
               onChange={(e) => setDeskripsi(e.target.value)}
             />
 
+            {errors.deskripsi && (
+              <p className="form-error">{errors.deskripsi}</p>
+            )}
+
             {/* ROW */}
             <div className="admin-add-row-3">
+
               <div>
                 <label>Waktu Memasak *</label>
+
                 <input
-                  type="text"
-                  placeholder="Contoh: 30 Menit"
+                  type="number"
+                  placeholder="Contoh: 30"
                   value={waktuMasak}
                   onChange={(e) => setWaktuMasak(e.target.value)}
                 />
+
+                {errors.waktuMasak && (
+                  <p className="form-error">
+                    {errors.waktuMasak}
+                  </p>
+                )}
               </div>
 
               <div>
                 <label>Daerah *</label>
+
                 <input
                   type="text"
                   placeholder="Contoh: Bali"
                   value={region}
                   onChange={(e) => setRegion(e.target.value)}
                 />
+
+                {errors.region && (
+                  <p className="form-error">{errors.region}</p>
+                )}
               </div>
 
               <div>
                 <label>Kategori *</label>
+
                 <select
                   value={kategori}
                   onChange={(e) => setKategori(e.target.value)}
@@ -183,7 +289,12 @@ function AddRecipes() {
                   <option value="Minuman">Minuman</option>
                   <option value="Jajanan">Jajanan</option>
                 </select>
+
+                {errors.kategori && (
+                  <p className="form-error">{errors.kategori}</p>
+                )}
               </div>
+
             </div>
 
             {/* BAHAN */}
@@ -195,13 +306,20 @@ function AddRecipes() {
             </div>
 
             {ingredients.map((item, index) => (
-              <div className="admin-add-ingredient-row" key={index}>
+              <div
+                className="admin-add-ingredient-row"
+                key={index}
+              >
                 <input
                   type="text"
                   placeholder="Nama Bahan"
                   value={item.name}
                   onChange={(e) =>
-                    handleIngredientChange(index, "name", e.target.value)
+                    handleIngredientChange(
+                      index,
+                      "name",
+                      e.target.value
+                    )
                   }
                 />
 
@@ -210,7 +328,11 @@ function AddRecipes() {
                   placeholder="Jumlah"
                   value={item.amount}
                   onChange={(e) =>
-                    handleIngredientChange(index, "amount", e.target.value)
+                    handleIngredientChange(
+                      index,
+                      "amount",
+                      e.target.value
+                    )
                   }
                 />
 
@@ -219,7 +341,11 @@ function AddRecipes() {
                   placeholder="Satuan"
                   value={item.unit}
                   onChange={(e) =>
-                    handleIngredientChange(index, "unit", e.target.value)
+                    handleIngredientChange(
+                      index,
+                      "unit",
+                      e.target.value
+                    )
                   }
                 />
               </div>
@@ -234,7 +360,10 @@ function AddRecipes() {
             </div>
 
             {steps.map((step, index) => (
-              <div className="admin-add-step-row" key={index}>
+              <div
+                className="admin-add-step-row"
+                key={index}
+              >
                 <span className="admin-add-step-number">
                   {index + 1}.
                 </span>
@@ -250,9 +379,15 @@ function AddRecipes() {
               </div>
             ))}
 
+            {errors.general && (
+              <p className="form-error">{errors.general}</p>
+            )}
+
             {/* BUTTON */}
             <div className="admin-add-buttons">
+
               <button
+                type="button"
                 className="admin-add-cancel"
                 onClick={() => navigate(-1)}
               >
@@ -260,14 +395,15 @@ function AddRecipes() {
               </button>
 
               <button
+                type="submit"
                 className="admin-add-submit"
-                onClick={handleSubmit}
               >
                 Simpan Resep
               </button>
+
             </div>
 
-          </div>
+          </form>
         </div>
       </div>
     </div>

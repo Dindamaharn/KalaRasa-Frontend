@@ -1,0 +1,47 @@
+.reject-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.3);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+}
+
+.reject-modal {
+  width: 348px;
+  height: 246px;
+  background: white;
+  border-radius: 12px;
+  position: relative;
+  text-align: center;
+  padding: 25px 20px;
+}
+
+.reject-close {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  width: 18px;
+  cursor: pointer;
+}
+
+.reject-title {
+  font-size: 20px;
+  font-weight: 600;
+  margin-top: 10px;
+  margin-bottom: 15px;
+}
+
+.reject-icon {
+  width: 70px;
+  margin: 10px 0;
+}
+
+.reject-desc {
+  font-size: 15px;
+  color: #6b7280;
+}

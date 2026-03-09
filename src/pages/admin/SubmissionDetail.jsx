@@ -4,7 +4,7 @@ import "./submissiondetail.css";
 import { useState, useEffect } from "react";
 import RejectReason from "../../components/modal/ReasonRejection";
 import UploadConfirm from "../../components/modal/UploadConfirm";
-import Loading from "../../components/modal/Loading"; // <-- import Loading Modal
+import Loading from "../../components/modal/Loading";
 import backIcon from "../../assets/icons/back.svg";
 import timeIcon from "../../assets/icons/time.svg";
 import locationIcon from "../../assets/icons/location.svg";
@@ -19,7 +19,7 @@ function SubmissionDetail() {
 
   const [showRejectModal, setShowRejectModal] = useState(false);
   const [showApproveModal, setShowApproveModal] = useState(false);
-  const [loading, setLoading] = useState(true); // <-- loading state global
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     fetchDetail();
@@ -27,35 +27,49 @@ function SubmissionDetail() {
 
   const fetchDetail = async () => {
     try {
-      setLoading(true); // <-- tampilkan loading saat fetch
+      setLoading(true);
+
       const res = await api.get(`/admin/recipe/${id}`);
       const data = res.data.data;
 
       setRecipe(data);
 
-      // parsing langkah dari deskripsi
-      if (data.deskripsi && data.deskripsi.includes("Langkah-langkah:")) {
-        const parts = data.deskripsi.split("Langkah-langkah:");
+      // parsing langkah dari API
+      if (data.langkah_langkah) {
+        const parsedSteps =
+          typeof data.langkah_langkah === "string"
+            ? JSON.parse(data.langkah_langkah)
+            : data.langkah_langkah;
 
-        const stepList = parts[1]
-          ?.trim()
-          .split("\n")
-          .map((s) => s.replace(/^\d+\.\s*/, ""));
-
-        setSteps(stepList);
+        setSteps(parsedSteps);
       }
 
     } catch (err) {
       console.log(err);
     } finally {
-      setLoading(false); // <-- sembunyikan loading saat selesai
+      setLoading(false);
     }
+  };
+
+  // FUNCTION FORMAT BAHAN
+  const formatIngredient = (item) => {
+    const jumlah = parseFloat(item.pivot.jumlah);
+
+    const jumlahFormatted = Number.isInteger(jumlah)
+      ? jumlah
+      : jumlah.toFixed(1);
+
+    const nama = item.nama.toLowerCase();
+
+    return `${jumlahFormatted} ${item.pivot.satuan} ${nama}`;
   };
 
   const handleReject = async (reason) => {
     try {
       setLoading(true);
-      await api.patch(`/admin/recipe/${id}/reject`, { rejection_reason: reason });
+      await api.patch(`/admin/recipe/${id}/reject`, {
+        rejection_reason: reason,
+      });
       navigate("/admin/submissions");
     } catch (err) {
       console.log(err.response?.data || err);
@@ -85,7 +99,6 @@ function SubmissionDetail() {
         <AsideAdmin />
 
         <main className="admin-content">
-
           <div className="submission-wrapper">
 
             <Link to="/admin/submissions" className="back-btn">
@@ -98,7 +111,9 @@ function SubmissionDetail() {
                 <img
                   src={
                     recipe.gambar
-                      ? `http://127.0.0.1:8000/storage/${recipe.gambar}`
+                      ? recipe.gambar.startsWith("http")
+                        ? recipe.gambar
+                        : `http://127.0.0.1:8000/storage/${recipe.gambar}`
                       : "https://via.placeholder.com/400x300?text=No+Image"
                   }
                   alt={recipe.nama}
@@ -125,46 +140,58 @@ function SubmissionDetail() {
                 {/* BAHAN */}
                 <div className="section-card">
                   <h3>Bahan - bahan</h3>
-                  <ul>
+
+                  <ul className="ingredient-list">
                     {recipe.ingredients?.map((item) => (
                       <li key={item.id}>
-                        {item.pivot.jumlah} {item.pivot.satuan} {item.nama}
+                        {formatIngredient(item)}
                       </li>
                     ))}
                   </ul>
+
                 </div>
 
                 {/* LANGKAH */}
                 <div className="section-card">
                   <h3>Cara Membuat</h3>
+
                   {steps.map((step, index) => (
                     <div className="step" key={index}>
                       <span className="step-number">{index + 1}</span>
                       <p>{step}</p>
                     </div>
                   ))}
+
                 </div>
 
-                {/* ACTION */}
-                <div className="submission-actions">
-                  <button className="btn-reject" onClick={() => setShowRejectModal(true)}>
-                    Tolak Pengajuan
-                  </button>
+                {/* ACTION (Hanya muncul jika status pending) */}
+                {recipe.status === "pending" && (
+                  <div className="submission-actions">
 
-                  <button className="btn-approve" onClick={() => setShowApproveModal(true)}>
-                    Setujui Pengajuan
-                  </button>
-                </div>
+                    <button
+                      className="btn-reject"
+                      onClick={() => setShowRejectModal(true)}
+                    >
+                      Tolak Pengajuan
+                    </button>
+
+                    <button
+                      className="btn-approve"
+                      onClick={() => setShowApproveModal(true)}
+                    >
+                      Setujui Pengajuan
+                    </button>
+
+                  </div>
+                )}
 
               </div>
             )}
-
           </div>
 
           <footer className="admin-footer">
             © 2026 Kala Rasa — Admin
           </footer>
-
         </main>
 
         {/* MODAL REJECT */}
@@ -180,7 +207,6 @@ function SubmissionDetail() {
           onClose={() => setShowApproveModal(false)}
           onConfirm={handleApprove}
         />
-
       </div>
     </>
   );

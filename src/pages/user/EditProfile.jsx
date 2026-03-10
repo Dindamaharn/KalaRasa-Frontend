@@ -5,15 +5,13 @@ import { useNavigate } from "react-router-dom";
 import SuccessPopup from "../../components/modal/Succes";
 import { getProfile, updateProfile } from "../../services/authService";
 import LoadingModal from "../../components/modal/Loading";
-import eyeIcon from "../../assets/icons/eye.svg";
-import eyeOffIcon from "../../assets/icons/eye-off.svg";
 
 function EditProfile() {
     const navigate = useNavigate();
 
     const [showSuccess, setShowSuccess] = useState(false);
 
-    const [showPassword, setShowPassword] = useState(false);
+
     const [formData, setFormData] = useState({
         name: "",
         email: "",
@@ -173,25 +171,6 @@ function EditProfile() {
                             </div>
 
                             <div className="full-width">
-                                <label>Kata Sandi Baru</label>
-
-                                <div className="password-wrapper">
-                                    <input
-                                        type={showPassword ? "text" : "password"}
-                                        name="password"
-                                        placeholder="Kosongkan jika tidak ingin mengubah"
-                                        value={formData.password}
-                                        onChange={handleChange}
-                                    />
-
-                                    <img
-                                        src={showPassword ? eyeOffIcon : eyeIcon}
-                                        alt="toggle password"
-                                        className="toggle-icon"
-                                        onClick={() => setShowPassword(!showPassword)}
-                                    />
-                                </div>
-
                                 <p
                                     className="reset-password-text"
                                     onClick={() => navigate("/reset-password")}
@@ -199,10 +178,6 @@ function EditProfile() {
                                     <span className="reset-gray">Atur Ulang </span>
                                     <span className="reset-orange">Kata Sandi</span>
                                 </p>
-
-                                {errors.password && (
-                                    <p className="error-text">{errors.password[0]}</p>
-                                )}
                             </div>
                         </div>
 

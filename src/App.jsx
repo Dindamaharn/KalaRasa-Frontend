@@ -16,6 +16,7 @@ import ShoppingDetail from "./pages/user/ShoppingDetail";
 import Recipes from "./pages/user/Recipes";
 import DetailRecipes from "./pages/user/DetailRecipes";
 import EditProfile from "./pages/user/EditProfile";
+import ResetPassword from "./pages/user/ResetPassword";
 import AddRecipes from "./pages/user/AddRecipes";
 import AddShopping from "./pages/user/AddShopping";
 import RecipesAdmin from "./pages/admin/RecipesAdmin";
@@ -52,6 +53,16 @@ function App() {
         />
 
         <Route path="/edit-profile" element={<EditProfile />} />
+
+        <Route
+          path="/reset-password"
+          element={
+            <ProtectedRoute>
+              <ResetPassword />
+            </ProtectedRoute>
+          }
+        />
+        
         <Route path="/bookmark" element={<Bookmark />} />
         <Route path="/history" element={<History />} />
         <Route path="/shopping" element={<Shopping />} />

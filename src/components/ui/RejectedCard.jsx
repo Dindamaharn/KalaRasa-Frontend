@@ -3,7 +3,7 @@ import styles from "./rejectedCard.module.css";
 import failIcon from "../../assets/icons/fail.svg";
 import timeIcon from "../../assets/icons/time.svg";
 
-function RejectedCard() {
+function RejectedCard({ recipe }) {
     const navigate = useNavigate();
 
     return (
@@ -12,24 +12,28 @@ function RejectedCard() {
             {/* LEFT */}
             <div className={styles.cardLeft}>
                 <img
-                    src="https://images.unsplash.com/photo-1604908176997-125f25cc6f3d"
-                    alt="Resep"
+                    src={
+                        recipe.gambar
+                            ? `http://localhost:8000/storage/${recipe.gambar}`
+                            : "https://via.placeholder.com/300"
+                    }
+                    alt={recipe.nama}
                 />
             </div>
 
             {/* MIDDLE */}
             <div className={styles.cardMiddle}>
                 <h3 className={styles.recipeTitle}>
-                    Martabak Manis Lembut Anti Gagal
+                    {recipe.nama}
                 </h3>
 
                 <p className={styles.recipeDesc}>
-                    Martabak manis tebal dan lembut dengan topping favorit keluarga.
+                    {recipe.deskripsi}
                 </p>
 
                 <div className={styles.cardInfo}>
                     <img src={timeIcon} alt="Time" />
-                    <span>Dikirim: 05 Februari</span>
+                    <span>Dikirim: {recipe.created_at}</span>
                 </div>
 
                 <div className={styles.rejectReason}>

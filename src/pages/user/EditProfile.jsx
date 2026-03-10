@@ -1,5 +1,5 @@
 import Navbar from "../../components/layout/Navbar";
-import "./editProfile.css";
+import styles from "./editProfile.module.css";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import SuccessPopup from "../../components/modal/Succes";
@@ -10,7 +10,6 @@ function EditProfile() {
     const navigate = useNavigate();
 
     const [showSuccess, setShowSuccess] = useState(false);
-
 
     const [formData, setFormData] = useState({
         name: "",
@@ -37,7 +36,7 @@ function EditProfile() {
                     phone: user.phone || "",
                     gender: user.gender || "",
                     birthdate: user.birthdate
-                        ? user.birthdate.split("T")[0]
+                        ? user.birthdate.substring(0, 10)
                         : "",
                     points: user.points || 0,
                     password: "",
@@ -91,12 +90,12 @@ function EditProfile() {
         <>
             <Navbar />
 
-            <div className="edit-profile-page">
-                <div className="edit-card">
+            <div className={styles.editProfilePage}>
+                <div className={styles.editCard}>
                     <h2>Informasi Akun</h2>
 
                     <form onSubmit={handleSubmit}>
-                        <div className="form-grid">
+                        <div className={styles.formGrid}>
                             <div>
                                 <label>Nama Lengkap</label>
                                 <input
@@ -106,7 +105,7 @@ function EditProfile() {
                                     onChange={handleChange}
                                 />
                                 {errors.name && (
-                                    <p className="error-text">{errors.name[0]}</p>
+                                    <p className={styles.errorText}>{errors.name[0]}</p>
                                 )}
                             </div>
 
@@ -124,7 +123,7 @@ function EditProfile() {
                                     onChange={handleChange}
                                 />
                                 {errors.phone && (
-                                    <p className="error-text">{errors.phone[0]}</p>
+                                    <p className={styles.errorText}>{errors.phone[0]}</p>
                                 )}
                             </div>
 
@@ -137,7 +136,7 @@ function EditProfile() {
                                     onChange={handleChange}
                                 />
                                 {errors.email && (
-                                    <p className="error-text">{errors.email[0]}</p>
+                                    <p className={styles.errorText}>{errors.email[0]}</p>
                                 )}
                             </div>
 
@@ -153,7 +152,7 @@ function EditProfile() {
                                     <option value="wanita">Wanita</option>
                                 </select>
                                 {errors.gender && (
-                                    <p className="error-text">{errors.gender[0]}</p>
+                                    <p className={styles.errorText}>{errors.gender[0]}</p>
                                 )}
                             </div>
 
@@ -162,35 +161,35 @@ function EditProfile() {
                                 <input
                                     type="date"
                                     name="birthdate"
-                                    value={formData.birthdate}
+                                    value={formData.birthdate || ""}
                                     onChange={handleChange}
                                 />
-                                {errors.birth_date && (
-                                    <p className="error-text">{errors.birth_date[0]}</p>
+                                {errors.birthdate && (
+                                    <p className={styles.errorText}>{errors.birthdate[0]}</p>
                                 )}
                             </div>
 
-                            <div className="full-width">
+                            <div className={styles.fullWidth}>
                                 <p
-                                    className="reset-password-text"
+                                    className={styles.resetPasswordText}
                                     onClick={() => navigate("/reset-password")}
                                 >
-                                    <span className="reset-gray">Atur Ulang </span>
-                                    <span className="reset-orange">Kata Sandi</span>
+                                    <span className={styles.resetGray}>Atur Ulang </span>
+                                    <span className={styles.resetOrange}>Kata Sandi</span>
                                 </p>
                             </div>
                         </div>
 
-                        <div className="button-group">
+                        <div className={styles.buttonGroup}>
                             <button
                                 type="button"
-                                className="cancel-btn"
+                                className={styles.cancelBtn}
                                 onClick={() => navigate("/profile")}
                             >
                                 Batalkan Perubahan
                             </button>
 
-                            <button type="submit" className="save-btn">
+                            <button type="submit" className={styles.saveBtn}>
                                 Simpan Perubahan
                             </button>
                         </div>
@@ -198,7 +197,6 @@ function EditProfile() {
                 </div>
             </div>
 
-            {/* POPUP SUCCESS EDIT */}
             {showSuccess && (
                 <SuccessPopup
                     title="Profil berhasil diperbarui!"

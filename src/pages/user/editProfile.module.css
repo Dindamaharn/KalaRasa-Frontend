@@ -1,32 +1,32 @@
 /* EDIT PROFILE PAGE */
-.edit-profile-page {
+.editProfilePage {
     padding: 20px 120px;
     background-color: #F9FAFB;
     min-height: 100vh;
 }
 
 /* CARD */
-.edit-card {
+.editCard {
     background: #FFFFFF;
     padding: 40px;
     border-radius: 16px;
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.05);
 }
 
-.edit-card h2 {
+.editCard h2 {
     margin-top: 0;
     margin-bottom: 32px;
     font-weight: 600;
 }
 
 /* FORM GRID */
-.form-grid {
+.formGrid {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 24px 40px;
 }
 
-.full-width {
+.fullWidth {
     grid-column: span 2;
 }
 
@@ -51,6 +51,19 @@ select {
     box-sizing: border-box;
 }
 
+input[type="date"] {
+    appearance: auto;
+    -webkit-appearance: auto;
+    position: relative;
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator {
+    opacity: 1;
+    display: block;
+    cursor: pointer;
+}
+
+
 /* DISABLED INPUT */
 input:disabled {
     background-color: #F3F4F6;
@@ -72,14 +85,14 @@ select {
 }
 
 /* BUTTON GROUP */
-.button-group {
+.buttonGroup {
     display: flex;
     justify-content: space-between;
     margin-top: 40px;
 }
 
 /* BUTTON CANCEL */
-.cancel-btn {
+.cancelBtn {
     background: #E5E7EB;
     border: none;
     padding: 12px 24px;
@@ -89,12 +102,12 @@ select {
     transition: 0.2s;
 }
 
-.cancel-btn:hover {
+.cancelBtn:hover {
     background: #D1D5DB;
 }
 
 /* BUTTON SAVE */
-.save-btn {
+.saveBtn {
     background: #022855;
     color: #FFFFFF;
     border: none;
@@ -105,19 +118,19 @@ select {
     transition: 0.2s;
 }
 
-.save-btn:hover {
+.saveBtn:hover {
     opacity: 0.9;
 }
 
 /* ERROR TEXT */
-.error-text {
+.errorText {
     margin-top: 6px;
     font-size: 12px;
     color: #DC2626;
 }
 
 /* RESET PASSWORD TEXT */
-.reset-password-text {
+.resetPasswordText {
     width: fit-content;
     margin-top: 8px;
     font-size: 14px;
@@ -125,15 +138,15 @@ select {
     cursor: pointer;
 }
 
-.reset-gray {
+.resetGray {
     color: #6B7280;
 }
 
-.reset-orange {
+.resetOrange {
     color: #FE6A03;
 }
 
-.reset-password-text:hover {
+.resetPasswordText:hover {
     opacity: 0.8;
 }
 
@@ -143,52 +156,52 @@ select {
 
 /* Tablet */
 @media (max-width: 1024px) {
-    .edit-profile-page {
+    .editProfilePage {
         padding: 40px 60px;
     }
 
-    .form-grid {
+    .formGrid {
         gap: 20px 24px;
     }
 }
 
 /* Mobile */
 @media (max-width: 768px) {
-    .edit-profile-page {
+    .editProfilePage {
         padding: 24px;
     }
 
-    .edit-card {
+    .editCard {
         padding: 24px;
     }
 
-    .form-grid {
+    .formGrid {
         grid-template-columns: 1fr;
         gap: 20px;
     }
 
-    .full-width {
+    .fullWidth {
         grid-column: span 1;
     }
 
-    .button-group {
+    .buttonGroup {
         flex-direction: column;
         gap: 16px;
     }
 
-    .cancel-btn,
-    .save-btn {
+    .cancelBtn,
+    .saveBtn {
         width: 100%;
     }
 }
 
 /* Extra Small*/
 @media (max-width: 480px) {
-    .edit-profile-page {
+    .editProfilePage {
         padding: 16px;
     }
 
-    .edit-card h2 {
+    .editCard h2 {
         font-size: 20px;
     }
 

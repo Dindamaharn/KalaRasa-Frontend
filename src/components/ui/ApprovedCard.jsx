@@ -4,7 +4,7 @@ import timeIcon from "../../assets/icons/time.svg";
 import bookmarkIcon from "../../assets/icons/bookmark.svg";
 import successIcon from "../../assets/icons/succced.svg";
 
-function ApprovedCard() {
+function ApprovedCard({ recipe }) {
     const navigate = useNavigate();
 
     return (
@@ -12,25 +12,29 @@ function ApprovedCard() {
 
             <div className={styles.cardLeft}>
                 <img
-                    src="https://images.unsplash.com/photo-1604908176997-125f25cc6f3d"
-                    alt="Resep"
+                    src={
+                        recipe.gambar
+                            ? `http://localhost:8000/storage/${recipe.gambar}`
+                            : "https://via.placeholder.com/300"
+                    }
+                    alt={recipe.nama}
                     className={styles.recipeImage}
                 />
             </div>
 
             <div className={styles.cardMiddle}>
                 <h3 className={styles.recipeTitle}>
-                    Ayam Bakar Teflon Empuk dan Bumbu Meresap
+                    {recipe.nama}
                 </h3>
 
                 <p className={styles.recipeDesc}>
-                    Resep ayam bakar teflon dengan bumbu khas yang meresap sempurna dan mudah dibuat.
+                    {recipe.deskripsi}
                 </p>
 
                 <div className={styles.cardInfoRow}>
                     <div className={styles.cardInfo}>
                         <img src={timeIcon} alt="Time" />
-                        <span>Dikirim: 05 Februari</span>
+                        <span>Dikirim: {recipe.created_at}</span>
                     </div>
 
                     <div className={styles.cardInfo}>

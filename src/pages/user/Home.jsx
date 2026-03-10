@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import styles from "./home.module.css";
+import api from "../../services/api";
 import { Link } from "react-router-dom";
 import Navbar from "../../components/layout/Navbar";
 
@@ -27,6 +28,8 @@ import Footer from "../../components/layout/Footer";
 
 const Home = () => {
 
+  const [mostViewed, setMostViewed] = useState([]);
+  const [topRated, setTopRated] = useState([]);
   const [currentSlide, setCurrentSlide] = useState(0);
 
   const slides = [
@@ -46,16 +49,50 @@ const Home = () => {
     }
   ];
 
+  const fetchHomeRecipes = async () => {
+    try {
+
+      const response = await api.get("/recipe");
+
+      const recipes = response.data.data.data;
+
+      const formatted = recipes.map((item) => ({
+        id: item.id,
+        title: item.nama,
+        desc: item.deskripsi,
+        rating: item.avg_rating,
+        views: item.view_count,
+        image: item.gambar
+          ? item.gambar
+          : "https://via.placeholder.com/300"
+      }));
+
+      const mostViewedRecipes = [...formatted]
+        .sort((a, b) => b.views - a.views)
+        .slice(0, 4);
+
+      const topRatedRecipes = [...formatted]
+        .sort((a, b) => b.rating - a.rating)
+        .slice(0, 4);
+
+      setMostViewed(mostViewedRecipes);
+      setTopRated(topRatedRecipes);
+
+    } catch (error) {
+      console.error("Gagal mengambil data home:", error);
+    }
+  };
+
   const categories = [
-  { name: "Olahan Daging", image: dagingImg },
-  { name: "Olahan Sayur Mayur", image: sayurImg },
-  { name: "Aneka Minuman", image: minumanImg },
-  { name: "Aneka Jajanan", image: jajananImg },
-  { name: "Olahan Seafood", image: seafoodImg },
-  { name: "Olahan Ayam & Bebek", image: ayamImg },
-  { name: "Olahan Mie", image: mieImg },
-  { name: "Olahan Pasta", image: pastaImg },
-  { name: "Olahan Ikan", image: ikanImg },
+    { name: "Olahan Daging", image: dagingImg },
+    { name: "Olahan Sayur Mayur", image: sayurImg },
+    { name: "Aneka Minuman", image: minumanImg },
+    { name: "Aneka Jajanan", image: jajananImg },
+    { name: "Olahan Seafood", image: seafoodImg },
+    { name: "Olahan Ayam & Bebek", image: ayamImg },
+    { name: "Olahan Mie", image: mieImg },
+    { name: "Olahan Pasta", image: pastaImg },
+    { name: "Olahan Ikan", image: ikanImg },
   ];
 
   const [openChat, setOpenChat] = useState(false);
@@ -65,6 +102,8 @@ const Home = () => {
     const interval = setInterval(() => {
       setCurrentSlide((prev) => (prev + 1) % slides.length);
     }, 8000);
+
+    fetchHomeRecipes();
 
     return () => clearInterval(interval);
   }, []);
@@ -136,9 +175,8 @@ const Home = () => {
                 key={index}
                 src={sliderIcon}
                 alt="slider"
-                className={`${styles.sliderDot} ${
-                  currentSlide === index ? styles.activeDot : ""
-                }`}
+                className={`${styles.sliderDot} ${currentSlide === index ? styles.activeDot : ""
+                  }`}
                 onClick={() => setCurrentSlide(index)}
               />
             ))}
@@ -155,32 +193,32 @@ const Home = () => {
           </div>
 
           <div className={styles.recipesGrid}>
-            {[1,2,3,4].map((item) => (
-              <div className={styles.recipeCard} key={item}>
+            {mostViewed.map((recipe) => (
+              <div className={styles.recipeCard} key={recipe.id}>
 
                 <img
-                  src="https://images.unsplash.com/photo-1604908176997-125f25cc6f3d"
-                  alt="Recipe"
+                  src={recipe.image}
+                  alt={recipe.title}
                   className={styles.recipeImage}
                 />
 
                 <div className={styles.recipeBody}>
                   <div className={styles.recipeHeader}>
-                    <h4>Tumis Sayur</h4>
-                    <img src={bookmarkIcon} alt="Bookmark" className={styles.bookmarkIcon}/>
+                    <h4>{recipe.title}</h4>
+                    <img src={bookmarkIcon} alt="Bookmark" className={styles.bookmarkIcon} />
                   </div>
 
                   <p className={styles.recipeDesc}>
-                    Menu sehat untuk makan siang keluarga
+                    {recipe.desc}
                   </p>
 
                   <div className={styles.recipeFooter}>
                     <div className={styles.rating}>
-                      <img src={starIcon} alt="Star"/>
-                      <span>4/5</span>
+                      <img src={starIcon} alt="Star" />
+                      <span>{recipe.rating}/5</span>
                     </div>
 
-                    <Link to="/detail-recipes" className={styles.detailButton}>
+                    <Link to={`/recipes/${recipe.id}`} className={styles.detailButton}>
                       Detail
                     </Link>
                   </div>
@@ -199,36 +237,36 @@ const Home = () => {
           </div>
 
           <div className={styles.recipesGrid}>
-            {[1, 2, 3, 4].map((item, index) => (
-              <div className={`${styles.recipeCard} ${styles.rankingCard}`} key={item}>
+            {topRated.map((recipe, index) => (
+              <div className={`${styles.recipeCard} ${styles.rankingCard}`} key={recipe.id}>
 
                 <div className={styles.rankingBadge}>
                   {index + 1}
                 </div>
 
                 <img
-                  src="https://images.unsplash.com/photo-1604908176997-125f25cc6f3d"
-                  alt="Recipe"
+                  src={recipe.image}
+                  alt={recipe.title}
                   className={styles.recipeImage}
                 />
 
                 <div className={styles.recipeBody}>
                   <div className={styles.recipeHeader}>
-                    <h4>Tumis Sayur</h4>
+                    <h4>{recipe.title}</h4>
                     <img src={bookmarkIcon} alt="Bookmark" className={styles.bookmarkIcon} />
                   </div>
 
                   <p className={styles.recipeDesc}>
-                    Menu sehat untuk makan siang keluarga
+                    {recipe.desc}
                   </p>
 
                   <div className={styles.recipeFooter}>
                     <div className={styles.rating}>
                       <img src={starIcon} alt="Star" />
-                      <span>4/5</span>
+                      <span>{recipe.rating}/5</span>
                     </div>
 
-                    <Link to="/detail-recipes" className={styles.detailButton}>
+                    <Link to={`/recipes/${recipe.id}`} className={styles.detailButton}>
                       Detail
                     </Link>
                   </div>
@@ -266,8 +304,8 @@ const Home = () => {
         </section>
 
       </div>
-        <Chatbot />
-        <Footer />
+      <Chatbot />
+      <Footer />
     </>
   );
 };

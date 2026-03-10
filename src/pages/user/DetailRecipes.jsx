@@ -24,7 +24,7 @@ const DetailRecipes = () => {
 
     const fetchRecipe = async () => {
         try {
-            const response = await api.get(`/recipe/recipes/${id}`);
+            const response = await api.get(`/recipe/${id}`);
 
             setRecipe(response.data.data.recipe);
             setUserData(response.data.data.user_data);
@@ -76,7 +76,7 @@ const DetailRecipes = () => {
                 <img
                     src={
                         recipe.gambar
-                            ? `http://127.0.0.1:8000/storage/${recipe.gambar}`
+                            ? recipe.gambar
                             : "https://via.placeholder.com/600"
                     }
                     alt={recipe.nama}
@@ -155,17 +155,17 @@ const DetailRecipes = () => {
 
                     <h3>Cara Membuat</h3>
 
-                    {recipe.langkah_langkah
-                        ?.split("\\n")
-                        .map((step, index) => (
-                            <div className={styles.step} key={index}>
-                                <div className={styles.stepNumber}>
-                                    {index + 1}
-                                </div>
+                    {JSON.parse(recipe.langkah_langkah || "[]").map((step, index) => (
+                        <div className={styles.step} key={index}>
 
-                                <p>{step.replace(/^\d+\.\s*/, "")}</p>
+                            <div className={styles.stepNumber}>
+                                {index + 1}
                             </div>
-                        ))}
+
+                            <p>{step}</p>
+
+                        </div>
+                    ))}
 
                 </div>
 

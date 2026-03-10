@@ -14,6 +14,7 @@ function MarkahUser() {
     const navigate = useNavigate();
     const [bookmarks, setBookmarks] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [search, setSearch] = useState("");
 
     useEffect(() => {
         fetchBookmarks();
@@ -43,6 +44,10 @@ function MarkahUser() {
         }
     };
 
+    const filteredBookmarks = bookmarks.filter((recipe) =>
+        recipe.nama.toLowerCase().includes(search.toLowerCase())
+    );
+
     return (
         <>
             <Navbar />
@@ -62,6 +67,8 @@ function MarkahUser() {
                         type="text"
                         placeholder="Cari resep berdasarkan nama makanan"
                         className={styles.searchInput}
+                        value={search}
+                        onChange={(e) => setSearch(e.target.value)}
                     />
 
                     <button className={styles.searchButton}>
@@ -87,13 +94,13 @@ function MarkahUser() {
 
                 {/* GRID */}
                 <div className={styles.recipesGrid}>
-                    {!loading && bookmarks.map((recipe) => (
+                    {!loading && filteredBookmarks.map((recipe) => (
                         <div className={styles.recipeCard} key={recipe.id}>
 
                             <img
                                 src={
                                     recipe.gambar
-                                        ? `http://127.0.0.1:8000/storage/${recipe.gambar}`
+                                        ? recipe.gambar_url
                                         : "https://via.placeholder.com/300"
                                 }
                                 alt={recipe.nama}

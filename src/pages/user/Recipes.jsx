@@ -33,7 +33,7 @@ function RecipesUser() {
                 desc: item.deskripsi,
                 rating: item.avg_rating,
                 image: item.gambar
-                    ? `http://127.0.0.1:8000/storage/${item.gambar}`
+                    ? item.gambar
                     : "https://via.placeholder.com/300",
                 bookmarked: item.is_favorited ?? false
             }));

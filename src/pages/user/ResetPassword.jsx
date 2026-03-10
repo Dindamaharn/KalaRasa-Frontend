@@ -107,7 +107,7 @@ function ResetPassword() {
 
   return (
     <>
-      {/* MODAL LOADING */}
+      {/* MODAL LOADING.. */}
       <Loading isOpen={loading} />
 
       <div className="rp-wrapper">

@@ -198,7 +198,7 @@ function EditProfile() {
                 </div>
             </div>
 
-            {/* POPUP SUCCESS */}
+            {/* POPUP SUCCESS EDIT */}
             {showSuccess && (
                 <SuccessPopup
                     title="Profil berhasil diperbarui!"

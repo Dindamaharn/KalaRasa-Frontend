@@ -182,7 +182,7 @@ select {
     }
 }
 
-/* Extra Small Phone */
+/* Extra Small*/
 @media (max-width: 480px) {
     .edit-profile-page {
         padding: 16px;

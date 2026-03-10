@@ -6,12 +6,15 @@ import logo from "../../assets/images/logo.png";
 import eyeIcon from "../../assets/icons/eye.svg";
 import eyeOffIcon from "../../assets/icons/eye-off.svg";
 
+import RegisterModal from "../../components/modal/Register";
+
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [errors, setErrors] = useState({});
   const navigate = useNavigate();
+  const [showRegister, setShowRegister] = useState(false);
 
 // ambil / buat device uuid sekali saja
 let deviceUUID = localStorage.getItem("device_uuid");
@@ -150,15 +153,17 @@ function getDeviceName() {
 
             <p className="register-text-to-page">
               Belum Memiliki Akun?{" "}
-              <a
-                href="https://hub.jtv.co.id/register"
+              <span
                 className="register-link"
-                target="_blank"
-                rel="noopener noreferrer"
+                onClick={() => setShowRegister(true)}
               >
                 Daftar
-              </a>
+              </span>
             </p>
+            <RegisterModal
+              show={showRegister}
+              onClose={() => setShowRegister(false)}
+            />
           </form>
         </div>
       </div>

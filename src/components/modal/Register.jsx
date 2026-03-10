@@ -1,19 +1,25 @@
-import "./register.css";
+import "./iframe.css";
+import closeIcon from "../../assets/icons/close-popup.svg";
 
 function RegisterModal({ show, onClose }) {
   if (!show) return null;
 
   return (
-    <div className="register-modal">
-      <div className="register-modal-content">
-        <button className="close-btn" onClick={onClose}>✕</button>
+    <div className="iframe-modal">
+      <div className="iframe-modal-content">
+
+        <div className="iframe-header">
+          <button className="close-modal" onClick={onClose}>
+            <img src={closeIcon} alt="close" />
+          </button>
+        </div>
 
         <iframe
           src="https://hub.jtv.co.id/register"
           title="Register"
-          width="100%"
-          height="600px"
+          scrolling="yes"
         />
+
       </div>
     </div>
   );

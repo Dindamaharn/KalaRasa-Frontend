@@ -7,6 +7,7 @@ import eyeIcon from "../../assets/icons/eye.svg";
 import eyeOffIcon from "../../assets/icons/eye-off.svg";
 
 import RegisterModal from "../../components/modal/Register";
+import ForgotPassword from "../../components/modal/ForgotPassword";
 
 function Login() {
   const [email, setEmail] = useState("");
@@ -15,6 +16,7 @@ function Login() {
   const [errors, setErrors] = useState({});
   const navigate = useNavigate();
   const [showRegister, setShowRegister] = useState(false);
+  const [showForgot, setShowForgot] = useState(false);
 
 // ambil / buat device uuid sekali saja
 let deviceUUID = localStorage.getItem("device_uuid");
@@ -142,7 +144,9 @@ function getDeviceName() {
                 onClick={() => setShowPassword(!showPassword)}
               />
             </div>
-
+            <p className="forgot" onClick={() => setShowForgot(true)}>
+              Lupa Kata Sandi?
+            </p>
             {errors.password && (
               <p className="error-text">{errors.password[0]}</p>
             )}
@@ -163,6 +167,10 @@ function getDeviceName() {
             <RegisterModal
               show={showRegister}
               onClose={() => setShowRegister(false)}
+            />
+            <ForgotPassword
+              show={showForgot}
+              onClose={() => setShowForgot(false)}
             />
           </form>
         </div>

@@ -21,13 +21,14 @@ import ikanImg from "../../assets/images/ikanpg.png";
 import dagingImg from "../../assets/images/daging.png";
 import ayamImg from "../../assets/images/ayam.png";
 
-import messageIcon from "../../assets/icons/message.svg";
 import Chatbot from "../../components/modal/Chatbot";
 
 import Footer from "../../components/layout/Footer";
 
+import LoadingModal from "../../components/modal/Loading";
 const Home = () => {
 
+  const [loading, setLoading] = useState(true);
   const [mostViewed, setMostViewed] = useState([]);
   const [topRated, setTopRated] = useState([]);
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -50,38 +51,40 @@ const Home = () => {
   ];
 
   const fetchHomeRecipes = async () => {
-    try {
+  try {
+    setLoading(true);
 
-      const response = await api.get("/recipe");
+    const response = await api.get("/recipe");
+    const recipes = response.data.data.data;
 
-      const recipes = response.data.data.data;
+    const formatted = recipes.map((item) => ({
+      id: item.id,
+      title: item.nama,
+      desc: item.deskripsi,
+      rating: item.avg_rating,
+      views: item.view_count,
+      image: item.gambar
+        ? item.gambar
+        : "https://via.placeholder.com/300"
+    }));
 
-      const formatted = recipes.map((item) => ({
-        id: item.id,
-        title: item.nama,
-        desc: item.deskripsi,
-        rating: item.avg_rating,
-        views: item.view_count,
-        image: item.gambar
-          ? item.gambar
-          : "https://via.placeholder.com/300"
-      }));
+    const mostViewedRecipes = [...formatted]
+      .sort((a, b) => b.views - a.views)
+      .slice(0, 4);
 
-      const mostViewedRecipes = [...formatted]
-        .sort((a, b) => b.views - a.views)
-        .slice(0, 4);
+    const topRatedRecipes = [...formatted]
+      .sort((a, b) => b.rating - a.rating)
+      .slice(0, 4);
 
-      const topRatedRecipes = [...formatted]
-        .sort((a, b) => b.rating - a.rating)
-        .slice(0, 4);
+    setMostViewed(mostViewedRecipes);
+    setTopRated(topRatedRecipes);
 
-      setMostViewed(mostViewedRecipes);
-      setTopRated(topRatedRecipes);
-
-    } catch (error) {
-      console.error("Gagal mengambil data home:", error);
-    }
-  };
+  } catch (error) {
+    console.error("Gagal mengambil data home:", error);
+  } finally {
+    setLoading(false);
+  }
+};
 
   const categories = [
     { name: "Olahan Daging", image: dagingImg },
@@ -111,7 +114,7 @@ const Home = () => {
   return (
     <>
       <Navbar />
-
+      <LoadingModal isOpen={loading} text="Memuat halaman..." />
       <div className={styles.homeContainer}>
 
         {/* HERO SECTION */}

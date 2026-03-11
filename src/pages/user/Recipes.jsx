@@ -7,24 +7,31 @@ import starIcon from "../../assets/icons/star.svg";
 import { useState, useEffect } from "react";
 import api from "../../services/api";
 
+import LoadingModal from "../../components/modal/Loading";
+import Pagination from "../../components/ui/Pagination";
+
 function RecipesUser() {
 
     const navigate = useNavigate();
     const [search, setSearch] = useState("");
     const [recipes, setRecipes] = useState([]);
-    const [loading, setLoading] = useState(false);
+    const [loading, setLoading] = useState(true);
+
+    // PAGINATION STATE
+    const [currentPage, setCurrentPage] = useState(1);
+    const [totalPages, setTotalPages] = useState(1);
 
     useEffect(() => {
-        fetchRecipes();
-    }, []);
+        fetchRecipes(currentPage);
+    }, [currentPage]);
 
-    const fetchRecipes = async () => {
+    const fetchRecipes = async (page = 1) => {
         try {
+
             setLoading(true);
 
-            const response = await api.get("/recipe");
+            const response = await api.get(`/recipe?page=${page}&per_page=8`);
 
-            // Karena backend pakai paginate
             const recipeData = response.data.data.data;
 
             const formatted = recipeData.map((item) => ({
@@ -34,11 +41,14 @@ function RecipesUser() {
                 rating: item.avg_rating,
                 image: item.gambar
                     ? item.gambar
-                    : "https://via.placeholder.com/300",
+                    : "",
                 bookmarked: item.is_favorited ?? false
             }));
 
             setRecipes(formatted);
+
+            // pagination info dari backend
+            setTotalPages(response.data.data.last_page);
 
         } catch (error) {
             console.error("Gagal mengambil resep:", error);
@@ -49,9 +59,9 @@ function RecipesUser() {
 
     const handleBookmark = async (id, isBookmarked) => {
         try {
+
             await api.post(`/recipe/${id}/toggle-favorite`);
 
-            // update state langsung tanpa fetch ulang
             setRecipes(prev =>
                 prev.map(recipe =>
                     recipe.id === id
@@ -60,7 +70,6 @@ function RecipesUser() {
                 )
             );
 
-            // kalau baru ditambahkan ke bookmark, langsung pindah halaman
             if (!isBookmarked) {
                 navigate("/bookmark");
             }
@@ -74,9 +83,12 @@ function RecipesUser() {
         recipe.title.toLowerCase().includes(search.toLowerCase())
     );
 
-
     return (
         <>
+
+            {/* LOADING MODAL */}
+            <LoadingModal isOpen={loading} text="Memuat resep..." />
+
             <Navbar />
 
             <div className={styles.recipesPage}>
@@ -101,12 +113,12 @@ function RecipesUser() {
                     <Link to="/add-recipes" className={styles.addRecipesButton}>
                         Tambahkan Resep Masakan Baru
                     </Link>
+
                 </div>
 
-                {loading && <p>Memuat resep...</p>}
-
                 <div className={styles.recipesGrid}>
-                    {!loading && filteredRecipes.map((recipe) => (
+
+                    {filteredRecipes.map((recipe) => (
                         <div className={styles.recipeCard} key={recipe.id}>
 
                             <img
@@ -116,7 +128,9 @@ function RecipesUser() {
                             />
 
                             <div className={styles.recipeBody}>
+
                                 <div className={styles.recipeHeader}>
+
                                     <h4>{recipe.title}</h4>
 
                                     <img
@@ -127,8 +141,11 @@ function RecipesUser() {
                                         }
                                         alt="Bookmark"
                                         className={styles.bookmarkIcon}
-                                        onClick={() => handleBookmark(recipe.id, recipe.bookmarked)}
+                                        onClick={() =>
+                                            handleBookmark(recipe.id, recipe.bookmarked)
+                                        }
                                     />
+
                                 </div>
 
                                 <p className={styles.recipeDesc}>
@@ -136,6 +153,7 @@ function RecipesUser() {
                                 </p>
 
                                 <div className={styles.recipeFooter}>
+
                                     <div className={styles.rating}>
                                         <img src={starIcon} alt="Star" />
                                         <span>{recipe.rating}/5</span>
@@ -147,7 +165,9 @@ function RecipesUser() {
                                     >
                                         Detail
                                     </Link>
+
                                 </div>
+
                             </div>
 
                         </div>
@@ -156,7 +176,18 @@ function RecipesUser() {
                     {!loading && filteredRecipes.length === 0 && (
                         <p>Resep tidak ditemukan.</p>
                     )}
+
                 </div>
+
+                {/* PAGINATION */}
+                {totalPages > 1 && (
+                    <Pagination
+                        currentPage={currentPage}
+                        totalPages={totalPages}
+                        onPageChange={(page) => setCurrentPage(page)}
+                    />
+                )}
+
             </div>
         </>
     );

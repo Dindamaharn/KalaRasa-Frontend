@@ -86,6 +86,34 @@
     background-color: #1F2933;
 }
 
+/* AUTH BUTTONS */
+
+.navbar-auth {
+    display: flex;
+    gap: 12px;
+}
+
+.btn-login {
+    border: 2px solid #022855;
+    color: #022855;
+    padding: 6px 16px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 14px;
+}
+
+.btn-register {
+    background: #FF6A00;
+    color: white;
+    border: none;
+    padding: 6px 16px;
+    border-radius: 8px;
+    font-weight: 500;
+    cursor: pointer;
+    font-size: 14px;
+}
+
 /* ================= RESPONSIVE ================= */
 
 @media (max-width: 768px) {

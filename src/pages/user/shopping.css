@@ -184,3 +184,14 @@
     background: #E5E7EB;
     cursor: pointer;
 }
+
+.empty-login-container{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    padding:120px 0;
+}
+
+.empty-login-icon{
+    width:350px;
+}

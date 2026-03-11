@@ -1,15 +1,19 @@
 import { useState, useEffect } from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import styles from "./home.module.css";
 import api from "../../services/api";
-import { Link } from "react-router-dom";
+
 import Navbar from "../../components/layout/Navbar";
+import Footer from "../../components/layout/Footer";
+import Chatbot from "../../components/modal/Chatbot";
+import LoadingModal from "../../components/modal/Loading";
 
 import bookmarkIcon from "../../assets/icons/bookmark.svg";
 import starIcon from "../../assets/icons/star.svg";
+import sliderIcon from "../../assets/icons/slider.svg";
 
 import heroImage from "../../assets/images/hero.jpg";
 import heroImage2 from "../../assets/images/hero1.png";
-import sliderIcon from "../../assets/icons/slider.svg";
 
 import seafoodImg from "../../assets/images/seafood.png";
 import pastaImg from "../../assets/images/pasta.png";
@@ -21,13 +25,12 @@ import ikanImg from "../../assets/images/ikanpg.png";
 import dagingImg from "../../assets/images/daging.png";
 import ayamImg from "../../assets/images/ayam.png";
 
-
-import Chatbot from "../../components/modal/Chatbot";
-
-import Footer from "../../components/layout/Footer";
-
-import LoadingModal from "../../components/modal/Loading";
 const Home = () => {
+
+  const location = useLocation();
+
+  const navigate = useNavigate();
+  const [openChat, setOpenChat] = useState(false);
 
   const [loading, setLoading] = useState(true);
   const [mostViewed, setMostViewed] = useState([]);
@@ -51,43 +54,7 @@ const Home = () => {
     }
   ];
 
-  const fetchHomeRecipes = async () => {
-  try {
-    setLoading(true);
-
-    const response = await api.get("/recipe");
-    const recipes = response.data.data.data;
-
-    const formatted = recipes.map((item) => ({
-      id: item.id,
-      title: item.nama,
-      desc: item.deskripsi,
-      rating: item.avg_rating,
-      views: item.view_count,
-      image: item.gambar
-        ? item.gambar
-        : "https://via.placeholder.com/300"
-    }));
-
-    const mostViewedRecipes = [...formatted]
-      .sort((a, b) => b.views - a.views)
-      .slice(0, 4);
-
-    const topRatedRecipes = [...formatted]
-      .sort((a, b) => b.rating - a.rating)
-      .slice(0, 4);
-
-    setMostViewed(mostViewedRecipes);
-    setTopRated(topRatedRecipes);
-
-  } catch (error) {
-    console.error("Gagal mengambil data home:", error);
-  } finally {
-    setLoading(false);
-  }
-};
-
-    const categories = [
+  const categories = [
     { name: "Olahan Daging", value: "daging", image: dagingImg },
     { name: "Olahan Sayur Mayur", value: "sayur", image: sayurImg },
     { name: "Aneka Minuman", value: "minuman", image: minumanImg },
@@ -99,26 +66,83 @@ const Home = () => {
     { name: "Olahan Ikan", value: "ikan", image: ikanImg },
   ];
 
-  const [openChat, setOpenChat] = useState(false);
+  /* ================= FETCH DATA ================= */
 
-  // AUTO SLIDE
+  const fetchHomeRecipes = async () => {
+    try {
+      setLoading(true);
+
+      const response = await api.get("/recipes");
+
+      const recipes = response?.data?.data?.data || [];
+
+      const formatted = recipes.map((item) => ({
+        id: item.id,
+        title: item.nama,
+        desc: item.deskripsi,
+        rating: item.avg_rating || 0,
+        views: item.view_count || 0,
+        image: item.gambar
+          ? item.gambar
+          : "https://via.placeholder.com/300"
+      }));
+
+      const mostViewedRecipes = [...formatted]
+        .sort((a, b) => b.views - a.views)
+        .slice(0, 4);
+
+      const topRatedRecipes = [...formatted]
+        .sort((a, b) => b.rating - a.rating)
+        .slice(0, 4);
+
+      setMostViewed(mostViewedRecipes);
+      setTopRated(topRatedRecipes);
+
+    } catch (error) {
+      console.error("Gagal mengambil data home:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  /* ================= CHATBOT ================= */
+
+  const handleOpenChat = () => {
+    const token = localStorage.getItem("access_token");
+
+    if (!token) {
+      navigate("/login");
+      return;
+    }
+
+    setOpenChat(true);
+  };
+
+  /* ================= SLIDER ================= */
+
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentSlide((prev) => (prev + 1) % slides.length);
     }, 8000);
 
-    fetchHomeRecipes();
-
     return () => clearInterval(interval);
   }, []);
+
+  /* ================= FETCH DATA ================= */
+
+  useEffect(() => {
+    fetchHomeRecipes();
+  }, [location.pathname]);
 
   return (
     <>
       <Navbar />
+
       <LoadingModal isOpen={loading} text="Memuat halaman..." />
+
       <div className={styles.homeContainer}>
 
-        {/* HERO SECTION */}
+        {/* HERO */}
         <section className={styles.heroSection}>
 
           <div
@@ -131,13 +155,13 @@ const Home = () => {
                 className={styles.heroSlide}
                 key={index}
                 style={{
-                  flexDirection: slide.imagePosition === "left" ? "row-reverse" : "row"
+                  flexDirection:
+                    slide.imagePosition === "left" ? "row-reverse" : "row"
                 }}
               >
 
                 <div className={styles.heroLeft}>
                   <h1>{slide.title}</h1>
-
                   <p>{slide.desc}</p>
 
                   <div className={styles.heroButtons}>
@@ -169,18 +193,18 @@ const Home = () => {
 
               </div>
             ))}
-
           </div>
 
-          {/* INDICATOR */}
+          {/* SLIDER DOT */}
           <div className={styles.heroIndicator}>
             {slides.map((_, index) => (
               <img
                 key={index}
                 src={sliderIcon}
                 alt="slider"
-                className={`${styles.sliderDot} ${currentSlide === index ? styles.activeDot : ""
-                  }`}
+                className={`${styles.sliderDot} ${
+                  currentSlide === index ? styles.activeDot : ""
+                }`}
                 onClick={() => setCurrentSlide(index)}
               />
             ))}
@@ -188,9 +212,9 @@ const Home = () => {
 
         </section>
 
-
         {/* PALING BANYAK DILIHAT */}
         <section className={styles.homeSection}>
+
           <div className={styles.sectionHeader}>
             <h2>Paling Banyak Dilihat</h2>
             <div className={styles.sectionLine}></div>
@@ -198,6 +222,7 @@ const Home = () => {
 
           <div className={styles.recipesGrid}>
             {mostViewed.map((recipe) => (
+
               <div className={styles.recipeCard} key={recipe.id}>
 
                 <img
@@ -207,42 +232,55 @@ const Home = () => {
                 />
 
                 <div className={styles.recipeBody}>
+
                   <div className={styles.recipeHeader}>
                     <h4>{recipe.title}</h4>
-                    <img src={bookmarkIcon} alt="Bookmark" className={styles.bookmarkIcon} />
+                    <img src={bookmarkIcon} alt="Bookmark" />
                   </div>
 
-                  <p className={styles.recipeDesc}>
-                    {recipe.desc}
-                  </p>
+                  <p className={styles.recipeDesc}>{recipe.desc}</p>
 
                   <div className={styles.recipeFooter}>
+
                     <div className={styles.rating}>
                       <img src={starIcon} alt="Star" />
                       <span>{recipe.rating}/5</span>
                     </div>
 
-                    <Link to={`/recipes/${recipe.id}`} className={styles.detailButton}>
+                    <Link
+                      to={`/recipes/${recipe.id}`}
+                      className={styles.detailButton}
+                    >
                       Detail
                     </Link>
+
                   </div>
+
                 </div>
 
               </div>
+
             ))}
           </div>
+
         </section>
 
         {/* PENILAIAN TERATAS */}
         <section className={styles.homeSection}>
+
           <div className={styles.sectionHeader}>
             <h2>Penilaian Teratas Minggu Ini</h2>
             <div className={styles.sectionLine}></div>
           </div>
 
           <div className={styles.recipesGrid}>
+
             {topRated.map((recipe, index) => (
-              <div className={`${styles.recipeCard} ${styles.rankingCard}`} key={recipe.id}>
+
+              <div
+                className={`${styles.recipeCard} ${styles.rankingCard}`}
+                key={recipe.id}
+              >
 
                 <div className={styles.rankingBadge}>
                   {index + 1}
@@ -255,33 +293,41 @@ const Home = () => {
                 />
 
                 <div className={styles.recipeBody}>
+
                   <div className={styles.recipeHeader}>
                     <h4>{recipe.title}</h4>
-                    <img src={bookmarkIcon} alt="Bookmark" className={styles.bookmarkIcon} />
+                    <img src={bookmarkIcon} alt="Bookmark" />
                   </div>
 
-                  <p className={styles.recipeDesc}>
-                    {recipe.desc}
-                  </p>
+                  <p className={styles.recipeDesc}>{recipe.desc}</p>
 
                   <div className={styles.recipeFooter}>
+
                     <div className={styles.rating}>
                       <img src={starIcon} alt="Star" />
                       <span>{recipe.rating}/5</span>
                     </div>
 
-                    <Link to={`/recipes/${recipe.id}`} className={styles.detailButton}>
+                    <Link
+                      to={`/recipes/${recipe.id}`}
+                      className={styles.detailButton}
+                    >
                       Detail
                     </Link>
+
                   </div>
+
                 </div>
 
               </div>
+
             ))}
+
           </div>
+
         </section>
 
-        {/* ANEKA RESEP MASAKAN */}
+        {/* KATEGORI */}
         <section className={styles.homeSection}>
 
           <div className={styles.sectionHeader}>
@@ -312,7 +358,12 @@ const Home = () => {
         </section>
 
       </div>
-      <Chatbot />
+
+      <Chatbot 
+        openChat={openChat}
+        setOpenChat={setOpenChat}
+        onOpen={handleOpenChat}
+      />
       <Footer />
     </>
   );

@@ -32,7 +32,7 @@ const DetailRecipes = () => {
 
             setLoading(true);
 
-            const response = await api.get(`/recipe/${id}`);
+            const response = await api.get(`/recipes/${id}`);
 
             setRecipe(response.data.data.recipe);
             setUserData(response.data.data.user_data);
@@ -49,11 +49,19 @@ const DetailRecipes = () => {
     };
 
     const handleBookmark = async () => {
+
+        const token = localStorage.getItem("access_token");
+
+        if (!token) {
+            navigate("/login");
+            return;
+        }
+
         try {
 
             setLoading(true);
 
-            const response = await api.post(`/recipe/${id}/toggle-favorite`);
+            const response = await api.post(`/recipes/${id}/toggle-favorite`);
 
             setUserData((prev) => ({
                 ...prev,
@@ -72,11 +80,19 @@ const DetailRecipes = () => {
     };
 
     const handleAddShoppingList = async () => {
+
+        const token = localStorage.getItem("access_token");
+
+        if (!token) {
+            navigate("/login");
+            return;
+        }
+
         try {
 
             setLoading(true);
 
-            await api.post(`/recipe/${id}/add-to-shopping-list`);
+            await api.post(`/recipes/${id}/add-to-shopping-list`);
 
             alert("Bahan berhasil ditambahkan ke daftar belanja!");
 
@@ -263,7 +279,17 @@ const DetailRecipes = () => {
                             {!userData?.has_rated && (
                                 <button
                                     className={styles.rateButton}
-                                    onClick={() => setShowRatingModal(true)}
+                                    onClick={() => {
+
+                                        const token = localStorage.getItem("access_token");
+
+                                        if (!token) {
+                                            navigate("/login");
+                                            return;
+                                        }
+
+                                        setShowRatingModal(true);
+                                    }}
                                 >
                                     Beri Penilaian
                                 </button>

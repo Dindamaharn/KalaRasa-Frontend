@@ -11,15 +11,12 @@ function SplashScreen() {
             const token = localStorage.getItem("access_token");
             const user = JSON.parse(localStorage.getItem("user"));
 
-            if (token && user) {
-                if (user.role?.name === "admin") {
-                    navigate("/admin/home");
-                } else {
-                    navigate("/home");
-                }
+            if (token && user?.role?.name === "admin") {
+                navigate("/admin/home");
             } else {
-                navigate("/login");
+                navigate("/home");
             }
+
         }, 2500);
 
         return () => clearTimeout(timer);

@@ -32,21 +32,20 @@ function App() {
     <BrowserRouter>
       <Routes>
 
-        {/* PUBLIC */}
+        {/* SPLASH */}
         <Route path="/" element={<Splash />} />
+
+        {/* AUTH */}
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
 
-        {/* USER ROUTES */}
-        <Route
-          path="/home"
-          element={
-            <ProtectedRoute>
-              <Home />
-            </ProtectedRoute>
-          }
-        />
+        {/* PUBLIC (GUEST BOLEH) */}
+        <Route path="/home" element={<Home />} />
+        <Route path="/recipes" element={<Recipes />} />
+        <Route path="/recipes/:id" element={<DetailRecipes />} />
+        <Route path="/shopping" element={<Shopping />} />
 
+        {/* USER (HARUS LOGIN) */}
         <Route
           path="/profile"
           element={
@@ -93,37 +92,10 @@ function App() {
         />
 
         <Route
-          path="/shopping"
-          element={
-            <ProtectedRoute>
-              <Shopping />
-            </ProtectedRoute>
-          }
-        />
-
-        <Route
           path="/shopping/:id"
           element={
             <ProtectedRoute>
               <ShoppingDetail />
-            </ProtectedRoute>
-          }
-        />
-
-        <Route
-          path="/recipes"
-          element={
-            <ProtectedRoute>
-              <Recipes />
-            </ProtectedRoute>
-          }
-        />
-
-        <Route
-          path="/recipes/:id"
-          element={
-            <ProtectedRoute>
-              <DetailRecipes />
             </ProtectedRoute>
           }
         />
@@ -146,7 +118,7 @@ function App() {
           }
         />
 
-        {/* ADMIN ROUTES */}
+        {/* ADMIN */}
         <Route
           path="/admin/home"
           element={

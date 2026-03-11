@@ -26,36 +26,32 @@ function RecipesUser() {
     }, [currentPage]);
 
     const fetchRecipes = async (page = 1) => {
-        try {
+    try {
 
-            setLoading(true);
+        setLoading(true);
 
-            const response = await api.get(`/recipe?page=${page}&per_page=8`);
+        const response = await api.get(`/recipes?page=${page}&per_page=8`);
 
-            const recipeData = response.data.data.data;
+        const recipeData = response.data.data.data;
 
-            const formatted = recipeData.map((item) => ({
-                id: item.id,
-                title: item.nama,
-                desc: item.deskripsi,
-                rating: item.avg_rating,
-                image: item.gambar
-                    ? item.gambar
-                    : "",
-                bookmarked: item.is_favorited ?? false
-            }));
+        const formatted = recipeData.map((item) => ({
+            id: item.id,
+            title: item.nama,
+            desc: item.deskripsi,
+            rating: item.avg_rating,
+            image: item.gambar ? item.gambar : "",
+            bookmarked: item.is_favorited ?? false
+        }));
 
-            setRecipes(formatted);
+        setRecipes(formatted);
+        setTotalPages(response.data.data.last_page);
 
-            // pagination info dari backend
-            setTotalPages(response.data.data.last_page);
-
-        } catch (error) {
-            console.error("Gagal mengambil resep:", error);
-        } finally {
-            setLoading(false);
-        }
-    };
+    } catch (error) {
+        console.error("Gagal mengambil resep:", error);
+    } finally {
+        setLoading(false);
+    }
+};
 
     const handleBookmark = async (id, isBookmarked) => {
         try {

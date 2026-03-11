@@ -12,8 +12,8 @@
 }
 
 .popup-card {
-    width: 348px;
-    height: 286px;
+    width: 500px;
+    height: 325px;
     background: white;
     border-radius: 12px;
     padding: 24px;
@@ -44,6 +44,19 @@
     width: 18px;
     cursor: pointer;
 }
+
+.popup-button {
+    margin-top: 20px;
+    padding: 10px 28px;
+    background: #022855;
+    color: #FFFFFF;
+    border: none;
+    border-radius: 8px;
+    font-size: 12px;
+    font-weight: 600; 
+    cursor: pointer;
+}
+
 
 @keyframes popupFade {
     from {

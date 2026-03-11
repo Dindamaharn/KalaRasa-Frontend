@@ -2,27 +2,38 @@ import "./succes.css";
 import closeIcon from "../../assets/icons/close-popup.svg";
 import successIcon from "../../assets/icons/succced.svg";
 
-function SuccessPopup({ title, message, onClose }) {
+function SuccessPopup({ title, message, buttonText, onButtonClick, onClose }) {
     return (
         <div className="popup-overlay">
-        <div className="popup-card">
-            <img
-            src={closeIcon}
-            alt="close"
-            className="popup-close"
-            onClick={onClose}
-            />
+            <div className="popup-card">
 
-            <h3>{title}</h3>
+                <img
+                    src={closeIcon}
+                    alt="close"
+                    className="popup-close"
+                    onClick={onClose}
+                />
 
-            <img
-            src={successIcon}
-            alt="success"
-            className="popup-icon"
-            />
+                <h3>{title}</h3>
 
-            <p>{message}</p>
-        </div>
+                <img
+                    src={successIcon}
+                    alt="success"
+                    className="popup-icon"
+                />
+
+                <p>{message}</p>
+
+                {buttonText && (
+                    <button
+                        className="popup-button"
+                        onClick={onButtonClick}
+                    >
+                        {buttonText}
+                    </button>
+                )}
+
+            </div>
         </div>
     );
 }

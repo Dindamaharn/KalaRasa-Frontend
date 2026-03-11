@@ -161,3 +161,10 @@
     cursor: pointer;
     font-weight: 500;
 }
+
+.errorMessage {
+    color: #dc2626;
+    font-size: 12px;
+    font-weight: 500;
+}
+

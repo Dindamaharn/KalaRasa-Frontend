@@ -1,13 +1,11 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import ProtectedRoute from "./components/ProtectedRoute";
+
 import Splash from "./pages/splash/Splash";
 import Login from "./pages/auth/Login";
 import Register from "./pages/auth/Register";
+
 import Home from "./pages/user/Home";
-import HomeAdmin from "./pages/admin/HomeAdmin";
-import UsersAdmin from "./pages/admin/UsersAdmin";
-import DetailUsers from "./pages/admin/DetailUsers";
-import SubmissionDetail from "./pages/admin/SubmissionDetail";
 import Profile from "./pages/user/Profile";
 import Bookmark from "./pages/user/Bookmark";
 import History from "./pages/user/History";
@@ -19,6 +17,11 @@ import EditProfile from "./pages/user/EditProfile";
 import ResetPassword from "./pages/user/ResetPassword";
 import AddRecipes from "./pages/user/AddRecipes";
 import AddShopping from "./pages/user/AddShopping";
+
+import HomeAdmin from "./pages/admin/HomeAdmin";
+import UsersAdmin from "./pages/admin/UsersAdmin";
+import DetailUsers from "./pages/admin/DetailUsers";
+import SubmissionDetail from "./pages/admin/SubmissionDetail";
 import RecipesAdmin from "./pages/admin/RecipesAdmin";
 import AddRecipesAdmin from "./pages/admin/AddRecipes";
 import SubmissionRecipes from "./pages/admin/SubmissionRecipes";
@@ -28,12 +31,13 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        {/* Public */}
+
+        {/* PUBLIC */}
         <Route path="/" element={<Splash />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
 
-        {/* User */}
+        {/* USER ROUTES */}
         <Route
           path="/home"
           element={
@@ -52,7 +56,14 @@ function App() {
           }
         />
 
-        <Route path="/edit-profile" element={<EditProfile />} />
+        <Route
+          path="/edit-profile"
+          element={
+            <ProtectedRoute>
+              <EditProfile />
+            </ProtectedRoute>
+          }
+        />
 
         <Route
           path="/reset-password"
@@ -62,17 +73,80 @@ function App() {
             </ProtectedRoute>
           }
         />
-        
-        <Route path="/bookmark" element={<Bookmark />} />
-        <Route path="/history" element={<History />} />
-        <Route path="/shopping" element={<Shopping />} />
-        <Route path="/shopping/:id" element={<ShoppingDetail />} />
-        <Route path="/recipes" element={<Recipes />} />
-        <Route path="/recipes/:id" element={<DetailRecipes />} />
-        <Route path="/add-recipes" element={<AddRecipes />} />
-        <Route path="/add-shopping" element={<AddShopping />} />
 
-        {/* Admin */}
+        <Route
+          path="/bookmark"
+          element={
+            <ProtectedRoute>
+              <Bookmark />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/history"
+          element={
+            <ProtectedRoute>
+              <History />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/shopping"
+          element={
+            <ProtectedRoute>
+              <Shopping />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/shopping/:id"
+          element={
+            <ProtectedRoute>
+              <ShoppingDetail />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/recipes"
+          element={
+            <ProtectedRoute>
+              <Recipes />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/recipes/:id"
+          element={
+            <ProtectedRoute>
+              <DetailRecipes />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/add-recipes"
+          element={
+            <ProtectedRoute>
+              <AddRecipes />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/add-shopping"
+          element={
+            <ProtectedRoute>
+              <AddShopping />
+            </ProtectedRoute>
+          }
+        />
+
+        {/* ADMIN ROUTES */}
         <Route
           path="/admin/home"
           element={
@@ -144,6 +218,7 @@ function App() {
             </ProtectedRoute>
           }
         />
+
       </Routes>
     </BrowserRouter>
   );

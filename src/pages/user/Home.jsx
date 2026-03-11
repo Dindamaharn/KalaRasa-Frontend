@@ -21,6 +21,7 @@ import ikanImg from "../../assets/images/ikanpg.png";
 import dagingImg from "../../assets/images/daging.png";
 import ayamImg from "../../assets/images/ayam.png";
 
+
 import Chatbot from "../../components/modal/Chatbot";
 
 import Footer from "../../components/layout/Footer";
@@ -86,16 +87,16 @@ const Home = () => {
   }
 };
 
-  const categories = [
-    { name: "Olahan Daging", image: dagingImg },
-    { name: "Olahan Sayur Mayur", image: sayurImg },
-    { name: "Aneka Minuman", image: minumanImg },
-    { name: "Aneka Jajanan", image: jajananImg },
-    { name: "Olahan Seafood", image: seafoodImg },
-    { name: "Olahan Ayam & Bebek", image: ayamImg },
-    { name: "Olahan Mie", image: mieImg },
-    { name: "Olahan Pasta", image: pastaImg },
-    { name: "Olahan Ikan", image: ikanImg },
+    const categories = [
+    { name: "Olahan Daging", value: "daging", image: dagingImg },
+    { name: "Olahan Sayur Mayur", value: "sayur", image: sayurImg },
+    { name: "Aneka Minuman", value: "minuman", image: minumanImg },
+    { name: "Aneka Jajanan", value: "jajanan", image: jajananImg },
+    { name: "Olahan Seafood", value: "seafood", image: seafoodImg },
+    { name: "Olahan Ayam & Bebek", value: "ayam", image: ayamImg },
+    { name: "Olahan Mie", value: "mie", image: mieImg },
+    { name: "Olahan Pasta", value: "pasta", image: pastaImg },
+    { name: "Olahan Ikan", value: "ikan", image: ikanImg },
   ];
 
   const [openChat, setOpenChat] = useState(false);
@@ -291,7 +292,11 @@ const Home = () => {
           <div className={styles.categorySlider}>
 
             {categories.map((cat, index) => (
-              <div className={styles.categoryCard} key={index}>
+              <Link
+                to={`/recipes?kategori=${cat.value}`}
+                className={styles.categoryCard}
+                key={index}
+              >
 
                 <img src={cat.image} alt={cat.name} />
 
@@ -299,7 +304,7 @@ const Home = () => {
                   <span>{cat.name}</span>
                 </div>
 
-              </div>
+              </Link>
             ))}
 
           </div>

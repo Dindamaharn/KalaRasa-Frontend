@@ -4,29 +4,33 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0,0,0,0.6);
+  background: rgba(0,0,0,0.55);
   display: flex;
   justify-content: center;
   align-items: center;
   z-index: 999;
 }
 
+/* container modal */
 .iframe-modal-content {
-  width: 85%;
-  max-width: 1000px;
-  height: 90vh;
-  background: white;
-  border-radius: 12px;
+  background: #fff;
+  border-radius: 14px;
   display: flex;
   flex-direction: column;
   overflow: hidden;
+
+  width: 560px;      /* pas dengan form */
+  height: 90vh;      /* supaya bisa scroll */
+  max-height: 750px;
+
+  box-shadow: 0 20px 60px rgba(0,0,0,0.25);
 }
 
-/* header khusus tombol close */
+/* header close */
 .iframe-header {
   display: flex;
   justify-content: flex-end;
-  padding: 12px 16px;
+  padding: 10px 14px;
 }
 
 /* tombol close */
@@ -34,42 +38,35 @@
   border: none;
   background: transparent;
   cursor: pointer;
-  padding: 0;
 }
 
 .close-modal img {
-  width: 20px;
-  height: 20px;
+  width: 18px;
+  height: 18px;
+  opacity: 0.7;
+}
+
+.close-modal img:hover {
+  opacity: 1;
 }
 
 /* iframe */
 .iframe-modal-content iframe {
-  flex: 1;
   width: 100%;
+  height: 100%;
   border: none;
-}
-
-/* DARK MODE */
-@media (prefers-color-scheme: dark) {
-  .iframe-header {
-    background: #000000;
-  }
 }
 
 /* TABLET */
 @media (max-width: 1024px) {
   .iframe-modal-content {
-    width: 92%;
-    height: 88vh;
-  }
-
-  .iframe-header {
-    padding: 10px 14px;
+    width: 500px;
   }
 }
 
 /* MOBILE */
 @media (max-width: 768px) {
+
   .iframe-modal {
     padding: 10px;
     align-items: flex-start;
@@ -81,29 +78,32 @@
     border-radius: 10px;
   }
 
-  .iframe-header {
-    padding: 10px 12px;
-  }
-
-  .close-modal img {
-    width: 18px;
-    height: 18px;
-  }
 }
 
 /* SMALL MOBILE */
 @media (max-width: 480px) {
+
   .iframe-modal-content {
     height: 100vh;
     border-radius: 0;
   }
 
+}
+
+/* DARK MODE */
+@media (prefers-color-scheme: dark) {
+
+  .iframe-modal-content {
+    background: #1f1f1f;
+    color: white;
+  }
+
   .iframe-header {
-    padding: 10px;
+    background: #1f1f1f;
   }
 
   .close-modal img {
-    width: 16px;
-    height: 16px;
+    filter: invert(1);
   }
+
 }

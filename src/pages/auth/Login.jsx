@@ -125,10 +125,6 @@ function getDeviceName() {
               />
             </div>
 
-            {errors.email && (
-              <p className="error-text">{errors.email[0]}</p>
-            )}
-
             <label>Kata Sandi</label>
             <div className="input-group">
               <input
@@ -144,6 +140,9 @@ function getDeviceName() {
                 onClick={() => setShowPassword(!showPassword)}
               />
             </div>
+            {errors.email && (
+              <p className="error-text">{errors.email[0]}</p>
+            )}
             <p className="forgot" onClick={() => setShowForgot(true)}>
               Lupa Kata Sandi?
             </p>

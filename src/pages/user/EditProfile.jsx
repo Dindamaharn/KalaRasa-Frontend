@@ -36,7 +36,9 @@ function EditProfile() {
                     phone: user.phone || "",
                     gender: user.gender || "",
                     birthdate: user.birthdate
-                        ? user.birthdate.substring(0, 10)
+                        ? new Date(new Date(user.birthdate).getTime() + 7 * 60 * 60 * 1000)
+                            .toISOString()
+                            .split("T")[0]
                         : "",
                     points: user.points || 0,
                     password: "",

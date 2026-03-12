@@ -106,7 +106,7 @@ function QueueSubmissionRecipes() {
                         {new Date(item.created_at).toLocaleDateString("id-ID")}
                       </td>
                       <td>
-                        <span className="status-admin">{item.status}</span>
+                        <span className="status-admin">{item.status === "pending" ? "Menunggu" : item.status}</span>
                       </td>
                       <td>
                         <Link

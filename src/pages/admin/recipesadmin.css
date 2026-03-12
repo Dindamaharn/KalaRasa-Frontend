@@ -85,13 +85,14 @@
   background: white;
   padding: 16px;
   border-radius: 14px;
-  box-shadow: 0 6px 18px rgba(0,0,0,0.05);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.05);
   gap: 16px;
+  cursor: pointer;
 }
 
 
 /* HANYA GAMBAR RESEP */
-.recipe-card-admin > img {
+.recipe-card-admin>img {
   width: 120px;
   height: 90px;
   object-fit: cover;
@@ -178,7 +179,7 @@
     align-items: flex-start;
   }
 
-  .recipe-card-admin> img {
+  .recipe-card-admin>img {
     width: 100%;
     height: 180px;
   }

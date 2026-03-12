@@ -66,12 +66,16 @@ function RecipesAdmin() {
 
   // ================= HANDLE UPDATE =================
   const handleUpdateClick = (recipe) => {
-  if (recipe.user?.role_id === 1) {
-    setShowRejectAccess(true);
-  } else {
-    navigate(`/admin/recipes/${recipe.id}`);
-  }
-};
+    if (recipe.user?.role_id === 1) {
+      setShowRejectAccess(true);
+    } else {
+      navigate(`/admin/recipes/${recipe.id}`);
+    }
+  };
+
+  const handleCardClick = (id) => {
+    navigate(`/admin/submissions/${id}`);
+  };
 
   return (
     <>
@@ -111,7 +115,7 @@ function RecipesAdmin() {
               <p>Tidak ada resep ditemukan</p>
             ) : (
               recipes.map((recipe) => (
-                <div className="recipe-card-admin" key={recipe.id}>
+                <div className="recipe-card-admin" key={recipe.id} onClick={() => handleCardClick(recipe.id)}>
                   <img
                     src={
                       recipe.gambar?.startsWith("http")
@@ -149,7 +153,10 @@ function RecipesAdmin() {
 
                   <button
                     className="btn-update"
-                    onClick={() => handleUpdateClick(recipe)}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleUpdateClick(recipe);
+                    }}
                   >
                     Perbarui Resep
                   </button>
@@ -171,13 +178,14 @@ function RecipesAdmin() {
           <div className="admin-footer">
             © 2026 Kala Rasa — Admin
           </div>
-        </main>
-      </div>
+        </main >
+      </div >
 
       {/* MODAL AKSES DITOLAK */}
-      <RejectAccess
+      < RejectAccess
         isOpen={showRejectAccess}
-        onClose={() => setShowRejectAccess(false)}
+        onClose={() => setShowRejectAccess(false)
+        }
       />
     </>
   );

@@ -156,15 +156,15 @@ function DetailUsers() {
                               item.status === "pending"
                                 ? "status-menunggu"
                                 : item.status === "approved"
-                                ? "status-disetujui"
-                                : "status-ditolak"
+                                  ? "status-disetujui"
+                                  : "status-ditolak"
                             }
                           >
                             {item.status === "pending"
                               ? "Menunggu"
                               : item.status === "approved"
-                              ? "Disetujui"
-                              : "Ditolak"}
+                                ? "Disetujui"
+                                : "Ditolak"}
                           </span>
                         </td>
 

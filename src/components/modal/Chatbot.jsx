@@ -1,160 +1,241 @@
 import { useState, useRef, useEffect } from "react";
+import api from "../../services/api";
 import styles from "./chatbot.module.css";
+
 import messageIcon from "../../assets/icons/message.svg";
 import sendIcon from "../../assets/icons/paper-plane.svg";
 import chefIcon from "../../assets/icons/chef-hat.svg";
 
 const Chatbot = ({ openChat, setOpenChat, onOpen }) => {
 
-    const [messages, setMessages] = useState([
-        {
-            sender: "bot",
-            text: "Halo! 👋 Saya Kala Assistant, siap membantu Anda menemukan resep yang sempurna. Ada bahan atau makanan yang ingin Anda masak hari ini?",
-            time: "22.00"
-        }
-    ]);
+  const [messages, setMessages] = useState([
+    {
+      sender: "bot",
+      text: "Halo! 👋 Saya Kala Assistant, siap membantu Anda menemukan resep yang sempurna. Ada bahan atau makanan yang ingin Anda masak hari ini?",
+      time: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })
+    }
+  ]);
 
-    const [input, setInput] = useState("");
+  const [input, setInput] = useState("");
+  const [sessionId, setSessionId] = useState("session_" + Date.now());
 
-    const chatEndRef = useRef(null);
+  const chatEndRef = useRef(null);
 
-    useEffect(() => {
-        chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
-    }, [messages]);
+  useEffect(() => {
+    chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages]);
 
-    const sendMessage = () => {
+  const sendMessage = async () => {
 
-        if(input.trim() === "") return;
+    const text = input.trim();
+    if (!text) return;
 
-        const newMessage = {
-            sender: "user",
-            text: input,
-            time: new Date().toLocaleTimeString([], {
-                hour: "2-digit",
-                minute: "2-digit"
-            })
-        };
-
-        setMessages([...messages, newMessage]);
-        setInput("");
-
+    const userMsg = {
+      sender: "user",
+      text,
+      time: new Date().toLocaleTimeString([], {
+        hour: "2-digit",
+        minute: "2-digit"
+      })
     };
 
-    return (
-        <div className={styles.chatbotContainer}>
+    setMessages(prev => [...prev, userMsg]);
+    setInput("");
 
-        {/* BUTTON */}
-        {!openChat && (
-            <button
-                className={styles.chatbotButton}
-                onClick={onOpen}
-            >
-                <img src={messageIcon} alt="chat"/>
-            </button>
-        )}
+    try {
 
-        {/* POPUP */}
-        {openChat && (
-            <div className={styles.chatbotPopup}>
+      const response = await api.post("/chatbot/message", {
+        message: text,
+        session_id: sessionId
+      });
 
-                {/* HEADER */}
-                <div className={styles.chatHeader}>
-                    <div className={styles.headerLeft}>
-                        <div className={styles.botIcon}>
-                            <img src={chefIcon} alt="bot"/>
-                        </div>
+      const data = response.data;
 
-                        <div>
-                            <h4>Kala Assistant</h4>
-                            <span className={styles.online}>● Online</span>
-                        </div>
-                    </div>
+      console.log("CHATBOT RESPONSE:", data);
 
-                    <button
-                        className={styles.closeBtn}
-                        onClick={() => setOpenChat(false)}
-                    >
-                        ✕
-                    </button>
-                </div>
+      if (!data.success) {
+        throw new Error("Chatbot error");
+      }
 
-                {/* BODY */}
-                <div className={styles.chatBody}>
+      // update session jika backend mengirim session baru
+      if (data.session_id) {
+        setSessionId(data.session_id);
+      }
 
-                    <div className={styles.date}>Hari Ini</div>
+      const botMsg = {
+        sender: "bot",
+        text: data.bot_message || "Maaf saya tidak mengerti.",
+        time: new Date().toLocaleTimeString([], {
+          hour: "2-digit",
+          minute: "2-digit"
+        })
+      };
 
-                    {messages.map((msg, index) => (
+      setMessages(prev => [...prev, botMsg]);
 
-                        msg.sender === "bot" ? (
+      // jika ada hasil resep
+      if (data.recipes && data.recipes.length > 0) {
 
-                            <div className={styles.botMessage} key={index}>
+        const recipeText = data.recipes
+          .map((r, i) => `${i + 1}. 🍲 ${r.nama}`)
+          .join("\n");
 
-                                <div className={styles.botAvatar}>
-                                    <img src={chefIcon} alt="bot"/>
-                                </div>
+        const recipeMsg = {
+          sender: "bot",
+          text: recipeText,
+          time: botMsg.time
+        };
 
-                                <div>
-                                    <div className={styles.messageBubbleBot}>
-                                        {msg.text}
-                                    </div>
+        setMessages(prev => [...prev, recipeMsg]);
+      }
 
-                                    <span className={styles.timestamp}>
-                                        {msg.time}
-                                    </span>
-                                </div>
+    } catch (err) {
 
-                            </div>
+      console.error("CHATBOT ERROR:", err);
 
-                        ) : (
+      let errorMessage = "Server chatbot tidak bisa dihubungi.";
 
-                            <div className={styles.userMessage} key={index}>
+      if (err.response?.status === 401) {
+        errorMessage = "Silakan login terlebih dahulu.";
+      }
 
-                                <div>
-                                    <div className={styles.messageBubbleUser}>
-                                        {msg.text}
-                                    </div>
+      if (err.response?.status === 422) {
+        errorMessage = "Pesan tidak valid.";
+        console.log("VALIDATION ERROR:", err.response.data);
+      }
 
-                                    <span className={styles.timestampUser}>
-                                        {msg.time}
-                                    </span>
-                                </div>
+      const botMsg = {
+        sender: "bot",
+        text: errorMessage,
+        time: new Date().toLocaleTimeString([], {
+          hour: "2-digit",
+          minute: "2-digit"
+        })
+      };
 
-                            </div>
+      setMessages(prev => [...prev, botMsg]);
 
-                        )
+    }
 
-                    ))}
+  };
 
-                    <div ref={chatEndRef}></div>
+  return (
+    <div className={styles.chatbotContainer}>
 
-                </div>
+      {!openChat && (
+        <button
+          className={styles.chatbotButton}
+          onClick={onOpen}
+        >
+          <img src={messageIcon} alt="chat"/>
+        </button>
+      )}
 
-                {/* INPUT */}
-                <div className={styles.chatInput}>
+      {openChat && (
+        <div className={styles.chatbotPopup}>
 
-                    <input
-                        type="text"
-                        placeholder="Tuliskan pertanyaanmu disini..."
-                        value={input}
-                        onChange={(e) => setInput(e.target.value)}
-                        onKeyDown={(e)=>{
-                            if(e.key === "Enter"){
-                                sendMessage();
-                            }
-                        }}
-                    />
+          {/* HEADER */}
+          <div className={styles.chatHeader}>
 
-                    <button onClick={sendMessage}>
-                        <img src={sendIcon} alt="send"/>
-                    </button>
+            <div className={styles.headerLeft}>
 
-                </div>
+              <div className={styles.botIcon}>
+                <img src={chefIcon} alt="bot"/>
+              </div>
+
+              <div>
+                <h4>Kala Assistant</h4>
+                <span className={styles.online}>● Online</span>
+              </div>
 
             </div>
-        )}
+
+            <button
+              className={styles.closeBtn}
+              onClick={() => setOpenChat(false)}
+            >
+              ✕
+            </button>
+
+          </div>
+
+          {/* BODY */}
+          <div className={styles.chatBody}>
+
+            <div className={styles.date}>Hari Ini</div>
+
+            {messages.map((msg, index) => (
+
+              msg.sender === "bot" ? (
+
+                <div className={styles.botMessage} key={index}>
+
+                  <div className={styles.botAvatar}>
+                    <img src={chefIcon} alt="bot"/>
+                  </div>
+
+                  <div>
+                    <div className={styles.messageBubbleBot}>
+                      {msg.text}
+                    </div>
+
+                    <span className={styles.timestamp}>
+                      {msg.time}
+                    </span>
+                  </div>
+
+                </div>
+
+              ) : (
+
+                <div className={styles.userMessage} key={index}>
+
+                  <div>
+                    <div className={styles.messageBubbleUser}>
+                      {msg.text}
+                    </div>
+
+                    <span className={styles.timestampUser}>
+                      {msg.time}
+                    </span>
+                  </div>
+
+                </div>
+
+              )
+
+            ))}
+
+            <div ref={chatEndRef}></div>
+
+          </div>
+
+          {/* INPUT */}
+          <div className={styles.chatInput}>
+
+            <input
+              type="text"
+              placeholder="Tuliskan pertanyaanmu disini..."
+              value={input}
+              onChange={(e)=>setInput(e.target.value)}
+              onKeyDown={(e)=>{
+                if(e.key==="Enter"){
+                  sendMessage();
+                }
+              }}
+            />
+
+            <button onClick={sendMessage}>
+              <img src={sendIcon} alt="send"/>
+            </button>
+
+          </div>
 
         </div>
-    );
+      )}
+
+    </div>
+  );
 };
 
 export default Chatbot;

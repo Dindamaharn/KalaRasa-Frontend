@@ -117,8 +117,9 @@
 
 .ingredientRow {
     display: flex;
-    gap: 20px;
+    gap: 10px;
     margin-top: 10px;
+    align-items: center;
 }
 
 .ingredientRow input {
@@ -128,13 +129,27 @@
 .stepRow {
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: 10px;
     margin-top: 10px;
 }
 
 .stepNumber {
     font-weight: 600;
     min-width: 22px;
+}
+
+.removeBtn {
+    background: none;
+    border: 1px solid #DC2626;
+    color: #DC2626;
+    font-size: 18px;
+    padding: 8px 13px;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.removeBtn:hover {
+    background-color: #FEE2E2;
 }
 
 .formButtons {
@@ -167,4 +182,3 @@
     font-size: 12px;
     font-weight: 500;
 }
-

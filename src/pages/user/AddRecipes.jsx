@@ -38,6 +38,16 @@ function AddRecipes() {
         setSteps([...steps, ""]);
     };
 
+    const removeIngredient = (index) => {
+        const newIngredients = ingredients.filter((_, i) => i !== index);
+        setIngredients(newIngredients);
+    };
+
+    const removeStep = (index) => {
+        const newSteps = steps.filter((_, i) => i !== index);
+        setSteps(newSteps);
+    };
+
     const handleUploadClick = () => {
         fileInputRef.current.click();
     };
@@ -87,60 +97,60 @@ function AddRecipes() {
 
     const handleSubmit = async () => {
 
-    if (
-        !form.nama ||
-        !form.deskripsi ||
-        !form.waktu_masak ||
-        !form.region ||
-        !form.kategori ||
-        !image ||
-        ingredients.some(i => !i.name || !i.amount || !i.unit) ||
-        steps.some(s => !s)
-    ) {
-        setErrorMessage("Lengkapi semua data dengan benar");
-        return;
-    }
-
-    try {
-
-        const formData = new FormData();
-
-        formData.append("nama", form.nama);
-        formData.append("deskripsi", form.deskripsi);
-        formData.append("waktu_masak", form.waktu_masak);
-        formData.append("region", form.region);
-        formData.append("kategori", form.kategori);
-
-        if (image) {
-            formData.append("gambar", image);
+        if (
+            !form.nama ||
+            !form.deskripsi ||
+            !form.waktu_masak ||
+            !form.region ||
+            !form.kategori ||
+            !image ||
+            ingredients.some(i => !i.name || !i.amount || !i.unit) ||
+            steps.some(s => !s)
+        ) {
+            setErrorMessage("Lengkapi semua data dengan benar");
+            return;
         }
 
-        ingredients.forEach((item, index) => {
-            formData.append(`bahan_bahan[${index}][nama]`, item.name);
-            formData.append(`bahan_bahan[${index}][jumlah]`, item.amount);
-            formData.append(`bahan_bahan[${index}][satuan]`, item.unit);
-        });
+        try {
 
-        steps.forEach((step, index) => {
-            formData.append(`langkah_langkah[${index}]`, step);
-        });
+            const formData = new FormData();
 
-        await api.post("/recipe/recipes", formData, {
-            headers: {
-                "Content-Type": "multipart/form-data"
+            formData.append("nama", form.nama);
+            formData.append("deskripsi", form.deskripsi);
+            formData.append("waktu_masak", form.waktu_masak);
+            formData.append("region", form.region);
+            formData.append("kategori", form.kategori);
+
+            if (image) {
+                formData.append("gambar", image);
             }
-        });
 
-        setErrorMessage("");
-        setShowSuccessModal(true);
+            ingredients.forEach((item, index) => {
+                formData.append(`bahan_bahan[${index}][nama]`, item.name);
+                formData.append(`bahan_bahan[${index}][jumlah]`, item.amount);
+                formData.append(`bahan_bahan[${index}][satuan]`, item.unit);
+            });
 
-    } catch (err) {
+            steps.forEach((step, index) => {
+                formData.append(`langkah_langkah[${index}]`, step);
+            });
 
-        console.error(err);
-        setErrorMessage("Terjadi kesalahan saat mengirim resep");
+            await api.post("/recipe/recipes", formData, {
+                headers: {
+                    "Content-Type": "multipart/form-data"
+                }
+            });
 
-    }
-};
+            setErrorMessage("");
+            setShowSuccessModal(true);
+
+        } catch (err) {
+
+            console.error(err);
+            setErrorMessage("Terjadi kesalahan saat mengirim resep");
+
+        }
+    };
 
     return (
         <div className={styles.addRecipePage}>
@@ -309,6 +319,16 @@ function AddRecipes() {
                                 }
                             />
 
+                            {ingredients.length > 1 && (
+                                <button
+                                    type="button"
+                                    className={styles.removeBtn}
+                                    onClick={() => removeIngredient(index)}
+                                >
+                                    −
+                                </button>
+                            )}
+
                         </div>
 
                     ))}
@@ -342,6 +362,16 @@ function AddRecipes() {
                                 }
                                 placeholder="Jelaskan Langkah Memasak..."
                             />
+
+                            {steps.length > 1 && (
+                                <button
+                                    type="button"
+                                    className={styles.removeBtn}
+                                    onClick={() => removeStep(index)}
+                                >
+                                    −
+                                </button>
+                            )}
 
                         </div>
 

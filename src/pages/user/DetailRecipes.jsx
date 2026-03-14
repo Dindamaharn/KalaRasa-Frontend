@@ -20,7 +20,7 @@ const DetailRecipes = () => {
     const [recipe, setRecipe] = useState(null);
     const [userData, setUserData] = useState(null);
     const [loading, setLoading] = useState(true);
-    
+
     const [showRatingModal, setShowRatingModal] = useState(false);
 
     useEffect(() => {
@@ -190,19 +190,21 @@ const DetailRecipes = () => {
                         <img src={backIcon} alt="Back" />
                     </button>
 
-                    <button
-                        className={styles.bookmarkButton}
-                        onClick={handleBookmark}
-                    >
-                        <img
-                            src={
-                                userData?.is_favorited
-                                    ? fillBookmarkIcon
-                                    : bookmarkIcon
-                            }
-                            alt="Bookmark"
-                        />
-                    </button>
+                    {recipe?.status !== "pending" && (
+                        <button
+                            className={styles.bookmarkButton}
+                            onClick={handleBookmark}
+                        >
+                            <img
+                                src={
+                                    userData?.is_favorited
+                                        ? fillBookmarkIcon
+                                        : bookmarkIcon
+                                }
+                                alt="Bookmark"
+                            />
+                        </button>
+                    )}
 
                 </div>
 
@@ -256,7 +258,11 @@ const DetailRecipes = () => {
 
                             <h3>Cara Membuat</h3>
 
-                            {JSON.parse(recipe.langkah_langkah || "[]").map((step, index) => (
+                            {(
+                                typeof recipe.langkah_langkah === "string"
+                                    ? recipe.langkah_langkah.split("\n")
+                                    : recipe.langkah_langkah || []
+                            ).map((step, index) => (
 
                                 <div className={styles.step} key={index}>
 
@@ -276,7 +282,7 @@ const DetailRecipes = () => {
                         <div className={styles.detailButtons}>
 
                             {/* tampilkan hanya jika user belum rating */}
-                            {!userData?.has_rated && (
+                            {recipe?.status !== "pending" && !userData?.has_rated && (
                                 <button
                                     className={styles.rateButton}
                                     onClick={() => {
@@ -295,12 +301,14 @@ const DetailRecipes = () => {
                                 </button>
                             )}
 
-                            <button
-                                className={styles.cartButton}
-                                onClick={handleAddShoppingList}
-                            >
-                                Tambah ke Daftar Belanja
-                            </button>
+                            {recipe?.status !== "pending" && (
+                                <button
+                                    className={styles.cartButton}
+                                    onClick={handleAddShoppingList}
+                                >
+                                    Tambah ke Daftar Belanja
+                                </button>
+                            )}
 
                         </div>
 

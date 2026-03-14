@@ -230,7 +230,7 @@ function AddRecipes() {
 
                         <div>
 
-                            <label>Waktu Memasak *</label>
+                            <label>Waktu Memasak (menit)*</label>
 
                             <input
                                 type="text"

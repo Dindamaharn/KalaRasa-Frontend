@@ -6,17 +6,28 @@ import timeIcon from "../../assets/icons/time.svg";
 function WaitingCard({ recipe }) {
     const navigate = useNavigate();
 
+    const formatDate = (dateString) => {
+        const date = new Date(dateString);
+
+        return date.toLocaleDateString("id-ID", {
+            day: "numeric",
+            month: "long",
+            year: "numeric"
+        });
+    };
+
     return (
         <div className={styles.historyCard}>
 
             <div className={styles.cardLeft}>
                 <img
                     src={
-                        recipe.gambar
-                            ? `http://localhost:8000/storage/${recipe.gambar}`
+                        recipe?.gambar
+                            ? recipe.gambar
                             : "https://via.placeholder.com/300"
                     }
-                    alt={recipe.nama}
+                    alt={recipe?.nama}
+                    className={styles.recipeImage}
                 />
             </div>
 
@@ -31,12 +42,12 @@ function WaitingCard({ recipe }) {
 
                 <div className={styles.cardInfo}>
                     <img src={timeIcon} alt="Time" />
-                    <span>Dikirim: {recipe.created_at}</span>
+                    <span>Dikirim: {formatDate(recipe.created_at)}</span>
                 </div>
 
                 <button
                     className={styles.primaryBtn}
-                    onClick={() => navigate("/detail-wait")}
+                    onClick={() => navigate(`/recipes/${recipe.id}`)}
                 >
                     Lihat Detail
                 </button>

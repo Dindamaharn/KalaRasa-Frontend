@@ -33,9 +33,9 @@ function MarkahUser() {
 
             setLoading(true);
 
-            const response = await api.get("/recipe/my/favorites");
+            const response = await api.get("/bookmarks");
 
-            setBookmarks(response.data.data.data);
+            setBookmarks(response.data.data);
 
         } catch (error) {
 
@@ -71,7 +71,7 @@ function MarkahUser() {
     };
 
     // FILTER SEARCH
-    const filteredBookmarks = bookmarks.filter((recipe) =>
+    const filteredBookmarks = (bookmarks || []).filter(recipe =>
         recipe.nama.toLowerCase().includes(search.toLowerCase())
     );
 
@@ -149,9 +149,9 @@ function MarkahUser() {
 
                             <img
                                 src={
-                                    recipe.gambar_url?.includes("https")
-                                        ? recipe.gambar_url.replace("/storage/", "")
-                                        : `http://localhost:8000${recipe.gambar_url}`
+                                    recipe?.gambar
+                                        ? recipe.gambar
+                                        : "https://via.placeholder.com/300"
                                 }
                                 alt={recipe.nama}
                                 className={styles.recipeImage}

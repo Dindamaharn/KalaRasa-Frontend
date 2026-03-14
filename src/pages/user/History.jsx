@@ -16,6 +16,7 @@ function RiwayatUser() {
     const [activeTab, setActiveTab] = useState("Menunggu");
     const [history, setHistory] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [search, setSearch] = useState("");
 
     useEffect(() => {
         fetchHistory();
@@ -23,9 +24,11 @@ function RiwayatUser() {
 
     const fetchHistory = async () => {
         try {
-            const response = await api.get("/recipe/recipes/my");
+            const response = await api.get("/recipe/history");
 
-            setHistory(response.data.data);
+            console.log(response.data.data.data);
+
+            setHistory(response.data.data.data);
 
         } catch (error) {
             console.error("Gagal mengambil riwayat:", error);
@@ -34,15 +37,19 @@ function RiwayatUser() {
         }
     };
 
-    const waitingRecipes = history.filter(
+    const filteredHistory = history.filter((recipe) =>
+        recipe.nama?.toLowerCase().includes(search.toLowerCase())
+    );
+
+    const waitingRecipes = filteredHistory.filter(
         (recipe) => recipe.status === "pending"
     );
 
-    const approvedRecipes = history.filter(
+    const approvedRecipes = filteredHistory.filter(
         (recipe) => recipe.status === "approved"
     );
 
-    const rejectedRecipes = history.filter(
+    const rejectedRecipes = filteredHistory.filter(
         (recipe) => recipe.status === "rejected"
     );
 
@@ -65,6 +72,8 @@ function RiwayatUser() {
                         type="text"
                         placeholder="Cari resep berdasarkan nama makanan"
                         className="search-input"
+                        value={search}
+                        onChange={(e) => setSearch(e.target.value)}
                     />
 
                     <button className="search-button">
@@ -78,20 +87,35 @@ function RiwayatUser() {
                         setActiveTab={setActiveTab}
                     />
 
-                    {activeTab === "Menunggu" &&
-                        waitingRecipes.map((recipe) => (
-                            <WaitingCard key={recipe.id} recipe={recipe} />
-                        ))}
+                    {activeTab === "Menunggu" && (
+                        waitingRecipes.length > 0 ? (
+                            waitingRecipes.map((recipe) => (
+                                <WaitingCard key={recipe.id} recipe={recipe} />
+                            ))
+                        ) : (
+                            <p className="empty-tab">Tidak ada riwayat menunggu</p>
+                        )
+                    )}
 
-                    {activeTab === "Disetujui" &&
-                        approvedRecipes.map((recipe) => (
-                            <ApprovedCard key={recipe.id} recipe={recipe} />
-                        ))}
+                    {activeTab === "Disetujui" && (
+                        approvedRecipes.length > 0 ? (
+                            approvedRecipes.map((recipe) => (
+                                <ApprovedCard key={recipe.id} recipe={recipe} />
+                            ))
+                        ) : (
+                            <p className="empty-tab">Tidak ada riwayat disetujui</p>
+                        )
+                    )}
 
-                    {activeTab === "Ditolak" &&
-                        rejectedRecipes.map((recipe) => (
-                            <RejectedCard key={recipe.id} recipe={recipe} />
-                        ))}
+                    {activeTab === "Ditolak" && (
+                        rejectedRecipes.length > 0 ? (
+                            rejectedRecipes.map((recipe) => (
+                                <RejectedCard key={recipe.id} recipe={recipe} />
+                            ))
+                        ) : (
+                            <p className="empty-tab">Tidak ada riwayat ditolak</p>
+                        )
+                    )}
                 </div>
 
                 {/* CONTENT */}

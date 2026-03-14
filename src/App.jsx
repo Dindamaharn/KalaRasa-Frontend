@@ -16,6 +16,7 @@ import DetailRecipes from "./pages/user/DetailRecipes";
 import EditProfile from "./pages/user/EditProfile";
 import ResetPassword from "./pages/user/ResetPassword";
 import AddRecipes from "./pages/user/AddRecipes";
+import EditRecipes from "./pages/user/EditRecipes";
 import AddShopping from "./pages/user/AddShopping";
 
 import HomeAdmin from "./pages/admin/HomeAdmin";
@@ -105,6 +106,15 @@ function App() {
           element={
             <ProtectedRoute>
               <AddRecipes />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/edit-recipe/:id"
+          element={
+            <ProtectedRoute>
+              <EditRecipes />
             </ProtectedRoute>
           }
         />

@@ -1,0 +1,184 @@
+.editRecipePage {
+    padding: 20px 80px;
+    background-color: #F4F6F9;
+}
+
+.layoutWrapper {
+    display: flex;
+    align-items: flex-start;
+    gap: 24px;
+}
+
+.backButton {
+    width: 48px;
+    height: 48px;
+    border-radius: 14px;
+    border: 1px solid #E5E7EB;
+    background: #FFFFFF;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    margin-bottom: 20px;
+    flex-shrink: 0;
+}
+
+.backButton img {
+    width: 20px;
+}
+
+.formCard {
+    background: #FFFFFF;
+    padding: 40px;
+    padding-top: 10px;
+    border: 1px solid #E5E7EB;
+    border-radius: 20px;
+    flex: 1;
+}
+
+.formCard h2 {
+    margin-bottom: 30px;
+}
+
+.formCard label {
+    display: block;
+    margin-top: 20px;
+    margin-bottom: 8px;
+    font-weight: 500;
+}
+
+.formCard input,
+.formCard textarea,
+.formCard select {
+    width: 100%;
+    padding: 12px 14px;
+    border-radius: 12px;
+    border: 1px solid #E5E7EB;
+    font-size: 14px;
+}
+
+.formCard textarea {
+    height: 20px;
+    resize: none;
+}
+
+.uploadBox {
+    border: 2px dashed #D1D5DB;
+    border-radius: 16px;
+    padding: 50px;
+    text-align: center;
+    color: #6B7280;
+    cursor: pointer;
+    transition: 0.3s;
+    position: relative;
+    overflow: hidden;
+}
+
+.uploadBox:hover {
+    border-color: #022855;
+    background-color: #F9FAFB;
+}
+
+.uploadIcon {
+    width: 40px;
+    margin-bottom: 12px;
+    opacity: 0.8;
+}
+
+.imagePreview {
+    width: 100%;
+    max-height: 300px;
+    object-fit: cover;
+    border-radius: 12px;
+}
+
+.row3 {
+    display: flex;
+    gap: 20px;
+    margin-top: 10px;
+}
+
+.row3>div {
+    flex: 1;
+}
+
+.sectionHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 30px;
+}
+
+.sectionHeader span {
+    color: #F97316;
+    cursor: pointer;
+    font-weight: 500;
+}
+
+.ingredientRow {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+    align-items: center;
+}
+
+.ingredientRow input {
+    flex: 1;
+}
+
+.stepRow {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.stepNumber {
+    font-weight: 600;
+    min-width: 22px;
+}
+
+.removeBtn {
+    background: none;
+    border: 1px solid #DC2626;
+    color: #DC2626;
+    font-size: 18px;
+    padding: 8px 13px;
+    border-radius: 12px;
+    cursor: pointer;
+}
+
+.removeBtn:hover {
+    background-color: #FEE2E2;
+}
+
+.formButtons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 40px;
+}
+
+.btnCancel {
+    background-color: #E5E7EB;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 12px;
+    cursor: pointer;
+    font-weight: 500;
+}
+
+.btnSubmit {
+    background-color: #022855;
+    color: white;
+    border: none;
+    padding: 12px 28px;
+    border-radius: 12px;
+    cursor: pointer;
+    font-weight: 500;
+}
+
+.errorMessage {
+    color: #dc2626;
+    font-size: 12px;
+    font-weight: 500;
+}

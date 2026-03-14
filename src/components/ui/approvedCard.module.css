@@ -73,6 +73,26 @@
     font-weight: 500;
 }
 
+.badgeRow {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.coinBadge {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 13px;
+    font-weight: 600;
+    color: #F59E0B;
+}
+
+.coinBadge img {
+    width: 16px;
+    height: 16px;
+}
+
 .approved {
     background-color: #DCFCE7;
     color: #16A34A;

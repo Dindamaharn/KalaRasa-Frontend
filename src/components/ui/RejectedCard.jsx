@@ -2,9 +2,36 @@ import { useNavigate } from "react-router-dom";
 import styles from "./rejectedCard.module.css";
 import failIcon from "../../assets/icons/fail.svg";
 import timeIcon from "../../assets/icons/time.svg";
+import api from "../../services/api";
 
 function RejectedCard({ recipe }) {
     const navigate = useNavigate();
+
+    const handleDelete = async () => {
+        const confirmDelete = window.confirm("Apakah kamu yakin ingin menghapus resep ini?");
+        if (!confirmDelete) return;
+
+        try {
+            await api.delete(`/recipes/${recipe.id}`);
+
+            alert("Resep berhasil dihapus");
+
+            navigate("/history");
+        } catch (error) {
+            console.error("Gagal menghapus resep", error);
+            alert("Gagal menghapus resep");
+        }
+    };
+
+    const formatDate = (dateString) => {
+        const date = new Date(dateString);
+
+        return date.toLocaleDateString("id-ID", {
+            day: "numeric",
+            month: "long",
+            year: "numeric"
+        });
+    };
 
     return (
         <div className={styles.historyCard}>
@@ -13,11 +40,12 @@ function RejectedCard({ recipe }) {
             <div className={styles.cardLeft}>
                 <img
                     src={
-                        recipe.gambar
-                            ? `http://localhost:8000/storage/${recipe.gambar}`
+                        recipe?.gambar
+                            ? recipe.gambar
                             : "https://via.placeholder.com/300"
                     }
-                    alt={recipe.nama}
+                    alt={recipe?.nama}
+                    className={styles.recipeImage}
                 />
             </div>
 
@@ -33,7 +61,7 @@ function RejectedCard({ recipe }) {
 
                 <div className={styles.cardInfo}>
                     <img src={timeIcon} alt="Time" />
-                    <span>Dikirim: {recipe.created_at}</span>
+                    <span>Dikirim: {formatDate(recipe.created_at)}</span>
                 </div>
 
                 <div className={styles.rejectReason}>
@@ -49,7 +77,7 @@ function RejectedCard({ recipe }) {
                 </div>
 
                 <div className={styles.buttonGroupVertical}>
-                    <button className={styles.dangerBtn}>
+                    <button className={styles.dangerBtn} onClick={handleDelete}>
                         Hapus
                     </button>
                     <button

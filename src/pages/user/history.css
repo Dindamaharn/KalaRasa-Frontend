@@ -71,3 +71,10 @@
 .empty-container p {
     color: #6B7280;
 }
+
+.empty-tab {
+    text-align: center;
+    padding: 40px;
+    color: #6B7280;
+    font-size: 16px;
+}

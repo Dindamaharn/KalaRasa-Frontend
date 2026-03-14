@@ -103,6 +103,9 @@
 /* BODY */
 .recipeBody {
     padding: 16px;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
 }
 
 .recipeHeader {
@@ -126,6 +129,12 @@
     font-size: 14px;
     color: #6B7280;
     margin: 10px 0 16px 0;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+
+    line-clamp: 2;
+    overflow: hidden;
 }
 
 /* FOOTER */
@@ -133,6 +142,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    margin-top: auto;
 }
 
 .rating {
